@@ -33,16 +33,19 @@ namespace klient_wpf
             //karta = karo[0];
             
             ZaladujKarty();
-            ZmienKarte(ref G1,1, ref pik[3]);
+            
+            UsunWszystkieKarty();
+            ZmienKarte(ref G7, 0, ref pik[10]);
         }
         private void ZmienKarte(ref Grid g, int ktoraKarta, ref Image nowaKarta)
         {
-            if (ktoraKarta >= g.Children.Count)
+            if (ktoraKarta >= g.Children.Count && g.Children.Count > 0)
             {
                 ktoraKarta = g.Children.Count - 1;
             }
-            G1.Children.RemoveAt(ktoraKarta);
-            G1.Children.Add(nowaKarta);
+            if(g.Children.Count > 0)
+                g.Children.RemoveAt(ktoraKarta);
+            g.Children.Add(nowaKarta);
             Grid.SetColumn(nowaKarta, ktoraKarta);
         }
         private void ZaladujTla()
@@ -57,6 +60,26 @@ namespace klient_wpf
                 tlo[i].Source = temp;
             }
         }
+
+        private void UsunWszystkieKarty()
+        {
+            try
+            {
+                G1.Children.RemoveRange(0, G1.Children.Count);
+                G2.Children.RemoveRange(0, G2.Children.Count);
+                G3.Children.RemoveRange(0, G3.Children.Count);
+                G4.Children.RemoveRange(0, G4.Children.Count);
+                G5.Children.RemoveRange(0, G5.Children.Count);
+                G6.Children.RemoveRange(0, G6.Children.Count);
+                G7.Children.RemoveRange(0, G7.Children.Count);
+                G8.Children.RemoveRange(0, G8.Children.Count);
+                Stol.Children.RemoveRange(0, Stol.Children.Count);
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
         private void ZaladujKarty()
         {
             for (int i = 0; i < 4; i++)
@@ -101,6 +124,8 @@ namespace klient_wpf
                     }
                 }
             }
+
+            ZaladujTla();
         }
 
     }
