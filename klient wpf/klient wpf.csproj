@@ -76,10 +76,17 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="PokojGry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="PokojGlowny.xaml.cs">
       <DependentUpon>PokojGlowny.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PokojGry.xaml.cs">
+      <DependentUpon>PokojGry.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -109,6 +116,81 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="resources\logo2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\stol.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\karty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\rect12346.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\tlo\1.png" />
+    <Resource Include="resources\tlo\2.png" />
+    <Resource Include="resources\tlo\3.png" />
+    <Resource Include="resources\tlo\4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\karo\10.png" />
+    <Resource Include="resources\karo\11.png" />
+    <Resource Include="resources\karo\12.png" />
+    <Resource Include="resources\karo\13.png" />
+    <Resource Include="resources\karo\14.png" />
+    <Resource Include="resources\karo\2.png" />
+    <Resource Include="resources\karo\3.png" />
+    <Resource Include="resources\karo\4.png" />
+    <Resource Include="resources\karo\5.png" />
+    <Resource Include="resources\karo\6.png" />
+    <Resource Include="resources\karo\7.png" />
+    <Resource Include="resources\karo\8.png" />
+    <Resource Include="resources\karo\9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\kier\10.png" />
+    <Resource Include="resources\kier\11.png" />
+    <Resource Include="resources\kier\12.png" />
+    <Resource Include="resources\kier\13.png" />
+    <Resource Include="resources\kier\14.png" />
+    <Resource Include="resources\kier\2.png" />
+    <Resource Include="resources\kier\3.png" />
+    <Resource Include="resources\kier\4.png" />
+    <Resource Include="resources\kier\5.png" />
+    <Resource Include="resources\kier\6.png" />
+    <Resource Include="resources\kier\7.png" />
+    <Resource Include="resources\kier\8.png" />
+    <Resource Include="resources\kier\9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\pik\10.png" />
+    <Resource Include="resources\pik\11.png" />
+    <Resource Include="resources\pik\12.png" />
+    <Resource Include="resources\pik\13.png" />
+    <Resource Include="resources\pik\14.png" />
+    <Resource Include="resources\pik\2.png" />
+    <Resource Include="resources\pik\3.png" />
+    <Resource Include="resources\pik\4.png" />
+    <Resource Include="resources\pik\5.png" />
+    <Resource Include="resources\pik\6.png" />
+    <Resource Include="resources\pik\7.png" />
+    <Resource Include="resources\pik\8.png" />
+    <Resource Include="resources\pik\9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="resources\trefl\10.png" />
+    <Resource Include="resources\trefl\11.png" />
+    <Resource Include="resources\trefl\12.png" />
+    <Resource Include="resources\trefl\13.png" />
+    <Resource Include="resources\trefl\14.png" />
+    <Resource Include="resources\trefl\2.png" />
+    <Resource Include="resources\trefl\3.png" />
+    <Resource Include="resources\trefl\4.png" />
+    <Resource Include="resources\trefl\5.png" />
+    <Resource Include="resources\trefl\6.png" />
+    <Resource Include="resources\trefl\7.png" />
+    <Resource Include="resources\trefl\8.png" />
+    <Resource Include="resources\trefl\9.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

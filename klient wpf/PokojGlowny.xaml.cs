@@ -45,5 +45,30 @@ namespace klient_wpf
 
             this.Close();
         }
+
+        private void TextBlock_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            (sender as TextBlock).ContextMenu.IsEnabled = true;
+            (sender as TextBlock).ContextMenu.PlacementTarget = (sender as TextBlock);
+            (sender as TextBlock).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
+            (sender as TextBlock).ContextMenu.IsOpen = true;
+        }
+
+        private void Top10_MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Overlay.Visibility = Visibility.Visible;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Black blackwindow = new Black();
+            blackwindow.Show();
+            PokojGry main = new PokojGry();
+
+            App.Current.MainWindow = main;
+            main.Show();
+            blackwindow.Close();
+            this.Close();
+        }
     }
 }

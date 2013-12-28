@@ -16,7 +16,7 @@
             </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Name="RootGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="5*" />
             <RowDefinition Height="10*" />
@@ -28,8 +28,8 @@
             <ColumnDefinition Width="2*"/>
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
-        
-        <Grid Grid.ColumnSpan="3" Grid.Row="0">
+
+        <Grid Name="grid_top" Grid.ColumnSpan="3" Grid.Row="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="5*"/>
@@ -45,6 +45,14 @@
             </Grid.ColumnDefinitions>
             <Image Grid.ColumnSpan="7" Grid.Row="1" Source="resources/logo2.png" Margin="5"></Image>
             <TextBlock Grid.Row="0" Grid.Column="6" Text="Wyloguj" TextAlignment="Center" Foreground="#FF487BD4" Style="{StaticResource HoverUnderlineStyle}" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"><Run Language="pl-pl"/></TextBlock>
+            <TextBlock ContextMenuService.IsEnabled="False" Grid.Row="0" Grid.Column="1" Text="Ranking ▼" TextAlignment="Center" Foreground="#FF487BD4" Style="{StaticResource HoverUnderlineStyle}" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_1"><Run Language="pl-pl"/>
+                <TextBlock.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Top 10" Click="Top10_MenuItem_Click"></MenuItem>
+                        <MenuItem Header="Najwięcej zwycięstw"></MenuItem>
+                    </ContextMenu>
+                </TextBlock.ContextMenu>
+            </TextBlock>
         </Grid>
         <TextBox Grid.Column="0" Grid.Row="2" Margin="3" AllowDrop="False" IsReadOnly="True" Text="Witaj w grze internetowej Poker!" TextWrapping="Wrap"/>
         <TextBox Grid.Column="0" Grid.Row="3" Margin="3" />
@@ -72,11 +80,21 @@
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Margin="3" Content="Dołącz"></Button>
+            <Button Grid.Row="0" Margin="3" Content="Dołącz" Click="Button_Click"></Button>
             <Slider Grid.Row="1"></Slider>
             <Slider Grid.Row="2"></Slider>
             <Slider Grid.Row="3"></Slider>
         </Grid>
+        
         <Button Content="Utwórz pokój" Grid.Column="2" Grid.Row="3" Margin="3"/>
+        <!--wyskakujące okienko-->
+
+        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Collapsed" Grid.ColumnSpan="3" Grid.RowSpan="4" ><!-- Width="{Binding ElementName=RootGrid,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}"-->
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity=".5"/>
+            </Grid.Background>
+
+            <!-- Add controls as needed -->
+        </Grid>
     </Grid>
 </Window>
