@@ -35,19 +35,253 @@ namespace klient_wpf
             ZaladujKarty();
             
             UsunWszystkieKarty();
-            ZmienKarte(ref G7, 0, ref pik[10]);
+            ZmienKarte(ref Stol, 0, ref kier[11]);
+            ZmienKarte(ref Stol, 1, ref trefl[11]);
+            ZmienKarte(ref Stol, 2, ref pik[11]);
+            UstawGracza(1, "primu", 150000,true,true,false,true);
+            ZmienKarte(ref G1, 0, ref pik[12]);
+            ZmienKarte(ref G1, 1, ref kier[12]);
+            UstawGracza(6, "Paweł", 1500, true, true, true);
+            ZmienKarte(ref G6, 0, ref pik[2]);
+            ZmienKarte(ref G6, 1, ref karo[3]);
+            UstawGracza(2, "Marcin", 100, true);
+            ZmienKarte(ref G2, 0, ref kier[2]);
+            ZmienKarte(ref G2, 1, ref trefl[3]);
+            UstawGracza(8, "Komputer", 10, true);
+            ZmienKarte(ref G8, 0, ref pik[4]);
+            ZmienKarte(ref G8, 1, ref trefl[4]);
+            UstawGracza(3);
+            UstawGracza(4);
+            UstawGracza(5);
+            UstawGracza(7);
+
         }
         private void ZmienKarte(ref Grid g, int ktoraKarta, ref Image nowaKarta)
         {
-            if (ktoraKarta >= g.Children.Count && g.Children.Count > 0)
-            {
-                ktoraKarta = g.Children.Count - 1;
-            }
-            if(g.Children.Count > 0)
+            //if (ktoraKarta >= g.Children.Count && g.Children.Count > 0)
+            //{
+            //    ktoraKarta = g.Children.Count - 1;
+            //}
+            if(g.Children.Count > 0 && ktoraKarta < g.Children.Count)
                 g.Children.RemoveAt(ktoraKarta);
-            g.Children.Add(nowaKarta);
+            //g.Children.Add(nowaKarta);
+            g.Children.Insert(ktoraKarta, nowaKarta);
             Grid.SetColumn(nowaKarta, ktoraKarta);
         }
+        private void UstawBlind(ref Ellipse kolko, bool maly = false)
+        {
+            RadialGradientBrush myRadialGradientBrush = new RadialGradientBrush();
+            if (maly)
+            {
+                myRadialGradientBrush.GradientStops.Add(new GradientStop(Colors.DodgerBlue, 0.0));
+                myRadialGradientBrush.GradientStops.Add(new GradientStop(Colors.Blue, 1));
+                kolko.Stroke = Brushes.MidnightBlue;
+            }
+            else
+            {
+                myRadialGradientBrush.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FFE6960B"), 0.0));
+                myRadialGradientBrush.GradientStops.Add(new GradientStop((Color)ColorConverter.ConvertFromString("#FF954F0A"), 1));
+                kolko.Stroke = Brushes.SaddleBrown;
+            }
+
+            //stroke Stroke="#FF572801" grubosc 3
+            //<GradientStop Color="#FFE6960B" Offset="0"/>
+            //<GradientStop Color="#FF954F0A" Offset="1"/>
+
+            //DirectCast(ColorConverter.ConvertFromString("#D8E0A627"), Color)
+
+            kolko.StrokeThickness = 3;
+            
+            kolko.Fill = myRadialGradientBrush;
+
+            kolko.Visibility = Visibility.Visible;
+        }
+        private void UstawGracza(int pozycja, string nazwa = "", int kasa = 0,  bool widoczny = false, bool blind = false, bool maly = false, bool ruch = false)
+        {
+            //Foreground="#FFFF9700" - brak ruchu
+            switch (pozycja)
+            {
+                case 1:
+                    if (widoczny)
+                    {
+                        LG1.Content = nazwa;
+                        LKasaG1.Content = kasa;
+                        if (ruch)
+                            LG1.Foreground = Brushes.Red;
+                        else
+                            LG1.Foreground = Brushes.Orange;
+
+                        if (blind)
+                            UstawBlind(ref EG1, maly);
+                        else
+                            EG1.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        LG1.Visibility = Visibility.Hidden;
+                        LKasaG1.Visibility = Visibility.Hidden;
+                        EG1.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case 2:
+                    if (widoczny)
+                    {
+                        LG2.Content = nazwa;
+                        LKasaG2.Content = kasa;
+                        if (ruch)
+                            LG2.Foreground = Brushes.Red;
+                        else
+                            LG2.Foreground = Brushes.Orange;
+
+                        if (blind)
+                            UstawBlind(ref EG2, maly);
+                        else
+                            EG2.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        LG2.Visibility = Visibility.Hidden;
+                        LKasaG2.Visibility = Visibility.Hidden;
+                        EG2.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case 3:
+                    if (widoczny)
+                    {
+                        LG3.Content = nazwa;
+                        LKasaG3.Content = kasa;
+                        if (ruch)
+                            LG3.Foreground = Brushes.Red;
+                        else
+                            LG3.Foreground = Brushes.Orange;
+
+                        if (blind)
+                            UstawBlind(ref EG3, maly);
+                        else
+                            EG3.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        LG3.Visibility = Visibility.Hidden;
+                        LKasaG3.Visibility = Visibility.Hidden;
+                        EG3.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case 4:
+                    if (widoczny)
+                    {
+                        LG4.Content = nazwa;
+                        LKasaG4.Content = kasa;
+                        if (ruch)
+                            LG4.Foreground = Brushes.Red;
+                        else
+                            LG4.Foreground = Brushes.Orange;
+
+                        if (blind)
+                            UstawBlind(ref EG4, maly);
+                        else
+                            EG4.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        LG4.Visibility = Visibility.Hidden;
+                        LKasaG4.Visibility = Visibility.Hidden;
+                        EG4.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case 5:
+                    if (widoczny)
+                    {
+                        LG5.Content = nazwa;
+                        LKasaG5.Content = kasa;
+                        if (ruch)
+                            LG5.Foreground = Brushes.Red;
+                        else
+                            LG5.Foreground = Brushes.Orange;
+
+                        if (blind)
+                            UstawBlind(ref EG5, maly);
+                        else
+                            EG5.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        LG5.Visibility = Visibility.Hidden;
+                        LKasaG5.Visibility = Visibility.Hidden;
+                        EG5.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case 6:
+                    if (widoczny)
+                    {
+                        LG6.Content = nazwa;
+                        LKasaG6.Content = kasa;
+                        if (ruch)
+                            LG6.Foreground = Brushes.Red;
+                        else
+                            LG6.Foreground = Brushes.Orange;
+
+                        if (blind)
+                            UstawBlind(ref EG6, maly);
+                        else
+                            EG6.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        LG6.Visibility = Visibility.Hidden;
+                        LKasaG6.Visibility = Visibility.Hidden;
+                        EG6.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case 7:
+                    if (widoczny)
+                    {
+                        LG7.Content = nazwa;
+                        LKasaG7.Content = kasa;
+                        if (ruch)
+                            LG7.Foreground = Brushes.Red;
+                        else
+                            LG7.Foreground = Brushes.Orange;
+
+                        if (blind)
+                            UstawBlind(ref EG7, maly);
+                        else
+                            EG7.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        LG7.Visibility = Visibility.Hidden;
+                        LKasaG7.Visibility = Visibility.Hidden;
+                        EG7.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                case 8:
+                    if (widoczny)
+                    {
+                        LG8.Content = nazwa;
+                        LKasaG8.Content = kasa;
+                        if (ruch)
+                            LG8.Foreground = Brushes.Red;
+                        else
+                            LG8.Foreground = Brushes.Orange;
+
+                        if (blind)
+                            UstawBlind(ref EG8, maly);
+                        else
+                            EG8.Visibility = Visibility.Hidden;
+                    }
+                    else
+                    {
+                        LG8.Visibility = Visibility.Hidden;
+                        LKasaG8.Visibility = Visibility.Hidden;
+                        EG8.Visibility = Visibility.Hidden;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void ZaladujTla()
         {
             for (int i = 0; i < 4; i++)
@@ -126,6 +360,11 @@ namespace klient_wpf
             }
 
             ZaladujTla();
+        }
+
+        private void SIleStawia_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            LIleStawia.Content = SIleStawia.Value;
         }
 
     }
