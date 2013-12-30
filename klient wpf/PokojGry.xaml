@@ -7,6 +7,14 @@
         <BitmapImage x:Key="masterImage" UriSource="/resources/karty.png" />
         <CroppedBitmap x:Key="croppedImage" 
       Source="{StaticResource masterImage}" SourceRect="2171 222 168 222"/>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        </Style>
     </Window.Resources>
     <Grid>
         <Image Height="528" Margin="0" Width="847" Source="resources/stol.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
@@ -152,7 +160,7 @@
                 </RadialGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="20" Margin="405,670,787,87" VerticalAlignment="Center" Width="235" ValueChanged="SIleStawia_ValueChanged"/>
+        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="20" Margin="405,670,787,87" VerticalAlignment="Center" Width="235" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10"/>
         <Label Name="LIleStawia" Content="0" HorizontalAlignment="Center" Height="30" Margin="645,670,687,77" VerticalAlignment="Center" Width="95" FontWeight="Bold"/>
         <Button Content="Postaw" HorizontalAlignment="Center" Margin="840,662,492,73" VerticalAlignment="Center" Width="95" Height="42"/>
         <Button Content="Spasuj" HorizontalAlignment="Center" Margin="940,662,392,73" VerticalAlignment="Center" Width="95" Height="42"/>
@@ -316,5 +324,45 @@
                 </RadialGradientBrush>
             </Ellipse.Fill>
         </Ellipse>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG1" Content="0" HorizontalAlignment="Center" Margin="655,477,645,274" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG2" Content="0" HorizontalAlignment="Center" Margin="480,455,820,296" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG3" Content="0" HorizontalAlignment="Center" Margin="473,374,827,377" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG4" Content="0" HorizontalAlignment="Center" Margin="514,315,786,436" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG5" Content="0" HorizontalAlignment="Center" Margin="655,269,645,482" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG6" Content="0" HorizontalAlignment="Center" Margin="808,309,492,442" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG7" Content="0" HorizontalAlignment="Center" Margin="853,374,447,377" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG8" Content="0" HorizontalAlignment="Center" Margin="808,454,492,297" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
     </Grid>
 </Window>

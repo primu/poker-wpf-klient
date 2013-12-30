@@ -19,6 +19,13 @@ namespace klient_wpf
     /// </summary>
     public partial class PokojGry : Window
     {
+        public byte[] token;
+        public Int64 id;
+
+        Glowny.GlownySoapClient SerwerGlowny = new Glowny.GlownySoapClient();
+        Rozgrywki.RozgrywkiSoapClient SerwerRozgrywki = new Rozgrywki.RozgrywkiSoapClient();
+        Glowny.Komunikat komunikat = new Glowny.Komunikat();
+
         Image[] karo = new Image[13];
         Image[] kier = new Image[13];
         Image[] pik = new Image[13];
@@ -38,16 +45,16 @@ namespace klient_wpf
             ZmienKarte(ref Stol, 0, ref kier[11]);
             ZmienKarte(ref Stol, 1, ref trefl[11]);
             ZmienKarte(ref Stol, 2, ref pik[11]);
-            UstawGracza(1, "primu", 150000,true,true,false,true);
+            UstawGracza(1, "primu", 150000,12,true,true,false,true);
             ZmienKarte(ref G1, 0, ref pik[12]);
             ZmienKarte(ref G1, 1, ref kier[12]);
-            UstawGracza(6, "Paweł", 1500, true, true, true);
+            UstawGracza(6, "Paweł", 1500,0, true, false, false, false, true);
             ZmienKarte(ref G6, 0, ref pik[2]);
             ZmienKarte(ref G6, 1, ref karo[3]);
-            UstawGracza(2, "Marcin", 100, true);
+            UstawGracza(2, "Marcin", 0, 100, true);
             ZmienKarte(ref G2, 0, ref kier[2]);
             ZmienKarte(ref G2, 1, ref trefl[3]);
-            UstawGracza(8, "Komputer", 10, true);
+            UstawGracza(8, "Komputer", 10, 199, true, true, true);
             ZmienKarte(ref G8, 0, ref pik[4]);
             ZmienKarte(ref G8, 1, ref trefl[4]);
             UstawGracza(3);
@@ -67,6 +74,21 @@ namespace klient_wpf
             //g.Children.Add(nowaKarta);
             g.Children.Insert(ktoraKarta, nowaKarta);
             Grid.SetColumn(nowaKarta, ktoraKarta);
+        }
+
+        private void PrzejdzDoPokojuGlownego()
+        {
+            Black blackwindow = new Black();
+            blackwindow.Show();
+            PokojGlowny main = new PokojGlowny();
+
+            main.token = token;
+            main.id = id;
+
+            App.Current.MainWindow = main;
+            main.Show();
+            blackwindow.Close();
+            this.Close();
         }
         private void UstawBlind(ref Ellipse kolko, bool maly = false)
         {
@@ -96,9 +118,90 @@ namespace klient_wpf
 
             kolko.Visibility = Visibility.Visible;
         }
-        private void UstawGracza(int pozycja, string nazwa = "", int kasa = 0,  bool widoczny = false, bool blind = false, bool maly = false, bool ruch = false)
+        private void IleStawia(int pozycja, int kasa = 0)
+        {
+            switch (pozycja)
+            {
+                case 1:
+                    if (kasa > 0)
+                    {
+                        LWkladG1.Content = kasa;
+                        LWkladG1.Visibility = Visibility.Visible;
+                    }
+                    else
+                        LWkladG1.Visibility = Visibility.Hidden;
+                    break;
+                case 2:
+                    if (kasa > 0)
+                    {
+                        LWkladG2.Content = kasa;
+                        LWkladG2.Visibility = Visibility.Visible;
+                    }
+                    else
+                        LWkladG2.Visibility = Visibility.Hidden;
+                    break;
+                case 3:
+                    if (kasa > 0)
+                    {
+                        LWkladG3.Content = kasa;
+                        LWkladG3.Visibility = Visibility.Visible;
+                    }
+                    else
+                        LWkladG3.Visibility = Visibility.Hidden;
+                    break;
+                case 4:
+                    if (kasa > 0)
+                    {
+                        LWkladG4.Content = kasa;
+                        LWkladG4.Visibility = Visibility.Visible;
+                    }
+                    else
+                        LWkladG4.Visibility = Visibility.Hidden;
+                    break;
+                case 5:
+                    if (kasa > 0)
+                    {
+                        LWkladG5.Content = kasa;
+                        LWkladG5.Visibility = Visibility.Visible;
+                    }
+                    else
+                        LWkladG5.Visibility = Visibility.Hidden;
+                    break;
+                case 6:
+                    if (kasa > 0)
+                    {
+                        LWkladG6.Content = kasa;
+                        LWkladG6.Visibility = Visibility.Visible;
+                    }
+                    else
+                        LWkladG6.Visibility = Visibility.Hidden;
+                    break;
+                case 7:
+                    if (kasa > 0)
+                    {
+                        LWkladG7.Content = kasa;
+                        LWkladG7.Visibility = Visibility.Visible;
+                    }
+                    else
+                        LWkladG7.Visibility = Visibility.Hidden;
+                    break;
+                case 8:
+                    if (kasa > 0)
+                    {
+                        LWkladG8.Content = kasa;
+                        LWkladG8.Visibility = Visibility.Visible;
+                    }
+                    else
+                        LWkladG8.Visibility = Visibility.Hidden;
+                    break;
+                default:
+                    break;
+            }
+        }
+        private void UstawGracza(int pozycja, string nazwa = "", int kasa = 0, int ileStawia = 0, bool widoczny = false, bool blind = false, bool maly = false, bool ruch = false, bool fold = false)
         {
             //Foreground="#FFFF9700" - brak ruchu
+            IleStawia(pozycja, ileStawia);
             switch (pozycja)
             {
                 case 1:
@@ -110,6 +213,9 @@ namespace klient_wpf
                             LG1.Foreground = Brushes.Red;
                         else
                             LG1.Foreground = Brushes.Orange;
+
+                        if (fold)
+                            LG1.Foreground = Brushes.Gray;
 
                         if (blind)
                             UstawBlind(ref EG1, maly);
@@ -132,6 +238,8 @@ namespace klient_wpf
                             LG2.Foreground = Brushes.Red;
                         else
                             LG2.Foreground = Brushes.Orange;
+                        if (fold)
+                            LG2.Foreground = Brushes.Gray;
 
                         if (blind)
                             UstawBlind(ref EG2, maly);
@@ -154,6 +262,8 @@ namespace klient_wpf
                             LG3.Foreground = Brushes.Red;
                         else
                             LG3.Foreground = Brushes.Orange;
+                        if (fold)
+                            LG3.Foreground = Brushes.Gray;
 
                         if (blind)
                             UstawBlind(ref EG3, maly);
@@ -176,6 +286,8 @@ namespace klient_wpf
                             LG4.Foreground = Brushes.Red;
                         else
                             LG4.Foreground = Brushes.Orange;
+                        if (fold)
+                            LG4.Foreground = Brushes.Gray;
 
                         if (blind)
                             UstawBlind(ref EG4, maly);
@@ -198,6 +310,8 @@ namespace klient_wpf
                             LG5.Foreground = Brushes.Red;
                         else
                             LG5.Foreground = Brushes.Orange;
+                        if (fold)
+                            LG5.Foreground = Brushes.Gray;
 
                         if (blind)
                             UstawBlind(ref EG5, maly);
@@ -220,6 +334,8 @@ namespace klient_wpf
                             LG6.Foreground = Brushes.Red;
                         else
                             LG6.Foreground = Brushes.Orange;
+                        if (fold)
+                            LG6.Foreground = Brushes.Gray;
 
                         if (blind)
                             UstawBlind(ref EG6, maly);
@@ -242,6 +358,8 @@ namespace klient_wpf
                             LG7.Foreground = Brushes.Red;
                         else
                             LG7.Foreground = Brushes.Orange;
+                        if (fold)
+                            LG7.Foreground = Brushes.Gray;
 
                         if (blind)
                             UstawBlind(ref EG7, maly);
@@ -264,6 +382,8 @@ namespace klient_wpf
                             LG8.Foreground = Brushes.Red;
                         else
                             LG8.Foreground = Brushes.Orange;
+                        if (fold)
+                            LG8.Foreground = Brushes.Gray;
 
                         if (blind)
                             UstawBlind(ref EG8, maly);

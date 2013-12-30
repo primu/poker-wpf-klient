@@ -22,6 +22,14 @@ namespace klient_wpf
     /// </summary>
     public partial class MainWindow : Window
     {
+        
+        private byte[] token;
+        private Int64 id;
+
+        Glowny.GlownySoapClient SerwerGlowny = new Glowny.GlownySoapClient();
+        Glowny.Komunikat komunikat = new Glowny.Komunikat();
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -29,24 +37,46 @@ namespace klient_wpf
 
         private void ZalogujBTN_Click(object sender, RoutedEventArgs e)
         {
+            token = SerwerGlowny.Zaloguj(LoginTB.Text, hasloTB.Password);
+            if (token != null)
+            {
+                komunikat = SerwerGlowny.PobierzSwojeID(token);
+                if (komunikat.kodKomunikatu == 200)
+                    id = Convert.ToInt64(komunikat.trescKomunikatu);
+                ZmienOkno();
+            }
+            else
+            {
+                //MessageBox.Show("Błąd logowania!");
+                LBlad.Content = "Błąd logowania! Spróbuj ponownie.";
+                LBlad.Visibility = Visibility.Visible;
+            }
             
+            
+           
+        }
+        private void ZmienOkno()
+        {
             //DoubleAnimation da = new DoubleAnimation();
             //da.From = 1;
-           // da.To = 0;
+            // da.To = 0;
             //da.Duration = new Duration(TimeSpan.FromSeconds(0.7));
             //da.Completed += new EventHandler(da_Completed);
             //da.AutoReverse = true;
             //da.RepeatBehavior = RepeatBehavior.Forever;
             //da.RepeatBehavior=new RepeatBehavior(3);
-            
+
             //da.AutoReverse = true;
             //da.RepeatBehavior = RepeatBehavior.Forever;
             //da.RepeatBehavior=new RepeatBehavior(3);
-           // this.BeginAnimation(OpacityProperty, da);
+            // this.BeginAnimation(OpacityProperty, da);
             Black blackwindow = new Black();
             blackwindow.Show();
             PokojGlowny main = new PokojGlowny();
-            
+
+            main.token = token; //przekazanie tokenu
+            main.id = id;       //przekazanie id
+
             App.Current.MainWindow = main;
             //main.Opacity = 0;
             main.Show();
@@ -54,15 +84,14 @@ namespace klient_wpf
             //main.Loaded += new RoutedEventHandler(da1_Completed);
             //MainWindow.BeginAnimation(OpacityProperty, da1);
             //this.GetAnimationBaseValue(da);
-            
+
             //this.BeginAnimation
             //while(da.Completed==null)
             //this.Hide();
             //this.Close();
-            
+
             this.Close();
         }
-
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();

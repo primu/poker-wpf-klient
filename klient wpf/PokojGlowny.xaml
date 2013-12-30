@@ -1,8 +1,9 @@
 ﻿<Window x:Class="klient_wpf.PokojGlowny"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="PokojGlowny"
-        WindowState="Maximized" WindowStyle="None" Height="550" Width="783">
+        WindowState="Maximized" WindowStyle="None" Height="550" Width="783" Loaded="Window_Loaded">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
             <Style.Triggers>
@@ -57,11 +58,19 @@
         <TextBox Grid.Column="0" Grid.Row="2" Margin="3" AllowDrop="False" IsReadOnly="True" Text="Witaj w grze internetowej Poker!" TextWrapping="Wrap"/>
         <TextBox Grid.Column="0" Grid.Row="3" Margin="3" />
         <ListView Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Margin="3"></ListView>
-        <Border BorderThickness="1" BorderBrush="Black" Grid.Column="2" Grid.Row="1" Margin="3" >
-            <TextBlock Margin="3" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum lorem sit amet quam feugiat venenatis sit amet at dui. Vivamus iaculis lectus at leo gravida, nec tempor odio fringilla. Quisque cursus, libero ut sodales auctor, massa sem fermentum lectus, non molestie sem leo non mi. Duis pretium ac magna quis egestas. Quisque tellus ante, viverra ut dolor vel, eleifend semper elit. Nunc porttitor erat at mi varius, nec posuere nibh eleifend. Vestibulum pharetra pulvinar mauris, ac venenatis augue mollis blandit. Vivamus a massa pretium, ornare neque sed, malesuada nisl. Fusce dictum justo nisi, id vulputate velit egestas eu. Mauris et elit nunc. Etiam lacinia turpis vitae erat feugiat mattis. 
+        <Grid Grid.Column="2" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="1*"/>
+            </Grid.RowDefinitions>
+            <Border BorderThickness="1" BorderBrush="Black" Grid.Column="0" Grid.Row="0" Margin="3" >
+                <TextBlock Margin="3" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum lorem sit amet quam feugiat venenatis sit amet at dui. Vivamus iaculis lectus at leo gravida, nec tempor odio fringilla. Quisque cursus, libero ut sodales auctor, massa sem fermentum lectus, non molestie sem leo non mi. Duis pretium ac magna quis egestas. Quisque tellus ante, viverra ut dolor vel, eleifend semper elit. Nunc porttitor erat at mi varius, nec posuere nibh eleifend. Vestibulum pharetra pulvinar mauris, ac venenatis augue mollis blandit. Vivamus a massa pretium, ornare neque sed, malesuada nisl. Fusce dictum justo nisi, id vulputate velit egestas eu. Mauris et elit nunc. Etiam lacinia turpis vitae erat feugiat mattis. 
 
  Phasellus at iaculis neque. Cras et enim sed est consequat venenatis non non lectus. Cras congue turpis eros, vel tempor ligula blandit vitae. Duis sed quam porttitor, fringilla enim a, dapibus felis. Mauris euismod ornare pellentesque. Nulla euismod dignissim accumsan. Vestibulum lobortis enim urna, pharetra malesuada est interdum semper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque quis sem ullamcorper, eleifend arcu vel, ornare odio."></TextBlock>
-        </Border>
+            </Border>
+            <Button Grid.Row="1" Margin="3" Content="Dołącz" Click="Button_Click"></Button>
+        </Grid>
+        
         <ListView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="3">
             <ListView.View>
                 <GridView>
@@ -77,13 +86,33 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
                 <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
                 <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
-            <Button Grid.Row="0" Margin="3" Content="Dołącz" Click="Button_Click"></Button>
-            <Slider Grid.Row="1"></Slider>
-            <Slider Grid.Row="2"></Slider>
-            <Slider Grid.Row="3"></Slider>
+            <Label HorizontalContentAlignment="Center" Grid.Row="0" Content="Nowy pokój" FontWeight="Bold"/>
+            
+            <Label Content="Nazwa stołu" Grid.Row="1"/>
+            <TextBox Margin="3,3,3,3" Name="TBNazwaStolu" Grid.Row="2" MaxLength="50"></TextBox>
+            
+            <Label Content="Liczba graczy" Grid.Row="3"/>
+            <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="10*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Slider Name="SLiczbaGraczy" Grid.Column="0" SmallChange="1" Maximum="8" Minimum="2" TickPlacement="TopLeft" IsSnapToTickEnabled="True"></Slider>
+                <Label HorizontalAlignment="Center" Grid.Column="1" Content="{Binding ElementName=SLiczbaGraczy, Path=Value}"></Label>
+            </Grid>
+
+            <Label Content="Stawka wejściowa" Grid.Row="5"/>
+            <xctk:IntegerUpDown Name="IUPStawka" Value="200" Margin="3,3,3,3" Grid.Row="6" Increment="10" Minimum="200" Maximum="1000"></xctk:IntegerUpDown>
+            <Label Content="Duży blind" Grid.Row="7"/>
+            <xctk:IntegerUpDown Name="IUPBlind" Value="2" Margin="3,3,3,3" Grid.Row="8" Increment="2" Minimum="2" Maximum="100"></xctk:IntegerUpDown>
         </Grid>
         
         <Button Content="Utwórz pokój" Grid.Column="2" Grid.Row="3" Margin="3"/>
