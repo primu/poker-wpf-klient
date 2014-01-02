@@ -19,11 +19,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://przemo:51314/glowny.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:51314/glowny.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="glowny.wsdl" MetadataType="Wsdl" ID="53657312-127a-43d2-bdff-72a1ce5422fe" SourceId="1" SourceUrl="http://przemo:51314/glowny.asmx?wsdl" />
-    <MetadataFile FileName="glowny.disco" MetadataType="Disco" ID="84ff85a6-5cf9-4a4c-8c95-434b83bf0c8a" SourceId="1" SourceUrl="http://przemo:51314/glowny.asmx?disco" />
+    <MetadataFile FileName="glowny1.disco" MetadataType="Disco" ID="24bf8e4a-cb75-4f91-afe0-f61ae7d754fb" SourceId="1" SourceUrl="http://localhost:51314/glowny.asmx?disco" />
+    <MetadataFile FileName="glowny1.wsdl" MetadataType="Wsdl" ID="59c1ab8b-e397-4cb0-a813-4ba6e2e8be23" SourceId="1" SourceUrl="http://localhost:51314/glowny.asmx?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

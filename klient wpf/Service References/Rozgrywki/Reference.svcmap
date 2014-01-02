@@ -19,11 +19,11 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://przemo:51314/rozgrywki.asmx" Protocol="http" SourceId="1" />
+    <MetadataSource Address="http://localhost:51314/rozgrywki.asmx" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="rozgrywki.disco" MetadataType="Disco" ID="496cc00b-6a2a-4839-b3f0-6d05da77cfd6" SourceId="1" SourceUrl="http://przemo:51314/rozgrywki.asmx?disco" />
-    <MetadataFile FileName="rozgrywki.wsdl" MetadataType="Wsdl" ID="5640fcd3-8163-4fdf-9618-9632a11fa47e" SourceId="1" SourceUrl="http://przemo:51314/rozgrywki.asmx?wsdl" />
+    <MetadataFile FileName="rozgrywki1.disco" MetadataType="Disco" ID="15414e26-a85d-4b87-9001-42b454d39129" SourceId="1" SourceUrl="http://localhost:51314/rozgrywki.asmx?disco" />
+    <MetadataFile FileName="rozgrywki1.wsdl" MetadataType="Wsdl" ID="0609121b-4e39-468a-a3a7-d78e57b2b5e2" SourceId="1" SourceUrl="http://localhost:51314/rozgrywki.asmx?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

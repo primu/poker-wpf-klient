@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="bchhlN82UeJMz2ft8IY6/K1PAzE=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="mr9z2k4Q9tCh643uOGIAJroGxIs=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="RozgrywkiSoap">
       <properties>
@@ -112,10 +112,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="RozgrywkiSoap" contract="Rozgrywki.RozgrywkiSoap" bindingType="basicHttpBinding" address="http://przemo:51314/rozgrywki.asmx" bindingConfiguration="RozgrywkiSoap">
+    <endpoint name="RozgrywkiSoap" contract="Rozgrywki.RozgrywkiSoap" bindingType="basicHttpBinding" address="http://localhost:51314/rozgrywki.asmx" bindingConfiguration="RozgrywkiSoap">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://przemo:51314/rozgrywki.asmx</serializedValue>
+          <serializedValue>http://localhost:51314/rozgrywki.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

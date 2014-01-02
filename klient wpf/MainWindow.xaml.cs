@@ -72,11 +72,11 @@ namespace klient_wpf
             // this.BeginAnimation(OpacityProperty, da);
             Black blackwindow = new Black();
             blackwindow.Show();
-            PokojGlowny main = new PokojGlowny();
+            PokojGlowny main = new PokojGlowny(token,id);
 
-            main.token = token; //przekazanie tokenu
-            main.id = id;       //przekazanie id
-
+            //main.token = token; //przekazanie tokenu
+            //main.id = id;       //przekazanie id
+            //main.PrzekazUzytkownika(token, id);
             App.Current.MainWindow = main;
             //main.Opacity = 0;
             main.Show();

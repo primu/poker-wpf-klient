@@ -20,16 +20,81 @@ namespace klient_wpf
     /// </summary>
     public partial class PokojGlowny : Window
     {
+        System.Windows.Threading.DispatcherTimer chatTimer = new System.Windows.Threading.DispatcherTimer();
+
         public byte[] token;
         public Int64 id;
 
         Glowny.GlownySoapClient SerwerGlowny = new Glowny.GlownySoapClient();
         Rozgrywki.RozgrywkiSoapClient SerwerRozgrywki = new Rozgrywki.RozgrywkiSoapClient();
         Glowny.Komunikat komunikat = new Glowny.Komunikat();
+        Rozgrywki.Komunikat komunikatR = new Rozgrywki.Komunikat();
+
+        Glowny.Uzytkownik[] Uzytkownicy;
+
+        Glowny.Uzytkownik ObecnyUzytkownik;
+
+        //IList<Rozgrywki.Pokoj> Pokoje { get; set; }
+        Rozgrywki.Pokoj[] Pokoje;
 
         public PokojGlowny()
         {
             InitializeComponent();
+        }
+        public PokojGlowny(byte[] token, Int64 id)
+        {
+            InitializeComponent();
+            this.token = token;
+            this.id = id;
+            Uzytkownicy = SerwerGlowny.ZwrocZalogowanych();
+            foreach (Glowny.Uzytkownik a in Uzytkownicy)
+            {
+                if (id == a.identyfikatorUzytkownika)
+                    ObecnyUzytkownik = a;
+            }
+            //ObecnyUzytkownik 
+            //this.Resources.Add("KeyNazwaUzytkownika", ObecnyUzytkownik.nazwaUzytkownika);
+
+            if (ObecnyUzytkownik.kasiora < 500)
+            {
+                IUPStawka.Maximum = (int)ObecnyUzytkownik.kasiora;
+            }
+            
+            PobierzPokoje();
+            //LUzytkownik.Content = "<span>Witaj <Bold>" + ObecnyUzytkownik.nazwaUzytkownika + "</Bold><LineBreak/><Bold>Twoje środki: </Bold>"+ObecnyUzytkownik.kasiora.ToString()+"</span>";
+            TBLUzytkownik.Inlines.Add(new Run("Witaj "));
+            TBLUzytkownik.Inlines.Add(new Run() { Text = ObecnyUzytkownik.nazwaUzytkownika, FontWeight = FontWeights.Bold, Foreground=Brushes.Red });
+            TBLUzytkownik.Inlines.Add(new Run("!"));
+            TBLUzytkownik.Inlines.Add(new LineBreak());
+            TBLUzytkownik.Inlines.Add(new Run() { Text = "Twoje środki: ", FontWeight = FontWeights.Bold });
+            TBLUzytkownik.Inlines.Add(new Run(ObecnyUzytkownik.kasiora.ToString()));
+
+        }
+        //public void PrzekazUzytkownika(byte[] token, Int64 id)
+        //{
+        //    this.token = token;
+        //    this.id = id;
+        //    Uzytkownicy = SerwerGlowny.ZwrocZalogowanych();
+        //    foreach (Glowny.Uzytkownik a in Uzytkownicy)
+        //    {
+        //        if (id == a.identyfikatorUzytkownika)
+        //            ObecnyUzytkownik = a;
+        //    }
+        //    //ObecnyUzytkownik 
+        //    this.Resources.Add("KeyNazwaUzytkownika", ObecnyUzytkownik.nazwaUzytkownika);
+        //}
+
+        private void PobierzPokoje()
+        {
+            
+            Pokoje = SerwerRozgrywki.PobierzPokoje(token);
+            LVListaPokoi.Items.Clear();
+            foreach (Rozgrywki.Pokoj p in Pokoje)
+            {
+                LVListaPokoi.Items.Add(new { numerPokoju = p.numerPokoju, nazwaPokoju = p.nazwaPokoju, iloscGraczyObecna = p.iloscGraczyObecna, iloscGraczyMax = p.iloscGraczyMax, stawkaWejsciowa = p.stawkaWejsciowa, graRozpoczeta = p.graRozpoczeta });
+            }
+            //foreach(ColumnDefinition c in LVListaPokoi.c
+            //LVListaPokoi.View.
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -50,14 +115,17 @@ namespace klient_wpf
             Overlay.Visibility = Visibility.Visible;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e) // dołączanie do wybranego pokoju
         {
+
             PrzejdzDoPokoju();
         }
         private void Wyloguj()
         {
+            chatTimer.Stop();
             if (MessageBox.Show("Czy na pewno chcesz się wylogować?", "Wyloguj", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
+                chatTimer.Start();
                 //do no stuff
             }
             else
@@ -110,7 +178,7 @@ namespace klient_wpf
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            System.Windows.Threading.DispatcherTimer chatTimer = new System.Windows.Threading.DispatcherTimer();
+            
             chatTimer.Tick += new EventHandler(chatTimer_Tick);
             chatTimer.Interval = new TimeSpan(0, 0, 5);
             chatTimer.Start();
@@ -118,6 +186,20 @@ namespace klient_wpf
         private void chatTimer_Tick(object sender, EventArgs e)
         {
             // code goes here
+            PobierzPokoje();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e) //Tworzenie pokoju
+        {
+            if (TBNazwaStolu.Text != "")
+            {
+                komunikatR = SerwerRozgrywki.UtworzStol(token, TBNazwaStolu.Text, (int)IUPStawka.Value, (int)IUPBlind.Value, (int)SLiczbaGraczy.Value);
+            }
+            else
+            {
+                MessageBox.Show("Wpisz nazwę stołu!");
+            }
+
         }
     }
 }

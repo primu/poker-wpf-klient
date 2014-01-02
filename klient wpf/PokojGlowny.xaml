@@ -54,6 +54,9 @@
                     </ContextMenu>
                 </TextBlock.ContextMenu>
             </TextBlock>
+            <TextBlock Name="TBLUzytkownik" Grid.Column="6" Grid.Row="1">
+
+            </TextBlock>
         </Grid>
         <TextBox Grid.Column="0" Grid.Row="2" Margin="3" AllowDrop="False" IsReadOnly="True" Text="Witaj w grze internetowej Poker!" TextWrapping="Wrap"/>
         <TextBox Grid.Column="0" Grid.Row="3" Margin="3" />
@@ -71,14 +74,15 @@
             <Button Grid.Row="1" Margin="3" Content="Dołącz" Click="Button_Click"></Button>
         </Grid>
         
-        <ListView Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="3">
+        <ListView x:Name="LVListaPokoi" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="3">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="auto"  Header="Nr pokoju"/>
-                    <GridViewColumn Width="auto" Header="Nazwa"/>
-                    <GridViewColumn Width="auto" Header="Liczba graczy"/>
-                    <GridViewColumn Width="auto" Header="Stawka"/>
-                    <GridViewColumn Width="auto" Header="Stan gry"/>
+                    <GridViewColumn Width="Auto"  Header="Nr pokoju" DisplayMemberBinding="{Binding numerPokoju}"/>
+                    <GridViewColumn Width="Auto" Header="Nazwa" DisplayMemberBinding="{Binding nazwaPokoju}"/>
+                    <GridViewColumn Width="Auto" Header="Liczba graczy" DisplayMemberBinding="{Binding iloscGraczyObecna}"/>
+                    <GridViewColumn Width="Auto" Header="Max graczy" DisplayMemberBinding="{Binding iloscGraczyMax}"/>
+                    <GridViewColumn Width="Auto" Header="Stawka" DisplayMemberBinding="{Binding stawkaWejsciowa}"/>
+                    <GridViewColumn Width="Auto" Header="Stan gry" DisplayMemberBinding="{Binding graRozpoczeta}"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -110,12 +114,12 @@
             </Grid>
 
             <Label Content="Stawka wejściowa" Grid.Row="5"/>
-            <xctk:IntegerUpDown Name="IUPStawka" Value="200" Margin="3,3,3,3" Grid.Row="6" Increment="10" Minimum="200" Maximum="1000"></xctk:IntegerUpDown>
+            <xctk:IntegerUpDown Name="IUPStawka" Value="200" Margin="3,3,3,3" Grid.Row="6" Increment="10" Minimum="200" Maximum="500"></xctk:IntegerUpDown>
             <Label Content="Duży blind" Grid.Row="7"/>
             <xctk:IntegerUpDown Name="IUPBlind" Value="2" Margin="3,3,3,3" Grid.Row="8" Increment="2" Minimum="2" Maximum="100"></xctk:IntegerUpDown>
         </Grid>
         
-        <Button Content="Utwórz pokój" Grid.Column="2" Grid.Row="3" Margin="3"/>
+        <Button Content="Utwórz pokój" Grid.Column="2" Grid.Row="3" Margin="3" Click="Button_Click_1"/>
         <!--wyskakujące okienko-->
 
         <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Collapsed" Grid.ColumnSpan="3" Grid.RowSpan="4" ><!-- Width="{Binding ElementName=RootGrid,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}"-->

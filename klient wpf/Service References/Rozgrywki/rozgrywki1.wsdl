@@ -1028,10 +1028,10 @@
   </wsdl:binding>
   <wsdl:service name="Rozgrywki">
     <wsdl:port name="RozgrywkiSoap" binding="tns:RozgrywkiSoap">
-      <soap:address location="http://przemo:51314/rozgrywki.asmx" />
+      <soap:address location="http://localhost:51314/rozgrywki.asmx" />
     </wsdl:port>
     <wsdl:port name="RozgrywkiSoap12" binding="tns:RozgrywkiSoap12">
-      <soap12:address location="http://przemo:51314/rozgrywki.asmx" />
+      <soap12:address location="http://localhost:51314/rozgrywki.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

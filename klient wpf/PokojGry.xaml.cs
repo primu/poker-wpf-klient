@@ -63,6 +63,36 @@ namespace klient_wpf
             UstawGracza(7);
 
         }
+        public PokojGry(byte[] token, Int64 id, Int64 nrPokoju)
+        {
+            InitializeComponent();
+            //var karta = (Image)G1.Children[0];
+            //karta = karo[0];
+
+            ZaladujKarty();
+
+            UsunWszystkieKarty();
+            ZmienKarte(ref Stol, 0, ref kier[11]);
+            ZmienKarte(ref Stol, 1, ref trefl[11]);
+            ZmienKarte(ref Stol, 2, ref pik[11]);
+            UstawGracza(1, "primu", 150000, 12, true, true, false, true);
+            ZmienKarte(ref G1, 0, ref pik[12]);
+            ZmienKarte(ref G1, 1, ref kier[12]);
+            UstawGracza(6, "Paweł", 1500, 0, true, false, false, false, true);
+            ZmienKarte(ref G6, 0, ref pik[2]);
+            ZmienKarte(ref G6, 1, ref karo[3]);
+            UstawGracza(2, "Marcin", 0, 100, true);
+            ZmienKarte(ref G2, 0, ref kier[2]);
+            ZmienKarte(ref G2, 1, ref trefl[3]);
+            UstawGracza(8, "Komputer", 10, 199, true, true, true);
+            ZmienKarte(ref G8, 0, ref pik[4]);
+            ZmienKarte(ref G8, 1, ref trefl[4]);
+            UstawGracza(3);
+            UstawGracza(4);
+            UstawGracza(5);
+            UstawGracza(7);
+
+        }
         private void ZmienKarte(ref Grid g, int ktoraKarta, ref Image nowaKarta)
         {
             //if (ktoraKarta >= g.Children.Count && g.Children.Count > 0)

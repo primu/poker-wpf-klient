@@ -141,6 +141,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Service References\Glowny\glowny1.wsdl" />
     <None Include="Service References\Glowny\klient_wpf.Glowny.Komunikat.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -258,8 +259,7 @@
     <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.ZwrocUserowStartResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\Glowny\glowny.wsdl" />
-    <None Include="Service References\Rozgrywki\rozgrywki.wsdl" />
+    <None Include="Service References\Rozgrywki\rozgrywki1.wsdl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -350,9 +350,6 @@
     <WCFMetadataStorage Include="Service References\Rozgrywki\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Rozgrywki\rozgrywki.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\Rozgrywki\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -365,9 +362,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\Glowny\glowny.disco" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Service References\Glowny\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
@@ -378,6 +372,12 @@
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Glowny\glowny1.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Rozgrywki\rozgrywki1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
