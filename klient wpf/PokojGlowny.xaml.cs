@@ -117,7 +117,6 @@ namespace klient_wpf
 
         private void Button_Click(object sender, RoutedEventArgs e) // dołączanie do wybranego pokoju
         {
-
             PrzejdzDoPokoju();
         }
         private void Wyloguj()
@@ -175,6 +174,20 @@ namespace klient_wpf
             blackwindow.Close();
             this.Close();
         }
+        private void PrzejdzDoPokoju(Int64 idPokoju)
+        {
+            Black blackwindow = new Black();
+            blackwindow.Show();
+            PokojGry main = new PokojGry(token,id,idPokoju);
+
+            main.token = token;
+            main.id = id;
+
+            App.Current.MainWindow = main;
+            main.Show();
+            blackwindow.Close();
+            this.Close();
+        }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
@@ -194,6 +207,17 @@ namespace klient_wpf
             if (TBNazwaStolu.Text != "")
             {
                 komunikatR = SerwerRozgrywki.UtworzStol(token, TBNazwaStolu.Text, (int)IUPStawka.Value, (int)IUPBlind.Value, (int)SLiczbaGraczy.Value);
+                PobierzPokoje();
+                Int64 idPokoju = 0;
+                foreach (Rozgrywki.Pokoj p in Pokoje)
+                {
+                    if (TBNazwaStolu.Text == p.nazwaPokoju)
+                    {
+                        idPokoju = p.numerPokoju;
+                    }
+                }
+                komunikatR = SerwerRozgrywki.DolaczDoStolu(token, idPokoju);
+                PrzejdzDoPokoju(idPokoju);
             }
             else
             {
