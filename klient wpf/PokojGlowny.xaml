@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         Title="PokojGlowny"
-        WindowState="Maximized" WindowStyle="None" Height="550" Width="783" Loaded="Window_Loaded">
+        WindowState="Maximized" WindowStyle="None" Height="550" Width="783" Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
             <Style.Triggers>
@@ -58,9 +58,26 @@
 
             </TextBlock>
         </Grid>
-        <TextBox Grid.Column="0" Grid.Row="2" Margin="3" AllowDrop="False" IsReadOnly="True" Text="Witaj w grze internetowej Poker!" TextWrapping="Wrap"/>
-        <TextBox Grid.Column="0" Grid.Row="3" Margin="3" />
-        <ListView Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Margin="3"></ListView>
+        <RichTextBox Name="RTBa" VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2" Margin="3" AllowDrop="False" IsReadOnly="True" IsUndoEnabled="False" AcceptsReturn="False" AutoWordSelection="False">
+            <FlowDocument Name="TBOknoCzatu"><!--Przedtem był sam TextBox zamiast RichTextBoxa (stąd nazwa)-->
+                <Paragraph>
+                    <Bold>
+                        <Run>Witaj w grze internetowej Poker!</Run>
+                    </Bold>
+                </Paragraph>
+                <Paragraph Name="TBOknoCzatuPara"></Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <TextBox Name="TBPoleCzatu" Grid.Column="0" Grid.Row="3" Margin="3" KeyDown="TBPoleCzatu_KeyDown" />
+        <ListView Name="LVListaUzytkownikow" Grid.Column="1" Grid.Row="2" Grid.RowSpan="2" Margin="3">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="Auto" Header="Nazwa" DisplayMemberBinding="{Binding nazwaUzytkownika}"/>
+                    <GridViewColumn Width="Auto" Header="Budżet" DisplayMemberBinding="{Binding kasiora}"/>
+                    <GridViewColumn Width="Auto" Header="Pokój" DisplayMemberBinding="{Binding numerPokoju}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
         <Grid Grid.Column="2" Grid.Row="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="5*"/>

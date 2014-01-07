@@ -20,7 +20,11 @@ namespace klient_wpf
     /// </summary>
     public partial class PokojGlowny : Window
     {
+        int chatWSek = 3; //czas dla obu timerów
+        int ogolnyWSek = 5; //czas dla obu timerów
+
         System.Windows.Threading.DispatcherTimer chatTimer = new System.Windows.Threading.DispatcherTimer();
+        System.Windows.Threading.DispatcherTimer ogolnyTimer = new System.Windows.Threading.DispatcherTimer();
 
         public byte[] token;
         public Int64 id;
@@ -39,7 +43,11 @@ namespace klient_wpf
 
         Int64 WybranyID = 0;
 
+        int OstatnieOdswiezenie = (Int32)(DateTime.Now.Subtract(new TimeSpan(0, 1, 0)).Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+
         int err = 0;
+
+        Glowny.Wiadomosc[] Wiadomosci;
 
         public PokojGlowny()
         {
@@ -58,7 +66,7 @@ namespace klient_wpf
             //        ObecnyUzytkownik = a;
             //}
             PobierzUzytkownikow();
-
+            PobierzWiadomosci();
             //ObecnyUzytkownik 
             //this.Resources.Add("KeyNazwaUzytkownika", ObecnyUzytkownik.nazwaUzytkownika);
 
@@ -106,9 +114,11 @@ namespace klient_wpf
         private void PobierzUzytkownikow()
         {
             bool jest = false;
-            Uzytkownicy = SerwerGlowny.ZwrocZalogowanych();
+            Uzytkownicy = SerwerGlowny.ZwrocZalogowanych(); // try i catch
+            LVListaUzytkownikow.Items.Clear();
             foreach (Glowny.Uzytkownik a in Uzytkownicy)
             {
+                LVListaUzytkownikow.Items.Add(new Rozgrywki.Uzytkownik { nazwaUzytkownika = a.nazwaUzytkownika, kasiora = a.kasiora, numerPokoju = a.numerPokoju });
                 if (id == a.identyfikatorUzytkownika)
                 {
                     ObecnyUzytkownik = a;
@@ -118,7 +128,7 @@ namespace klient_wpf
             if (!jest)
             {
                 komunikat = SerwerGlowny.Wyloguj(token);
-                MessageBox.Show("Wystąpił błąd z połączeniem. Nastąpiło wylogowanie.");
+                MessageBox.Show("Wystąpił problem z połączeniem. Nastąpiło wylogowanie.");
                 PrzejdzDoOknaLogowania();
             }
         }
@@ -161,9 +171,12 @@ namespace klient_wpf
         private void Wyloguj()
         {
             chatTimer.Stop();
+            ogolnyTimer.Stop();
+
             if (MessageBox.Show("Czy na pewno chcesz się wylogować?", "Wyloguj", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.No)
             {
                 chatTimer.Start();
+                ogolnyTimer.Start();
                 //do no stuff
             }
             else
@@ -241,19 +254,31 @@ namespace klient_wpf
         {
             
             chatTimer.Tick += new EventHandler(chatTimer_Tick);
-            chatTimer.Interval = new TimeSpan(0, 0, 5);
+            chatTimer.Interval = new TimeSpan(0, 0, chatWSek);
             chatTimer.Start();
+
+            ogolnyTimer.Tick += new EventHandler(ogolnyTimer_Tick);
+            ogolnyTimer.Interval = new TimeSpan(0, 0, ogolnyWSek);
+            ogolnyTimer.Start();
         }
         private void chatTimer_Tick(object sender, EventArgs e)
+        {
+
+            PobierzWiadomosci();
+        }
+
+        private void ogolnyTimer_Tick(object sender, EventArgs e)
         {
 
             try
             {
                 PobierzPokoje();
                 PobierzUzytkownikow();
+                //PobierzWiadomosci();
                 err = 0;
-                
-            }catch(Exception ee)
+
+            }
+            catch (Exception ee)
             {
                 err++;
                 if (err == 5)
@@ -261,7 +286,37 @@ namespace klient_wpf
                     MessageBox.Show("Wystąpił problem z połączeniem! Nastąpi wylogowanie.");
                 }
             }
+
+        }
+
+        //private void WyswietlWiadomosc()
+        //{
+        //   TBOknoCzatuPara.Inlines.Add(new Run("Siema"));
+        //    
+        //}
+        private void PobierzWiadomosci()
+        {
+            Wiadomosci = SerwerGlowny.PobierzWiadomosci(token, OstatnieOdswiezenie, 0);
+            OstatnieOdswiezenie = (Int32)(DateTime.Now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
             
+            if (Wiadomosci != null)
+            {
+                foreach (Glowny.Wiadomosc w in Wiadomosci)
+                {
+                    if (w.nazwaUzytkownika == ObecnyUzytkownik.nazwaUzytkownika)
+                    {
+                        TBOknoCzatuPara.Inlines.Add(new Bold(new Run { Text = w.nazwaUzytkownika + ": ", Foreground = Brushes.RoyalBlue }));
+                        TBOknoCzatuPara.Inlines.Add(new Run { Text = w.trescWiadomosci, Foreground = Brushes.SteelBlue });
+                    }
+                    else
+                    {
+                        TBOknoCzatuPara.Inlines.Add(new Bold(new Run(w.nazwaUzytkownika + ": ")));
+                        TBOknoCzatuPara.Inlines.Add(new Run(w.trescWiadomosci));
+                    }
+                    TBOknoCzatuPara.Inlines.Add(new LineBreak());
+                }
+                RTBa.ScrollToEnd();
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e) //Tworzenie pokoju
@@ -297,6 +352,37 @@ namespace klient_wpf
         {
             if((Rozgrywki.Pokoj)LVListaPokoi.SelectedItem != null)
                 WybranyID = ((Rozgrywki.Pokoj)LVListaPokoi.SelectedItem).numerPokoju;
+        }
+
+        private void TBPoleCzatu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (TBPoleCzatu.Text != "")
+                {
+                    try
+                    {
+                        komunikat = SerwerGlowny.WyslijWiadomosc(token, new Glowny.Wiadomosc { nazwaUzytkownika = ObecnyUzytkownik.nazwaUzytkownika, stempelCzasowy = 0, numerPokoju = 0, trescWiadomosci = TBPoleCzatu.Text });
+
+                        //TBOknoCzatuPara.Inlines.Add(new Bold(new Run(ObecnyUzytkownik.nazwaUzytkownika + ": ")));
+                        //TBOknoCzatuPara.Inlines.Add(new Run(TBPoleCzatu.Text));
+                        //TBOknoCzatuPara.Inlines.Add(new LineBreak());
+                        PobierzWiadomosci();
+
+                        TBPoleCzatu.Text = "";
+                    }
+                    catch (Exception ee)
+                    {
+                        MessageBox.Show(ee.Message);
+                    }
+                }
+            }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            chatTimer.Stop();
+            ogolnyTimer.Stop();
         }
     }
 }
