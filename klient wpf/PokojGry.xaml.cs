@@ -73,23 +73,36 @@ namespace klient_wpf
             UstawGracza(7);
 
         }
+        private void Nakladka()
+        {
+            Overlay.Visibility = Visibility.Visible;
+            //LStart.Visibility = Visibility.Visible;
+            //LOczekiwanie.Visibility = Visibility.Visible;
+            foreach (Rozgrywki.Uzytkownik u in Uzytkownicy)
+            {
+                TBLUzytkownicyStart.Inlines.Add(new Run() { Text = u.nazwaUzytkownika, Foreground = u.start ? Brushes.Green : Brushes.Red });
+                TBLUzytkownicyStart.Inlines.Add(new LineBreak());
+            }
+
+        }
         public PokojGry(byte[] token, Int64 id, Int64 nrPokoju)
         {
             InitializeComponent();
             idPokoju = nrPokoju;
+            this.token = token;
             //var karta = (Image)G1.Children[0];
             //karta = karo[0];
             //ObecnyStol = SerwerRozgrywki.zwrocStol(token);
 
             //ObecnyGracz = SerwerRozgrywki.PobierzGracza(token, id);
 
-            Uzytkownicy = SerwerRozgrywki.ZwrocUserowStart(token);
+            Uzytkownicy = SerwerRozgrywki.ZwrocUserowStart(token); // Tu jest czasem coś nie tak ;p
             foreach (Rozgrywki.Uzytkownik u in Uzytkownicy)
             {
                 if (id == u.identyfikatorUzytkownika)
                     ObecnyUzytkownik = u;
             }
-
+            
 
             Rozgrywki.Pokoj[] temp = SerwerRozgrywki.PobierzPokoje(token);
             foreach (Rozgrywki.Pokoj p in temp)
@@ -130,7 +143,7 @@ namespace klient_wpf
             //UstawGracza(4);
             //UstawGracza(5);
             //UstawGracza(7);
-
+            Nakladka();
         }
         private void ZmienKarte(ref Grid g, int ktoraKarta, ref Image nowaKarta)
         {
@@ -554,6 +567,27 @@ namespace klient_wpf
         private void SIleStawia_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             LIleStawia.Content = SIleStawia.Value;
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            try
+            {
+                komunikatR = SerwerRozgrywki.OpuscStol(token);
+            }
+            catch (Exception ee)
+            {
+            }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Czy na pewno chcesz opuścić pokój?", "Opuść pokój", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                SerwerRozgrywki.OpuscStol(token);
+                PrzejdzDoPokojuGlownego();
+                //do no stuff
+            }
         }
 
     }

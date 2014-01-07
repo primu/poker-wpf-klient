@@ -37,6 +37,10 @@ namespace klient_wpf
         //IList<Rozgrywki.Pokoj> Pokoje { get; set; }
         Rozgrywki.Pokoj[] Pokoje;
 
+        Int64 WybranyID = 0;
+
+        int err = 0;
+
         public PokojGlowny()
         {
             InitializeComponent();
@@ -46,12 +50,15 @@ namespace klient_wpf
             InitializeComponent();
             this.token = token;
             this.id = id;
-            Uzytkownicy = SerwerGlowny.ZwrocZalogowanych();
-            foreach (Glowny.Uzytkownik a in Uzytkownicy)
-            {
-                if (id == a.identyfikatorUzytkownika)
-                    ObecnyUzytkownik = a;
-            }
+
+            //Uzytkownicy = SerwerGlowny.ZwrocZalogowanych();
+            //foreach (Glowny.Uzytkownik a in Uzytkownicy)
+            //{
+            //    if (id == a.identyfikatorUzytkownika)
+            //        ObecnyUzytkownik = a;
+            //}
+            PobierzUzytkownikow();
+
             //ObecnyUzytkownik 
             //this.Resources.Add("KeyNazwaUzytkownika", ObecnyUzytkownik.nazwaUzytkownika);
 
@@ -91,10 +98,29 @@ namespace klient_wpf
             LVListaPokoi.Items.Clear();
             foreach (Rozgrywki.Pokoj p in Pokoje)
             {
-                LVListaPokoi.Items.Add(new { numerPokoju = p.numerPokoju, nazwaPokoju = p.nazwaPokoju, iloscGraczyObecna = p.iloscGraczyObecna, iloscGraczyMax = p.iloscGraczyMax, stawkaWejsciowa = p.stawkaWejsciowa, graRozpoczeta = p.graRozpoczeta });
+                LVListaPokoi.Items.Add(new Rozgrywki.Pokoj { numerPokoju = p.numerPokoju, nazwaPokoju = p.nazwaPokoju, iloscGraczyObecna = p.iloscGraczyObecna, iloscGraczyMax = p.iloscGraczyMax, stawkaWejsciowa = p.stawkaWejsciowa, graRozpoczeta = p.graRozpoczeta });
             }
             //foreach(ColumnDefinition c in LVListaPokoi.c
             //LVListaPokoi.View.
+        }
+        private void PobierzUzytkownikow()
+        {
+            bool jest = false;
+            Uzytkownicy = SerwerGlowny.ZwrocZalogowanych();
+            foreach (Glowny.Uzytkownik a in Uzytkownicy)
+            {
+                if (id == a.identyfikatorUzytkownika)
+                {
+                    ObecnyUzytkownik = a;
+                    jest = true;
+                }
+            }
+            if (!jest)
+            {
+                komunikat = SerwerGlowny.Wyloguj(token);
+                MessageBox.Show("Wystąpił błąd z połączeniem. Nastąpiło wylogowanie.");
+                PrzejdzDoOknaLogowania();
+            }
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -117,7 +143,20 @@ namespace klient_wpf
 
         private void Button_Click(object sender, RoutedEventArgs e) // dołączanie do wybranego pokoju
         {
-            PrzejdzDoPokoju();
+            //PrzejdzDoPokoju();
+            if (WybranyID == 0)
+            {
+                MessageBox.Show("Wybierz jakiś pokój!");
+            }
+            else
+            {
+                komunikatR = SerwerRozgrywki.DolaczDoStolu(token, WybranyID); //try i catch w przypadku braku połączenia...
+                if (komunikatR.kodKomunikatu == 404)
+                {
+                    MessageBox.Show("Wystąpił błąd! Spróbuj wejść do pokoju ponownie.");
+                }else
+                    PrzejdzDoPokoju(WybranyID);
+            }
         }
         private void Wyloguj()
         {
@@ -177,16 +216,25 @@ namespace klient_wpf
         private void PrzejdzDoPokoju(Int64 idPokoju)
         {
             Black blackwindow = new Black();
-            blackwindow.Show();
-            PokojGry main = new PokojGry(token,id,idPokoju);
+            try
+            {
+                blackwindow.Show();
 
-            main.token = token;
-            main.id = id;
+                PokojGry main = new PokojGry(token, id, idPokoju);
 
-            App.Current.MainWindow = main;
-            main.Show();
-            blackwindow.Close();
-            this.Close();
+                //main.token = token;
+                //main.id = id;
+
+                App.Current.MainWindow = main;
+                main.Show();
+                blackwindow.Close();
+                this.Close();
+            }
+            catch (Exception ee)
+            {
+                blackwindow.Close();
+                MessageBox.Show("Nie można przejść do pokoju! Spróbuj ponownie.");
+            }
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -198,8 +246,22 @@ namespace klient_wpf
         }
         private void chatTimer_Tick(object sender, EventArgs e)
         {
-            // code goes here
-            PobierzPokoje();
+
+            try
+            {
+                PobierzPokoje();
+                PobierzUzytkownikow();
+                err = 0;
+                
+            }catch(Exception ee)
+            {
+                err++;
+                if (err == 5)
+                {
+                    MessageBox.Show("Wystąpił problem z połączeniem! Nastąpi wylogowanie.");
+                }
+            }
+            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e) //Tworzenie pokoju
@@ -217,13 +279,24 @@ namespace klient_wpf
                     }
                 }
                 komunikatR = SerwerRozgrywki.DolaczDoStolu(token, idPokoju);
-                PrzejdzDoPokoju(idPokoju);
+                if (komunikatR.kodKomunikatu == 404)
+                {
+                    MessageBox.Show("Wystąpił błąd! Spróbuj wejść do pokoju ponownie.");
+                }
+                else
+                    PrzejdzDoPokoju(idPokoju);
             }
             else
             {
                 MessageBox.Show("Wpisz nazwę stołu!");
             }
 
+        }
+
+        private void LVListaPokoi_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if((Rozgrywki.Pokoj)LVListaPokoi.SelectedItem != null)
+                WybranyID = ((Rozgrywki.Pokoj)LVListaPokoi.SelectedItem).numerPokoju;
         }
     }
 }

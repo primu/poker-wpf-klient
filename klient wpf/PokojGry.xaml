@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="PokojGry" Height="785.1" Width="1435"
-        WindowState="Maximized" WindowStyle="None">
+        WindowState="Maximized" WindowStyle="None" Closed="Window_Closed">
     <Window.Resources>
         <BitmapImage x:Key="masterImage" UriSource="/resources/karty.png" />
         <CroppedBitmap x:Key="croppedImage" 
@@ -17,7 +17,26 @@
         </Style>
     </Window.Resources>
     <Grid>
-        <Image Height="528" Margin="0" Width="847" Source="resources/stol.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Visible" Width="{Binding ElementName=IObrazStolu,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}">
+            <!-- Width="{Binding ElementName=RootGrid,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}"-->
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity=".5"/>
+            </Grid.Background>
+            <Label x:Name="LOczekiwanie" Content="Oczekiwanie na graczy!" HorizontalAlignment="Center" Margin="0,35,0,716" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="48" />
+            <Label x:Name="LStart" Content="Wciśnij start!" HorizontalAlignment="Center" Margin="0,70,0,681" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="24"/>
+            <TextBlock x:Name="TBLUzytkownicyStart" HorizontalAlignment="Center" Margin="110,145,559,316" VerticalAlignment="Center" Foreground="Red" FontSize="18" Width="178" Height="316"/>
+            <Button x:Name="BStart" Content="Start" HorizontalAlignment="Center" Height="145" Margin="0" VerticalAlignment="Center" Width="270" FontSize="48" FontWeight="ExtraBlack">
+                <Button.Foreground>
+                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                        <GradientStop Color="{DynamicResource {x:Static SystemColors.MenuTextColorKey}}" Offset="1"/>
+                        <GradientStop Color="{DynamicResource {x:Static SystemColors.GradientActiveCaptionColorKey}}"/>
+                    </LinearGradientBrush>
+                </Button.Foreground>
+            </Button>
+            <!-- Add controls as needed -->
+        </Grid>
+
+        <Image x:Name="IObrazStolu" Height="528" Margin="0" Width="847" Source="resources/stol.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Grid Name="G1" HorizontalAlignment="Center" Height="58" Margin="655,560,645,159" VerticalAlignment="Center" Width="127">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
@@ -160,7 +179,7 @@
                 </RadialGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="20" Margin="405,670,787,87" VerticalAlignment="Center" Width="235" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10"/>
+        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="20" Margin="405,670,787,87" VerticalAlignment="Center" Width="235" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True"/>
         <Label Name="LIleStawia" Content="0" HorizontalAlignment="Center" Height="30" Margin="645,670,687,77" VerticalAlignment="Center" Width="95" FontWeight="Bold"/>
         <Button Content="Postaw" HorizontalAlignment="Center" Margin="840,662,492,73" VerticalAlignment="Center" Width="95" Height="42"/>
         <Button Content="Spasuj" HorizontalAlignment="Center" Margin="940,662,392,73" VerticalAlignment="Center" Width="95" Height="42"/>
@@ -216,7 +235,7 @@
         </Label>
         <Label HorizontalContentAlignment="Center" Name="LStol" Content="Nazwa Stołu" HorizontalAlignment="Center" Margin="605,315,592,425" VerticalAlignment="Center" FontWeight="Bold" FontSize="20" Width="230" Background="{x:Null}">
             <Label.Effect>
-                <DropShadowEffect BlurRadius="2"/>
+                <DropShadowEffect BlurRadius="2" Opacity="0.7" RenderingBias="Quality"/>
             </Label.Effect>
             <Label.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -364,5 +383,10 @@
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
         </Label>
+
+        <TextBox Grid.Column="0" Margin="96,454,1149,98" AllowDrop="False" IsReadOnly="True" Text="Witaj w grze internetowej Poker!" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Height="225"/>
+        <TextBox Grid.Column="0" Margin="96,684,1149,73" HorizontalAlignment="Center" VerticalAlignment="Center" Width="182" />
+        <Label Content="Chat:" HorizontalAlignment="Center" Margin="96,429,1293,322" VerticalAlignment="Center" FontWeight="Bold"/>
+        <Button Content="Opuść pokój" HorizontalAlignment="Center" Margin="96,365,1149,362" VerticalAlignment="Center" Width="182" Height="50" Click="Button_Click"/>
     </Grid>
 </Window>
