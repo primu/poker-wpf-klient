@@ -19,6 +19,9 @@ namespace klient_wpf
     /// </summary>
     public partial class PokojGry : Window
     {
+        System.Windows.Threading.DispatcherTimer chatTimer = new System.Windows.Threading.DispatcherTimer();
+        //System.Windows.Threading.DispatcherTimer ogolnyTimer = new System.Windows.Threading.DispatcherTimer();
+
         public byte[] token;
         public Int64 id;
         public Int64 idPokoju;
@@ -42,6 +45,9 @@ namespace klient_wpf
         Image[] trefl = new Image[13];
 
         Image[] tlo = new Image[4];
+
+        Glowny.Wiadomosc[] Wiadomosci;
+        int OstatnieOdswiezenie = (Int32)(DateTime.Now.Subtract(new TimeSpan(0, 1, 0)).Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 
         public PokojGry()
         {
@@ -90,6 +96,7 @@ namespace klient_wpf
             InitializeComponent();
             idPokoju = nrPokoju;
             this.token = token;
+            this.id = id;
             //var karta = (Image)G1.Children[0];
             //karta = karo[0];
             //ObecnyStol = SerwerRozgrywki.zwrocStol(token);
@@ -143,8 +150,47 @@ namespace klient_wpf
             //UstawGracza(4);
             //UstawGracza(5);
             //UstawGracza(7);
+            PobierzWiadomosci();
             Nakladka();
         }
+        private void WystartujZegar()
+        {
+            chatTimer.Tick += new EventHandler(chatTimer_Tick);
+            chatTimer.Interval = new TimeSpan(0, 0, 3);
+            chatTimer.Start();
+        }
+
+        private void chatTimer_Tick(object sender, EventArgs e)
+        {
+
+            PobierzWiadomosci();
+        }
+
+        private void PobierzWiadomosci()
+        {
+            Wiadomosci = SerwerGlowny.PobierzWiadomosci(token, OstatnieOdswiezenie, ObecnyStol.numerPokoju);
+            OstatnieOdswiezenie = (Int32)(DateTime.Now.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
+
+            if (Wiadomosci != null)
+            {
+                foreach (Glowny.Wiadomosc w in Wiadomosci)
+                {
+                    if (w.nazwaUzytkownika == ObecnyUzytkownik.nazwaUzytkownika)
+                    {
+                        TBOknoCzatuPara.Inlines.Add(new Bold(new Run { Text = w.nazwaUzytkownika + ": ", Foreground = Brushes.RoyalBlue }));
+                        TBOknoCzatuPara.Inlines.Add(new Run { Text = w.trescWiadomosci, Foreground = Brushes.SteelBlue });
+                    }
+                    else
+                    {
+                        TBOknoCzatuPara.Inlines.Add(new Bold(new Run(w.nazwaUzytkownika + ": ")));
+                        TBOknoCzatuPara.Inlines.Add(new Run(w.trescWiadomosci));
+                    }
+                    TBOknoCzatuPara.Inlines.Add(new LineBreak());
+                }
+                RTBa.ScrollToEnd();
+            }
+        }
+
         private void ZmienKarte(ref Grid g, int ktoraKarta, ref Image nowaKarta)
         {
             //if (ktoraKarta >= g.Children.Count && g.Children.Count > 0)
@@ -162,10 +208,10 @@ namespace klient_wpf
         {
             Black blackwindow = new Black();
             blackwindow.Show();
-            PokojGlowny main = new PokojGlowny();
+            PokojGlowny main = new PokojGlowny(token,id);
 
-            main.token = token;
-            main.id = id;
+            //main.token = token;
+            //main.id = id;
 
             App.Current.MainWindow = main;
             main.Show();
@@ -584,9 +630,34 @@ namespace klient_wpf
         {
             if (MessageBox.Show("Czy na pewno chcesz opuścić pokój?", "Opuść pokój", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
-                SerwerRozgrywki.OpuscStol(token);
+                komunikatR = SerwerRozgrywki.OpuscStol(token);
                 PrzejdzDoPokojuGlownego();
                 //do no stuff
+            }
+        }
+
+        private void TBPoleCzatu_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (TBPoleCzatu.Text != "")
+                {
+                    try
+                    {
+                        komunikat = SerwerGlowny.WyslijWiadomosc(token, new Glowny.Wiadomosc { nazwaUzytkownika = ObecnyUzytkownik.nazwaUzytkownika, stempelCzasowy = 0, numerPokoju = ObecnyStol.numerPokoju, trescWiadomosci = TBPoleCzatu.Text });
+
+                        //TBOknoCzatuPara.Inlines.Add(new Bold(new Run(ObecnyUzytkownik.nazwaUzytkownika + ": ")));
+                        //TBOknoCzatuPara.Inlines.Add(new Run(TBPoleCzatu.Text));
+                        //TBOknoCzatuPara.Inlines.Add(new LineBreak());
+                        PobierzWiadomosci();
+
+                        TBPoleCzatu.Text = "";
+                    }
+                    catch (Exception ee)
+                    {
+                        MessageBox.Show(ee.Message);
+                    }
+                }
             }
         }
 

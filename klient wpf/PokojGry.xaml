@@ -384,8 +384,18 @@
             </Label.Effect>
         </Label>
 
-        <TextBox Grid.Column="0" Margin="96,454,1149,98" AllowDrop="False" IsReadOnly="True" Text="Witaj w grze internetowej Poker!" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Height="225"/>
-        <TextBox Grid.Column="0" Margin="96,684,1149,73" HorizontalAlignment="Center" VerticalAlignment="Center" Width="182" />
+        <RichTextBox Name="RTBa" Grid.Column="0" Margin="96,454,1149,98" AllowDrop="False" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Height="225">
+            <FlowDocument Name="TBOknoCzatu">
+                <!--Przedtem był sam TextBox zamiast RichTextBoxa (stąd nazwa)-->
+                <Paragraph>
+                    <Bold>
+                        <Run>Witaj w grze internetowej Poker!</Run>
+                    </Bold>
+                </Paragraph>
+                <Paragraph Name="TBOknoCzatuPara"></Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <TextBox Name="TBPoleCzatu" Grid.Column="0" Margin="96,684,1149,73" HorizontalAlignment="Center" VerticalAlignment="Center" Width="182" KeyDown="TBPoleCzatu_KeyDown" />
         <Label Content="Chat:" HorizontalAlignment="Center" Margin="96,429,1293,322" VerticalAlignment="Center" FontWeight="Bold"/>
         <Button Content="Opuść pokój" HorizontalAlignment="Center" Margin="96,365,1149,362" VerticalAlignment="Center" Width="182" Height="50" Click="Button_Click"/>
     </Grid>
