@@ -25,14 +25,24 @@
             <Label x:Name="LOczekiwanie" Content="Oczekiwanie na graczy!" HorizontalAlignment="Center" Margin="0,35,0,716" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="48" />
             <Label x:Name="LStart" Content="Wciśnij start!" HorizontalAlignment="Center" Margin="0,70,0,681" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="24"/>
             <TextBlock x:Name="TBLUzytkownicyStart" HorizontalAlignment="Center" Margin="110,145,559,316" VerticalAlignment="Center" Foreground="Red" FontSize="18" Width="178" Height="316"/>
-            <Button x:Name="BStart" Content="Start" HorizontalAlignment="Center" Height="145" Margin="0" VerticalAlignment="Center" Width="270" FontSize="48" FontWeight="ExtraBlack">
-                <Button.Foreground>
-                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                        <GradientStop Color="{DynamicResource {x:Static SystemColors.MenuTextColorKey}}" Offset="1"/>
-                        <GradientStop Color="{DynamicResource {x:Static SystemColors.GradientActiveCaptionColorKey}}"/>
-                    </LinearGradientBrush>
-                </Button.Foreground>
-            </Button>
+
+            <TextBlock x:Name="TBLPoStart" Visibility="Hidden" TextAlignment="Center" HorizontalAlignment="Center"  Margin="0" TextWrapping="Wrap" Text="Oczekiwanie na pozostałych graczy..." VerticalAlignment="Center" Height="87" Width="268" FontSize="24" Foreground="White" FontWeight="Bold"/>
+            <TextBlock x:Name="TBLStart" TextAlignment="Center" HorizontalAlignment="Center"  Margin="0" TextWrapping="Wrap" Text="Start" VerticalAlignment="Center" Height="87" Width="268" FontSize="72" FontWeight="Bold" MouseLeftButtonDown="TBLStart_MouseLeftButtonDown">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="2"/>
+                </TextBlock.Effect>
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property= "Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <Trigger Property ="IsMouseOver" Value="True">
+                                <Setter Property= "Foreground" Value="Red"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
             <!-- Add controls as needed -->
         </Grid>
 
@@ -384,7 +394,7 @@
             </Label.Effect>
         </Label>
 
-        <RichTextBox Name="RTBa" Grid.Column="0" Margin="96,454,1149,98" AllowDrop="False" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Height="225">
+        <RichTextBox Name="RTBa" VerticalScrollBarVisibility="Auto" Grid.Column="0" Margin="96,454,1149,98" AllowDrop="False" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Height="225" Width="182">
             <FlowDocument Name="TBOknoCzatu">
                 <!--Przedtem był sam TextBox zamiast RichTextBoxa (stąd nazwa)-->
                 <Paragraph>
@@ -398,5 +408,6 @@
         <TextBox Name="TBPoleCzatu" Grid.Column="0" Margin="96,684,1149,73" HorizontalAlignment="Center" VerticalAlignment="Center" Width="182" KeyDown="TBPoleCzatu_KeyDown" />
         <Label Content="Chat:" HorizontalAlignment="Center" Margin="96,429,1293,322" VerticalAlignment="Center" FontWeight="Bold"/>
         <Button Content="Opuść pokój" HorizontalAlignment="Center" Margin="96,365,1149,362" VerticalAlignment="Center" Width="182" Height="50" Click="Button_Click"/>
+
     </Grid>
 </Window>

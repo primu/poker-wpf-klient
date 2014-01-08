@@ -79,17 +79,32 @@ namespace klient_wpf
             UstawGracza(7);
 
         }
-        private void Nakladka()
+        private void Nakladka(bool widoczna = false)
         {
-            Overlay.Visibility = Visibility.Visible;
+            if (widoczna && Overlay.Visibility == Visibility.Visible)
+            {
+                UzytkownicyNaStart();
+            }
+            else if (widoczna)
+            {
+                Overlay.Visibility = Visibility.Visible;
+                UzytkownicyNaStart();
+            }
+            else
+                Overlay.Visibility = Visibility.Hidden;
             //LStart.Visibility = Visibility.Visible;
             //LOczekiwanie.Visibility = Visibility.Visible;
+            
+
+        }
+        private void UzytkownicyNaStart()
+        {
+            TBLUzytkownicyStart.Inlines.Clear();
             foreach (Rozgrywki.Uzytkownik u in Uzytkownicy)
             {
                 TBLUzytkownicyStart.Inlines.Add(new Run() { Text = u.nazwaUzytkownika, Foreground = u.start ? Brushes.Green : Brushes.Red });
                 TBLUzytkownicyStart.Inlines.Add(new LineBreak());
             }
-
         }
         public PokojGry(byte[] token, Int64 id, Int64 nrPokoju)
         {
@@ -103,13 +118,8 @@ namespace klient_wpf
 
             //ObecnyGracz = SerwerRozgrywki.PobierzGracza(token, id);
 
-            Uzytkownicy = SerwerRozgrywki.ZwrocUserowStart(token); // Tu jest czasem coś nie tak ;p
-            foreach (Rozgrywki.Uzytkownik u in Uzytkownicy)
-            {
-                if (id == u.identyfikatorUzytkownika)
-                    ObecnyUzytkownik = u;
-            }
-            
+
+            PobierzUzytkownikow();
 
             Rozgrywki.Pokoj[] temp = SerwerRozgrywki.PobierzPokoje(token);
             foreach (Rozgrywki.Pokoj p in temp)
@@ -150,9 +160,22 @@ namespace klient_wpf
             //UstawGracza(4);
             //UstawGracza(5);
             //UstawGracza(7);
+            
             PobierzWiadomosci();
-            Nakladka();
+            Nakladka(true);
+            WystartujZegar();
         }
+
+        private void PobierzUzytkownikow()
+        {
+            Uzytkownicy = SerwerRozgrywki.ZwrocUserowStart(token); // Tu jest czasem coś nie tak ;p
+            foreach (Rozgrywki.Uzytkownik u in Uzytkownicy)
+            {
+                if (id == u.identyfikatorUzytkownika)
+                    ObecnyUzytkownik = u;
+            }
+        }
+
         private void WystartujZegar()
         {
             chatTimer.Tick += new EventHandler(chatTimer_Tick);
@@ -162,7 +185,12 @@ namespace klient_wpf
 
         private void chatTimer_Tick(object sender, EventArgs e)
         {
-
+            if (!ObecnyStol.graRozpoczeta)
+            {
+                PobierzUzytkownikow();
+                Nakladka(true);
+            }
+            
             PobierzWiadomosci();
         }
 
@@ -628,11 +656,16 @@ namespace klient_wpf
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            chatTimer.Stop();
             if (MessageBox.Show("Czy na pewno chcesz opuścić pokój?", "Opuść pokój", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 komunikatR = SerwerRozgrywki.OpuscStol(token);
                 PrzejdzDoPokojuGlownego();
                 //do no stuff
+            }
+            else
+            {
+                chatTimer.Start();
             }
         }
 
@@ -659,6 +692,15 @@ namespace klient_wpf
                     }
                 }
             }
+        }
+
+        private void TBLStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            komunikatR = SerwerRozgrywki.Start(token);
+            TBLPoStart.Visibility = Visibility.Visible;
+            TBLStart.Visibility = Visibility.Hidden;
+            PobierzUzytkownikow();
+            UzytkownicyNaStart();
         }
 
     }
