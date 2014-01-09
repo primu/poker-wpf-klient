@@ -16,14 +16,14 @@
             <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
         </Style>
     </Window.Resources>
-    <Grid>
-        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Visible" Width="{Binding ElementName=IObrazStolu,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}">
+    <Grid Width="1366" Height="786">
+        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Visible" Height="{Binding ElementName=RootGrid,Path=ActualHeight}" Margin="260,0">
             <!-- Width="{Binding ElementName=RootGrid,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}"-->
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity=".5"/>
             </Grid.Background>
-            <Label x:Name="LOczekiwanie" Content="Oczekiwanie na graczy!" HorizontalAlignment="Center" Margin="0,35,0,716" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="48" />
-            <Label x:Name="LStart" Content="Wciśnij start!" HorizontalAlignment="Center" Margin="0,70,0,681" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="24"/>
+            <Label x:Name="LOczekiwanie" Content="Oczekiwanie na graczy!" HorizontalAlignment="Center" Margin="156,10,156,694" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="48" Height="73" />
+            <Label x:Name="LStart" Content="Wciśnij start!" HorizontalAlignment="Center" Margin="344,88,346,654" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="24" Height="44"/>
             <TextBlock x:Name="TBLUzytkownicyStart" HorizontalAlignment="Center" Margin="110,145,559,316" VerticalAlignment="Center" Foreground="Red" FontSize="18" Width="178" Height="316"/>
 
             <TextBlock x:Name="TBLPoStart" Visibility="Hidden" TextAlignment="Center" HorizontalAlignment="Center"  Margin="0" TextWrapping="Wrap" Text="Oczekiwanie na pozostałych graczy..." VerticalAlignment="Center" Height="87" Width="268" FontSize="24" Foreground="White" FontWeight="Bold"/>
@@ -47,7 +47,7 @@
         </Grid>
 
         <Image x:Name="IObrazStolu" Height="528" Margin="0" Width="847" Source="resources/stol.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-        <Grid Name="G1" HorizontalAlignment="Center" Height="58" Margin="655,560,645,159" VerticalAlignment="Center" Width="127">
+        <Grid Name="G1" HorizontalAlignment="Center" Height="60" Margin="614,564,614,164" VerticalAlignment="Center" Width="130">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
@@ -55,7 +55,7 @@
             <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
             <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
         </Grid>
-        <Grid Name="G2" HorizontalAlignment="Center" Height="58" Margin="435,520,865,199" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="G2" HorizontalAlignment="Center" Height="60" Margin="404,521,834,204" VerticalAlignment="Center" Width="130" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -71,7 +71,7 @@
             <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
             <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
         </Grid>
-        <Grid Name="G3" HorizontalAlignment="Center" Height="58" Margin="303,362,997,357" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False">
+        <Grid Name="G3" HorizontalAlignment="Center" Height="60" Margin="275,364,966,361" VerticalAlignment="Center" Width="130" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -84,10 +84,10 @@
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
-            <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="0" Source="/resources/rect12346.png"/>
             <Image Grid.Column="1" Source="/resources/rect12346.png"/>
         </Grid>
-        <Grid Name="G4" HorizontalAlignment="Center" Height="58" Margin="440,200,860,519" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="G4" HorizontalAlignment="Center" Height="60" Margin="408,205,829,521" VerticalAlignment="Center" Width="130" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -103,7 +103,7 @@
             <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
             <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
         </Grid>
-        <Grid Name="G5" HorizontalAlignment="Center" Height="58" Margin="660,160,640,559" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="G5" HorizontalAlignment="Center" Height="60" Margin="626,164,610,560" VerticalAlignment="Center" Width="130" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -119,7 +119,7 @@
             <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
             <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
         </Grid>
-        <Grid Name="G6" HorizontalAlignment="Center" Height="58" Margin="873,202,427,517" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="G6" HorizontalAlignment="Center" Height="60" Margin="832,204,397,521" VerticalAlignment="Center" Width="130" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -135,7 +135,7 @@
             <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
             <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
         </Grid>
-        <Grid Name="G7" HorizontalAlignment="Center" Height="58" Margin="998,367,302,352" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="G7" HorizontalAlignment="Center" Height="60" Margin="963,370,273,352" VerticalAlignment="Center" Width="130" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -151,7 +151,7 @@
             <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
             <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
         </Grid>
-        <Grid Name="G8" HorizontalAlignment="Center" Height="58" Margin="875,520,425,199" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+        <Grid Name="G8" HorizontalAlignment="Center" Height="60" Margin="838,522,395,202" VerticalAlignment="Center" Width="130" RenderTransformOrigin="0.5,0.5">
             <Grid.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -167,7 +167,7 @@
             <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
             <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
         </Grid>
-        <Grid Name="Stol" HorizontalAlignment="Center" Height="105" Margin="605,335,592,337" VerticalAlignment="Center" Width="230">
+        <Grid Name="Stol" HorizontalAlignment="Center" Height="104" Margin="570,340,562,342" VerticalAlignment="Center" Width="234">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"/>
                 <ColumnDefinition Width="1*"/>
@@ -181,7 +181,7 @@
             <Image Grid.Column="3" Source="/resources/rect12346.png"></Image>
             <Image Grid.Column="4" Source="/resources/rect12346.png"></Image>
         </Grid>
-        <Rectangle HorizontalAlignment="Center" Height="58" Margin="390,652,377,67" Stroke="#FF572801" VerticalAlignment="Center" Width="660" StrokeThickness="3">
+        <Rectangle HorizontalAlignment="Center" Height="58" Margin="354,656,346,72" Stroke="#FF572801" VerticalAlignment="Center" Width="666" StrokeThickness="3">
             <Rectangle.Fill>
                 <RadialGradientBrush>
                     <GradientStop Color="#FFE6960B" Offset="0"/>
@@ -189,10 +189,10 @@
                 </RadialGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="20" Margin="405,670,787,87" VerticalAlignment="Center" Width="235" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True"/>
+        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="20" Margin="376,674,756,92" VerticalAlignment="Center" Width="234" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True"/>
         <Label Name="LIleStawia" Content="0" HorizontalAlignment="Center" Height="30" Margin="645,670,687,77" VerticalAlignment="Center" Width="95" FontWeight="Bold"/>
-        <Button Content="Postaw" HorizontalAlignment="Center" Margin="840,662,492,73" VerticalAlignment="Center" Width="95" Height="42"/>
-        <Button Content="Spasuj" HorizontalAlignment="Center" Margin="940,662,392,73" VerticalAlignment="Center" Width="95" Height="42"/>
+        <Button Content="Postaw" HorizontalAlignment="Center" Margin="810,666,462,78" VerticalAlignment="Center" Width="95" Height="42"/>
+        <Button Content="Spasuj" HorizontalAlignment="Center" Margin="909,666,362,78" VerticalAlignment="Center" Width="95" Height="42"/>
         <Label Name="LKasaG1" Content="0" HorizontalAlignment="Center" Margin="710,534,701,217" VerticalAlignment="Center" Foreground="Yellow">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
@@ -394,7 +394,7 @@
             </Label.Effect>
         </Label>
 
-        <RichTextBox Name="RTBa" VerticalScrollBarVisibility="Auto" Grid.Column="0" Margin="96,454,1149,98" AllowDrop="False" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Height="225" Width="182">
+        <RichTextBox Name="RTBa" VerticalScrollBarVisibility="Auto" Grid.Column="0" Margin="66,450,1118,94" AllowDrop="False" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Height="224" Width="182">
             <FlowDocument Name="TBOknoCzatu">
                 <!--Przedtem był sam TextBox zamiast RichTextBoxa (stąd nazwa)-->
                 <Paragraph>
@@ -405,9 +405,9 @@
                 <Paragraph Name="TBOknoCzatuPara"></Paragraph>
             </FlowDocument>
         </RichTextBox>
-        <TextBox Name="TBPoleCzatu" Grid.Column="0" Margin="96,684,1149,73" HorizontalAlignment="Center" VerticalAlignment="Center" Width="182" KeyDown="TBPoleCzatu_KeyDown" />
+        <TextBox Name="TBPoleCzatu" Grid.Column="0" Margin="66,684,1118,62" HorizontalAlignment="Center" VerticalAlignment="Center" Width="182" KeyDown="TBPoleCzatu_KeyDown" Height="22" />
         <Label Content="Chat:" HorizontalAlignment="Center" Margin="96,429,1293,322" VerticalAlignment="Center" FontWeight="Bold"/>
-        <Button Content="Opuść pokój" HorizontalAlignment="Center" Margin="96,365,1149,362" VerticalAlignment="Center" Width="182" Height="50" Click="Button_Click"/>
+        <Button Content="Opuść pokój" HorizontalAlignment="Center" Margin="66,360,1118,358" VerticalAlignment="Center" Width="182" Height="50" Click="Button_Click"/>
 
     </Grid>
 </Window>
