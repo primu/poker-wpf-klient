@@ -46,15 +46,21 @@ namespace klient_wpf
             {
                 komunikat = SerwerGlowny.Zarejestruj(LoginRej.Text,HasloRej.Password,EmailRej.Text);
                 string messageBoxText =komunikat.trescKomunikatu;               
-                if (komunikat.kodKomunikatu == 201)
+                if (komunikat.kodKomunikatu == 200)
                 {//komunikat OK                
                     LBlad.Content = "Zarejestrowano poprawnie.";
+                    LBlad.Foreground = Brushes.Green;
                     LBlad.Visibility = Visibility.Visible;
-                    this.Close();
+                    //this.Close();
+                    LoginRej.Text = "Login";
+                    HasloRej.Password = "Hasło";
+                    EmailRej.Text = "Email";
                 }
                 else
                 {//jakiś błąd nazwy/adresu email                   
-                    LBlad.Content = "Błąd. Spróbuj ponownie.";
+                    //LBlad.Content = "Błąd. Spróbuj ponownie.";
+                    LBlad.Content = komunikat.trescKomunikatu;
+                    LBlad.Foreground = Brushes.Red;
                     LBlad.Visibility = Visibility.Visible;
                     LoginRej.Text = "Login";
                     HasloRej.Password = "Hasło";
@@ -65,7 +71,10 @@ namespace klient_wpf
             {//błąd np. usługa niedostępna             
                 LBlad.Content = "Błąd. Nieobsługiwany wyjątek.";
                 LBlad.Visibility = Visibility.Visible;
-                this.Close();
+                LoginRej.Text = "Login";
+                HasloRej.Password = "Hasło";
+                EmailRej.Text = "Email";
+                //this.Close();
             }                   
         }
         //===

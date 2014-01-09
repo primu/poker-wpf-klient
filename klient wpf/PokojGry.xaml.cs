@@ -189,7 +189,7 @@ namespace klient_wpf
         private void WystartujZegar2()
         {
             ogolnyTimer.Tick += new EventHandler(ogolnyTimer_Tick);
-            ogolnyTimer.Interval = new TimeSpan(0, 0, 0);
+            ogolnyTimer.Interval = new TimeSpan(0, 0, 1);
             ogolnyTimer.Start();
         }
 
@@ -222,8 +222,11 @@ namespace klient_wpf
                         bool fold=false;
                         if(Gracze[i].stan==StanGracza.BigBlind)
                             tempBB=true;
-                        else if(Gracze[i].stan==StanGracza.SmallBlind)
-                            tempSB=true;
+                        else if (Gracze[i].stan == StanGracza.SmallBlind)
+                        {
+                            tempBB = true;
+                            tempSB = true;
+                        }
                         if(Gracze[i].identyfikatorUzytkownika==gra.czyjRuch)
                             ruch=true;
                         if (Gracze[i].stan == StanGracza.Fold)
@@ -231,6 +234,7 @@ namespace klient_wpf
 
                         UstawGracza(i+1,Gracze[i].nazwaUzytkownika,(int)Gracze[i].kasa,(int)Gracze[i].stawia,true,tempBB,tempSB,ruch,fold);
                     }
+                    LKasaStol.Content = gra.pula;
                 }
             }
             catch (Exception ex)
