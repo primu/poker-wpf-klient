@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using klient_wpf.Glowny;
+using klient_wpf.Rozgrywki;
 
 namespace klient_wpf
 {
@@ -20,7 +22,7 @@ namespace klient_wpf
     public partial class PokojGry : Window
     {
         System.Windows.Threading.DispatcherTimer chatTimer = new System.Windows.Threading.DispatcherTimer();
-        //System.Windows.Threading.DispatcherTimer ogolnyTimer = new System.Windows.Threading.DispatcherTimer();
+        System.Windows.Threading.DispatcherTimer ogolnyTimer = new System.Windows.Threading.DispatcherTimer();
 
         public byte[] token;
         public Int64 id;
@@ -30,6 +32,8 @@ namespace klient_wpf
         Rozgrywki.RozgrywkiSoapClient SerwerRozgrywki = new Rozgrywki.RozgrywkiSoapClient();
         Glowny.Komunikat komunikat = new Glowny.Komunikat();
         Rozgrywki.Komunikat komunikatR = new Rozgrywki.Komunikat();
+        Rozgrywki.Gra gra = new Rozgrywki.Gra();
+
 
         Rozgrywki.Uzytkownik ObecnyUzytkownik;
         Rozgrywki.Uzytkownik[] Uzytkownicy;
@@ -132,7 +136,7 @@ namespace klient_wpf
 
             ZaladujKarty();
 
-            UsunWszystkieKarty();
+            //UsunWszystkieKarty();
             for (int i = 0; i < Uzytkownicy.Length; i++)
             {
                 UstawGracza(i + 1, Uzytkownicy[i].nazwaUzytkownika,0,0,true);
@@ -182,16 +186,58 @@ namespace klient_wpf
             chatTimer.Interval = new TimeSpan(0, 0, 3);
             chatTimer.Start();
         }
+        private void WystartujZegar2()
+        {
+            ogolnyTimer.Tick += new EventHandler(ogolnyTimer_Tick);
+            ogolnyTimer.Interval = new TimeSpan(0, 0, 0);
+            ogolnyTimer.Start();
+        }
 
         private void chatTimer_Tick(object sender, EventArgs e)
         {
             if (!ObecnyStol.graRozpoczeta)
             {
                 PobierzUzytkownikow();
-                Nakladka(true);
+                if(gra==null)
+                    Nakladka(true);
             }
             
             PobierzWiadomosci();
+        }
+
+        private void ogolnyTimer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                gra = SerwerRozgrywki.ZwrocGre(token);
+                if (gra != null)
+                {
+                    Nakladka(false);
+                    Gracze=SerwerRozgrywki.ZwrocGraczy(token);
+                    for(int i=0;i<Gracze.Length;i++)     
+                    {
+                        bool tempBB=false;
+                        bool tempSB=false;
+                        bool ruch=false;
+                        bool fold=false;
+                        if(Gracze[i].stan==StanGracza.BigBlind)
+                            tempBB=true;
+                        else if(Gracze[i].stan==StanGracza.SmallBlind)
+                            tempSB=true;
+                        if(Gracze[i].identyfikatorUzytkownika==gra.czyjRuch)
+                            ruch=true;
+                        if (Gracze[i].stan == StanGracza.Fold)
+                            fold = true;
+
+                        UstawGracza(i+1,Gracze[i].nazwaUzytkownika,(int)Gracze[i].kasa,(int)Gracze[i].stawia,true,tempBB,tempSB,ruch,fold);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nieoczekiwany wyjątek!", "Fatal Error");
+            }
+
         }
 
         private void PobierzWiadomosci()
@@ -363,7 +409,7 @@ namespace klient_wpf
                 case 1:
                     if (widoczny)
                     {
-                        LG1.Content = nazwa;
+                        LG1.Content = nazwa;                      
                         LKasaG1.Content = kasa;
                         if (ruch)
                             LG1.Foreground = Brushes.Red;
@@ -701,6 +747,7 @@ namespace klient_wpf
             TBLStart.Visibility = Visibility.Hidden;
             PobierzUzytkownikow();
             UzytkownicyNaStart();
+            WystartujZegar2();
         }
 
     }
