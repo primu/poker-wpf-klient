@@ -189,7 +189,7 @@ namespace klient_wpf
         private void WystartujZegar2()
         {
             ogolnyTimer.Tick += new EventHandler(ogolnyTimer_Tick);
-            ogolnyTimer.Interval = new TimeSpan(0, 0, 0);
+            ogolnyTimer.Interval = new TimeSpan(0, 0, 1);
             ogolnyTimer.Start();
         }
 
@@ -234,6 +234,7 @@ namespace klient_wpf
 
                         UstawGracza(i+1,Gracze[i].nazwaUzytkownika,(int)Gracze[i].kasa,(int)Gracze[i].stawia,true,tempBB,tempSB,ruch,fold);
                     }
+                    LKasaStol.Content = gra.pula;
                 }
             }
             catch (Exception ex)
