@@ -1,0 +1,413 @@
+﻿<Window x:Class="klient_wpf.PokojGry"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PokojGry" Height="785.1" Width="1435"
+        WindowState="Maximized" WindowStyle="None" Closed="Window_Closed">
+    <Window.Resources>
+        <BitmapImage x:Key="masterImage" UriSource="/resources/karty.png" />
+        <CroppedBitmap x:Key="croppedImage" 
+      Source="{StaticResource masterImage}" SourceRect="2171 222 168 222"/>
+        <Style TargetType="Image">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="RenderOptions.BitmapScalingMode" Value="HighQuality" />
+            <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Visible" Width="{Binding ElementName=IObrazStolu,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}">
+            <!-- Width="{Binding ElementName=RootGrid,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}"-->
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity=".5"/>
+            </Grid.Background>
+            <Label x:Name="LOczekiwanie" Content="Oczekiwanie na graczy!" HorizontalAlignment="Center" Margin="0,35,0,716" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="48" />
+            <Label x:Name="LStart" Content="Wciśnij start!" HorizontalAlignment="Center" Margin="0,70,0,681" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="24"/>
+            <TextBlock x:Name="TBLUzytkownicyStart" HorizontalAlignment="Center" Margin="110,145,559,316" VerticalAlignment="Center" Foreground="Red" FontSize="18" Width="178" Height="316"/>
+
+            <TextBlock x:Name="TBLPoStart" Visibility="Hidden" TextAlignment="Center" HorizontalAlignment="Center"  Margin="0" TextWrapping="Wrap" Text="Oczekiwanie na pozostałych graczy..." VerticalAlignment="Center" Height="87" Width="268" FontSize="24" Foreground="White" FontWeight="Bold"/>
+            <TextBlock x:Name="TBLStart" TextAlignment="Center" HorizontalAlignment="Center"  Margin="0" TextWrapping="Wrap" Text="Start" VerticalAlignment="Center" Height="87" Width="268" FontSize="72" FontWeight="Bold" MouseLeftButtonDown="TBLStart_MouseLeftButtonDown">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="2"/>
+                </TextBlock.Effect>
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property= "Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <Trigger Property ="IsMouseOver" Value="True">
+                                <Setter Property= "Foreground" Value="Red"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+
+            <!-- Add controls as needed -->
+        </Grid>
+
+        <Image x:Name="IObrazStolu" Height="528" Margin="0" Width="847" Source="resources/stol.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Grid Name="G1" HorizontalAlignment="Center" Height="58" Margin="655,560,645,159" VerticalAlignment="Center" Width="127">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
+        </Grid>
+        <Grid Name="G2" HorizontalAlignment="Center" Height="58" Margin="435,520,865,199" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="24.018"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
+        </Grid>
+        <Grid Name="G3" HorizontalAlignment="Center" Height="58" Margin="303,362,997,357" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5" UseLayoutRounding="False">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="1" Source="/resources/rect12346.png"/>
+        </Grid>
+        <Grid Name="G4" HorizontalAlignment="Center" Height="58" Margin="440,200,860,519" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-201.464"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
+        </Grid>
+        <Grid Name="G5" HorizontalAlignment="Center" Height="58" Margin="660,160,640,559" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="180"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
+        </Grid>
+        <Grid Name="G6" HorizontalAlignment="Center" Height="58" Margin="873,202,427,517" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-156.974"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
+        </Grid>
+        <Grid Name="G7" HorizontalAlignment="Center" Height="58" Margin="998,367,302,352" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
+        </Grid>
+        <Grid Name="G8" HorizontalAlignment="Center" Height="58" Margin="875,520,425,199" VerticalAlignment="Center" Width="127" RenderTransformOrigin="0.5,0.5">
+            <Grid.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-25.642"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Grid.RenderTransform>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
+        </Grid>
+        <Grid Name="Stol" HorizontalAlignment="Center" Height="105" Margin="605,335,592,337" VerticalAlignment="Center" Width="230">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="1" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="2" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="3" Source="/resources/rect12346.png"></Image>
+            <Image Grid.Column="4" Source="/resources/rect12346.png"></Image>
+        </Grid>
+        <Rectangle HorizontalAlignment="Center" Height="58" Margin="390,652,377,67" Stroke="#FF572801" VerticalAlignment="Center" Width="660" StrokeThickness="3">
+            <Rectangle.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFE6960B" Offset="0"/>
+                    <GradientStop Color="#FF954F0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="20" Margin="405,670,787,87" VerticalAlignment="Center" Width="235" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True"/>
+        <Label Name="LIleStawia" Content="0" HorizontalAlignment="Center" Height="30" Margin="645,670,687,77" VerticalAlignment="Center" Width="95" FontWeight="Bold"/>
+        <Button Content="Postaw" HorizontalAlignment="Center" Margin="840,662,492,73" VerticalAlignment="Center" Width="95" Height="42"/>
+        <Button Content="Spasuj" HorizontalAlignment="Center" Margin="940,662,392,73" VerticalAlignment="Center" Width="95" Height="42"/>
+        <Label Name="LKasaG1" Content="0" HorizontalAlignment="Center" Margin="710,534,701,217" VerticalAlignment="Center" Foreground="Yellow">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label Name="LKasaG2" Content="0" HorizontalAlignment="Center" Margin="514,499,897,252" VerticalAlignment="Center" Foreground="Yellow">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label Name="LKasaG3" Content="0" HorizontalAlignment="Center" Margin="450,384,961,367" VerticalAlignment="Center" Foreground="Yellow">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label Name="LKasaG4" Content="0" HorizontalAlignment="Center" Margin="534,295,877,456" VerticalAlignment="Center" Foreground="Yellow">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label Name="LKasaG5" Content="0" HorizontalAlignment="Center" Margin="710,244,701,507" VerticalAlignment="Center" Foreground="Yellow">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label Name="LKasaG6" Content="0" HorizontalAlignment="Center" Margin="895,295,516,456" VerticalAlignment="Center" Foreground="Yellow">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label Name="LKasaG7" Content="0" HorizontalAlignment="Center" Margin="964,384,447,367" VerticalAlignment="Center" Foreground="Yellow">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label Name="LKasaG8" Content="0" HorizontalAlignment="Center" Margin="905,499,506,252" VerticalAlignment="Center" Foreground="Yellow">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LKasaStol" Content="0" HorizontalAlignment="Center" Margin="605,425,592,322" VerticalAlignment="Center" Foreground="Yellow" FontWeight="Bold" FontSize="18" Height="30" Width="230">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LG1" Content="Gracz 1" HorizontalAlignment="Center" Margin="655,508,645,243" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LStol" Content="Nazwa Stołu" HorizontalAlignment="Center" Margin="605,315,592,425" VerticalAlignment="Center" FontWeight="Bold" FontSize="20" Width="230" Background="{x:Null}">
+            <Label.Effect>
+                <DropShadowEffect BlurRadius="2" Opacity="0.7" RenderingBias="Quality"/>
+            </Label.Effect>
+            <Label.Foreground>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FFCD5512" Offset="0.983"/>
+                    <GradientStop Color="#FFFFA625" Offset="0.262"/>
+                </LinearGradientBrush>
+            </Label.Foreground>
+        </Label>
+        <Label HorizontalContentAlignment="Center" x:Name="LG2" Content="Gracz 2" HorizontalAlignment="Center" Margin="460,480,840,271" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" x:Name="LG3" Content="Gracz 3" HorizontalAlignment="Center" Margin="398,365,902,386" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" x:Name="LG4" Content="Gracz 4" HorizontalAlignment="Center" Margin="480,269,820,482" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" x:Name="LG5" Content="Gracz 5" HorizontalAlignment="Center" Margin="655,218,645,533" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" x:Name="LG6" Content="Gracz 6" HorizontalAlignment="Center" Margin="840,269,460,482" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" x:Name="LG7" Content="Gracz 7" HorizontalAlignment="Center" Margin="908,358,392,393" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" x:Name="LG8" Content="Gracz 8" HorizontalAlignment="Center" Margin="853,480,447,271" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Ellipse Name="EG1" HorizontalAlignment="Center" Height="18" Margin="637,580,772,179" Stroke="#FF572801" StrokeThickness="3" VerticalAlignment="Center" Width="18">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFE6960B" Offset="0"/>
+                    <GradientStop Color="#FF954F0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Ellipse Name="EG2" HorizontalAlignment="Center" Height="18" Margin="425,516,984,243" Stroke="#FF572801" StrokeThickness="3" VerticalAlignment="Center" Width="18">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFE6960B" Offset="0"/>
+                    <GradientStop Color="#FF954F0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Ellipse Name="EG3" HorizontalAlignment="Center" Height="18" Margin="357,315,1052,444" Stroke="#FF572801" StrokeThickness="3" VerticalAlignment="Center" Width="18">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFE6960B" Offset="0"/>
+                    <GradientStop Color="#FF954F0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Ellipse Name="EG4" HorizontalAlignment="Center" Height="18" Margin="560,195,849,564" Stroke="#FF572801" StrokeThickness="3" VerticalAlignment="Center" Width="18">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFE6960B" Offset="0"/>
+                    <GradientStop Color="#FF954F0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Ellipse Name="EG5" HorizontalAlignment="Center" Height="18" Margin="785,180,624,579" Stroke="#FF572801" StrokeThickness="3" VerticalAlignment="Center" Width="18">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFE6960B" Offset="0"/>
+                    <GradientStop Color="#FF954F0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Ellipse Name="EG6" HorizontalAlignment="Center" Height="18" Margin="992,252,417,507" Stroke="#FF572801" StrokeThickness="3" VerticalAlignment="Center" Width="18">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFE6960B" Offset="0"/>
+                    <GradientStop Color="#FF954F0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Ellipse Name="EG7" HorizontalAlignment="Center" Height="18" Margin="1052,455,357,304" Stroke="#FF572801" StrokeThickness="3" VerticalAlignment="Center" Width="18">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFE6960B" Offset="0"/>
+                    <GradientStop Color="#FF954F0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Ellipse Name="EG8" HorizontalAlignment="Center" Height="18" Margin="865,570,544,189" Stroke="#FF572801" StrokeThickness="3" VerticalAlignment="Center" Width="18">
+            <Ellipse.Fill>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFE6960B" Offset="0"/>
+                    <GradientStop Color="#FF954F0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Ellipse.Fill>
+        </Ellipse>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG1" Content="0" HorizontalAlignment="Center" Margin="655,477,645,274" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG2" Content="0" HorizontalAlignment="Center" Margin="480,455,820,296" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG3" Content="0" HorizontalAlignment="Center" Margin="473,374,827,377" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG4" Content="0" HorizontalAlignment="Center" Margin="514,315,786,436" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG5" Content="0" HorizontalAlignment="Center" Margin="655,269,645,482" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG6" Content="0" HorizontalAlignment="Center" Margin="808,309,492,442" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG7" Content="0" HorizontalAlignment="Center" Margin="853,374,447,377" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+        <Label HorizontalContentAlignment="Center" Name="LWkladG8" Content="0" HorizontalAlignment="Center" Margin="808,454,492,297" VerticalAlignment="Center" Foreground="White" Width="127" FontWeight="Bold">
+            <Label.Effect>
+                <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
+            </Label.Effect>
+        </Label>
+
+        <RichTextBox Name="RTBa" VerticalScrollBarVisibility="Auto" Grid.Column="0" Margin="96,454,1149,98" AllowDrop="False" IsReadOnly="True" HorizontalAlignment="Center" VerticalAlignment="Center" Height="225" Width="182">
+            <FlowDocument Name="TBOknoCzatu">
+                <!--Przedtem był sam TextBox zamiast RichTextBoxa (stąd nazwa)-->
+                <Paragraph>
+                    <Bold>
+                        <Run>Witaj w grze internetowej Poker!</Run>
+                    </Bold>
+                </Paragraph>
+                <Paragraph Name="TBOknoCzatuPara"></Paragraph>
+            </FlowDocument>
+        </RichTextBox>
+        <TextBox Name="TBPoleCzatu" Grid.Column="0" Margin="96,684,1149,73" HorizontalAlignment="Center" VerticalAlignment="Center" Width="182" KeyDown="TBPoleCzatu_KeyDown" />
+        <Label Content="Chat:" HorizontalAlignment="Center" Margin="96,429,1293,322" VerticalAlignment="Center" FontWeight="Bold"/>
+        <Button Content="Opuść pokój" HorizontalAlignment="Center" Margin="96,365,1149,362" VerticalAlignment="Center" Width="182" Height="50" Click="Button_Click"/>
+
+    </Grid>
+</Window>

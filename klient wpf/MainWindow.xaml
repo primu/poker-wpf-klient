@@ -1,0 +1,42 @@
+﻿<Window x:Class="klient_wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="650.302" Width="713.218" WindowState="Maximized" WindowStyle="None">
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Unloaded">
+            <BeginStoryboard>
+                <Storyboard >
+                    <DoubleAnimation Duration="3:3:3" Storyboard.TargetProperty="Left" From="1920" To="0" AccelerationRatio=".1"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+    <Window.Resources>
+        <Style TargetType="TextBlock" x:Key="HoverUnderlineStyle">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="TextBlock.Effect">
+                        <Setter.Value>
+                            <DropShadowEffect ShadowDepth="1" Opacity="0.4" Color="Black" RenderingBias="Performance"/>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Center" Height="261" Margin="182,275,183,106" Stroke="#26000000" VerticalAlignment="Center" Width="340" RadiusX="2" RadiusY="2">
+            <Rectangle.Effect>
+                <DropShadowEffect Opacity="0.15" Direction="270" ShadowDepth="3"/>
+            </Rectangle.Effect>
+        </Rectangle>
+        <TextBox x:Name="LoginTB" Margin="227,312,228,280" TextWrapping="Wrap" VerticalAlignment="Center" HorizontalAlignment="Center" Height="50" Width="250" FontSize="30"/>
+        <Button x:Name="ZalogujBTN" Content="Zaloguj" HorizontalAlignment="Center" Margin="227,422,228,170" VerticalAlignment="Center" Width="250" Height="50" Click="ZalogujBTN_Click"/>
+        <PasswordBox x:Name="hasloTB" HorizontalAlignment="Center" Margin="227,367,228,225" VerticalAlignment="Center" Height="50" Width="250" FontSize="30"/>
+        <Label Content="Zaloguj się do gry Poker" Margin="0,217,0,367" VerticalAlignment="Center" FontSize="20" Background="{x:Null}" Foreground="#FF5F5F5F" HorizontalAlignment="Center"/>
+        <Image HorizontalAlignment="Center" Margin="198,-26,197,534" VerticalAlignment="Center" Source="resources/logo2.png" Height="134" Width="310"/>
+        <TextBlock x:Name="ZamknijTBL" HorizontalAlignment="Center" Margin="332,548,331,78" TextWrapping="Wrap" Foreground="#FF487BD4" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" VerticalAlignment="Center" Style="{StaticResource HoverUnderlineStyle}"><Run Language="pl-pl" Text="Zamknij" /></TextBlock>
+        <TextBlock HorizontalAlignment="Center" Margin="0,486,0,140" TextWrapping="Wrap" Foreground="#FF487BD4" Text="Utwórz konto" VerticalAlignment="Center" Style="{StaticResource HoverUnderlineStyle}" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_1"/>
+        <Label Name="LBlad" Content="" HorizontalAlignment="Center" Margin="227,286,228,330" VerticalAlignment="Center" Width="250" Foreground="Red" Visibility="Hidden"/>
+    </Grid>
+</Window>
