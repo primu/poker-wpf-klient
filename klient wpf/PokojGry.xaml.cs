@@ -39,7 +39,7 @@ namespace klient_wpf
         Rozgrywki.Uzytkownik[] Uzytkownicy;
 
         Rozgrywki.Gracz[] Gracze;
-        Rozgrywki.Gracz ObecnyGracz;
+        Rozgrywki.Gracz ja;        
 
         Rozgrywki.Pokoj ObecnyStol;
 
@@ -62,25 +62,25 @@ namespace klient_wpf
             ZaladujKarty();
             
             UsunWszystkieKarty();
-            ZmienKarte(ref Stol, 0, ref kier[11]);
-            ZmienKarte(ref Stol, 1, ref trefl[11]);
-            ZmienKarte(ref Stol, 2, ref pik[11]);
-            UstawGracza(1, "primu", 150000,12,true,true,false,true);
-            ZmienKarte(ref G1, 0, ref pik[12]);
-            ZmienKarte(ref G1, 1, ref kier[12]);
-            UstawGracza(6, "Paweł", 1500,0, true, false, false, false, true);
-            ZmienKarte(ref G6, 0, ref pik[2]);
-            ZmienKarte(ref G6, 1, ref karo[3]);
-            UstawGracza(2, "Marcin", 0, 100, true);
-            ZmienKarte(ref G2, 0, ref kier[2]);
-            ZmienKarte(ref G2, 1, ref trefl[3]);
-            UstawGracza(8, "Komputer", 10, 199, true, true, true);
-            ZmienKarte(ref G8, 0, ref pik[4]);
-            ZmienKarte(ref G8, 1, ref trefl[4]);
-            UstawGracza(3);
-            UstawGracza(4);
-            UstawGracza(5);
-            UstawGracza(7);
+            //ZmienKarte(ref Stol, 0, ref kier[11]);
+            //ZmienKarte(ref Stol, 1, ref trefl[11]);
+            //ZmienKarte(ref Stol, 2, ref pik[11]);
+            //UstawGracza(1, "primu", 150000,12,true,true,false,true);
+            //ZmienKarte(ref G1, 0, ref pik[12]);
+            //ZmienKarte(ref G1, 1, ref kier[12]);
+            //UstawGracza(6, "Paweł", 1500,0, true, false, false, false, true);
+            //ZmienKarte(ref G6, 0, ref pik[2]);
+            //ZmienKarte(ref G6, 1, ref karo[3]);
+            //UstawGracza(2, "Marcin", 0, 100, true);
+            //ZmienKarte(ref G2, 0, ref kier[2]);
+            //ZmienKarte(ref G2, 1, ref trefl[3]);
+            //UstawGracza(8, "Komputer", 10, 199, true, true, true);
+            //ZmienKarte(ref G8, 0, ref pik[4]);
+            //ZmienKarte(ref G8, 1, ref trefl[4]);
+            //UstawGracza(3);
+            //UstawGracza(4);
+            //UstawGracza(5);
+            //UstawGracza(7);
 
         }
         private void Nakladka(bool widoczna = false)
@@ -209,9 +209,9 @@ namespace klient_wpf
         {
             try
             {
-                gra = SerwerRozgrywki.ZwrocGre(token);
+                gra = SerwerRozgrywki.ZwrocGre(token);               
                 if (gra != null)
-                {
+                {                
                     Nakladka(false);
                     Gracze=SerwerRozgrywki.ZwrocGraczy(token);
                     for(int i=0;i<Gracze.Length;i++)     
@@ -232,9 +232,31 @@ namespace klient_wpf
                         if (Gracze[i].stan == StanGracza.Fold)
                             fold = true;
 
-                        UstawGracza(i+1,Gracze[i].nazwaUzytkownika,(int)Gracze[i].kasa,(int)Gracze[i].stawia,true,tempBB,tempSB,ruch,fold);
+                        UstawGracza(i+1,Gracze[i].nazwaUzytkownika,(int)Gracze[i].kasa,(int)Gracze[i].stawia,true,tempBB,tempSB,ruch,fold,(int)Gracze[i].identyfikatorUzytkownika);
                     }
                     LKasaStol.Content = gra.pula;
+                    //wszystko co związane z naszym graczem
+                    if (SerwerRozgrywki.PobierzGracza(token, id) != null)
+                    {
+                        Rozgrywki.Gracz t = gra.aktywni.Single<Gracz>(delegate(Gracz c) { return c.identyfikatorUzytkownika == id; });
+                        if (t != null)
+                        {
+                            if (ja != t)
+                            {
+                                //ja = t;
+                                if (gra.stan == Stan.PREFLOP)
+                                {//pobranie kart i wyświetlenie ich
+                                    List<Karta> k = new List<Karta>(SerwerRozgrywki.PobierzKarty(token));
+                                    Image x=PowiazanieKart(k.ElementAt(0));
+                                    Image y=PowiazanieKart(k.ElementAt(1));
+                                    ZmienKarte(ref G1, 0, ref x);
+                                    ZmienKarte(ref G1, 1, ref y);
+                                  
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
             catch (Exception ex)
@@ -242,6 +264,56 @@ namespace klient_wpf
                 MessageBox.Show("Nieoczekiwany wyjątek!", "Fatal Error");
             }
 
+        }
+
+        private void displayCards()
+        {
+
+        }
+
+        private Image PowiazanieKart(Karta card)
+        {
+            if (card.kolor == kolorKarty.karo)
+            {
+                for (int i = 0; i < 13; i++)
+                {
+                    if ((int)card.figura == (int)figuraKarty.K2 + i)
+                    {
+                        return karo[(int)card.figura];
+                    }
+                }
+            }
+            else if (card.kolor == kolorKarty.kier)
+            {
+                for (int i = 0; i < 13; i++)
+                {
+                    if ((int)card.figura == (int)figuraKarty.K2 + i)
+                    {
+                        return kier[(int)card.figura];
+                    }
+                }
+            }
+            else if (card.kolor == kolorKarty.pik)
+            {
+                for (int i = 0; i < 13; i++)
+                {
+                    if ((int)card.figura == (int)figuraKarty.K2 + i)
+                    {
+                        return pik[(int)card.figura];
+                    }
+                }
+            }
+            else if (card.kolor == kolorKarty.trefl)
+            {
+                for (int i = 0; i < 13; i++)
+                {
+                    if ((int)card.figura == (int)figuraKarty.K2 + i)
+                    {
+                        return trefl[(int)card.figura];
+                    }
+                }
+            }
+            return null;
         }
 
         private void PobierzWiadomosci()
@@ -404,7 +476,7 @@ namespace klient_wpf
                     break;
             }
         }
-        private void UstawGracza(int pozycja, string nazwa = "", int kasa = 0, int ileStawia = 0, bool widoczny = false, bool blind = false, bool maly = false, bool ruch = false, bool fold = false)
+        private void UstawGracza(int pozycja, string nazwa = "", int kasa = 0, int ileStawia = 0, bool widoczny = false, bool blind = false, bool maly = false, bool ruch = false, bool fold = false,int identyfikator=-1)
         {
             //Foreground="#FFFF9700" - brak ruchu
             IleStawia(pozycja, ileStawia);
@@ -413,6 +485,12 @@ namespace klient_wpf
                 case 1:
                     if (widoczny)
                     {
+                        //if (identyfikator == id && x!=null && y!=null)
+                        //{
+                        //    ZmienKarte(ref G1, 0, ref x);
+                        //    ZmienKarte(ref G1, 1, ref y);
+                        //}
+                        LG1.Visibility = Visibility.Visible;
                         LG1.Content = nazwa;                      
                         LKasaG1.Content = kasa;
                         if (ruch)
@@ -438,6 +516,12 @@ namespace klient_wpf
                 case 2:
                     if (widoczny)
                     {
+                        //if (identyfikator == id)
+                        //{
+                        //    ZmienKarte(ref G1, 0, ref x);
+                        //    ZmienKarte(ref G1, 1, ref y);
+                        //}
+                        LG2.Visibility = Visibility.Visible;
                         LG2.Content = nazwa;
                         LKasaG2.Content = kasa;
                         if (ruch)
@@ -462,6 +546,7 @@ namespace klient_wpf
                 case 3:
                     if (widoczny)
                     {
+                        LG3.Visibility = Visibility.Visible;
                         LG3.Content = nazwa;
                         LKasaG3.Content = kasa;
                         if (ruch)
@@ -486,6 +571,7 @@ namespace klient_wpf
                 case 4:
                     if (widoczny)
                     {
+                        LG4.Visibility = Visibility.Visible;
                         LG4.Content = nazwa;
                         LKasaG4.Content = kasa;
                         if (ruch)
@@ -510,6 +596,7 @@ namespace klient_wpf
                 case 5:
                     if (widoczny)
                     {
+                        LG5.Visibility = Visibility.Visible;
                         LG5.Content = nazwa;
                         LKasaG5.Content = kasa;
                         if (ruch)
@@ -534,6 +621,7 @@ namespace klient_wpf
                 case 6:
                     if (widoczny)
                     {
+                        LG6.Visibility = Visibility.Visible;
                         LG6.Content = nazwa;
                         LKasaG6.Content = kasa;
                         if (ruch)
@@ -558,6 +646,7 @@ namespace klient_wpf
                 case 7:
                     if (widoczny)
                     {
+                        LG7.Visibility = Visibility.Visible;
                         LG7.Content = nazwa;
                         LKasaG7.Content = kasa;
                         if (ruch)
@@ -582,6 +671,7 @@ namespace klient_wpf
                 case 8:
                     if (widoczny)
                     {
+                        LG8.Visibility = Visibility.Visible;
                         LG8.Content = nazwa;
                         LKasaG8.Content = kasa;
                         if (ruch)

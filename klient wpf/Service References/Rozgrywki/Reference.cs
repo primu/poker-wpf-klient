@@ -152,8 +152,6 @@ namespace klient_wpf.Rozgrywki {
         
         private long kasioraField;
         
-        private bool foldField;
-        
         private bool startField;
         
         [global::System.ComponentModel.BrowsableAttribute(false)]
@@ -219,19 +217,6 @@ namespace klient_wpf.Rozgrywki {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=4)]
-        public bool fold {
-            get {
-                return this.foldField;
-            }
-            set {
-                if ((this.foldField.Equals(value) != true)) {
-                    this.foldField = value;
-                    this.RaisePropertyChanged("fold");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=5)]
         public bool start {
             get {
                 return this.startField;

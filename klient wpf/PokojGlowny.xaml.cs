@@ -118,7 +118,8 @@ namespace klient_wpf
             LVListaUzytkownikow.Items.Clear();
             foreach (Glowny.Uzytkownik a in Uzytkownicy)
             {
-                LVListaUzytkownikow.Items.Add(new Rozgrywki.Uzytkownik { nazwaUzytkownika = a.nazwaUzytkownika, kasiora = a.kasiora, numerPokoju = a.numerPokoju });
+                //LVListaUzytkownikow.Items.Add(new Rozgrywki.Uzytkownik { nazwaUzytkownika = a.nazwaUzytkownika, kasiora = a.kasiora, numerPokoju = a.numerPokoju });
+                LVListaUzytkownikow.Items.Add(new { nazwaUzytkownika = a.nazwaUzytkownika, kasiora = a.kasiora, numerPokoju = ZwrocNazwePokoju(a.numerPokoju) });
                 if (id == a.identyfikatorUzytkownika)
                 {
                     ObecnyUzytkownik = a;
@@ -131,6 +132,20 @@ namespace klient_wpf
                 MessageBox.Show("Wystąpił problem z połączeniem. Nastąpiło wylogowanie.");
                 PrzejdzDoOknaLogowania();
             }
+        }
+
+        private string ZwrocNazwePokoju(long idPok)
+        {
+            if (idPok == 0)
+                return "Główny";
+            for (int i = 0; i < Pokoje.Length; i++)
+            {
+                if (Pokoje[i].numerPokoju == idPok)
+                {
+                    return Pokoje[i].nazwaPokoju;
+                }
+            }
+            return "";
         }
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
