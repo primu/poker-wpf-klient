@@ -92,9 +92,25 @@ namespace klient_wpf
 
             this.Close();
         }
+        private void ZmienOkno2()//rejestracja
+        {
+            Black blackwindow = new Black();
+            blackwindow.Show();
+            Rejestracja rej = new Rejestracja();
+            App.Current.MainWindow = rej;
+            rej.Show();
+            blackwindow.Close();
+            this.Close();
+        }
+
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void TextBlock_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            ZmienOkno2();
         }
     }
 }

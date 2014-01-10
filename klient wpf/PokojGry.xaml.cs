@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using klient_wpf.Glowny;
+using klient_wpf.Rozgrywki;
 
 namespace klient_wpf
 {
@@ -20,7 +22,7 @@ namespace klient_wpf
     public partial class PokojGry : Window
     {
         System.Windows.Threading.DispatcherTimer chatTimer = new System.Windows.Threading.DispatcherTimer();
-        //System.Windows.Threading.DispatcherTimer ogolnyTimer = new System.Windows.Threading.DispatcherTimer();
+        System.Windows.Threading.DispatcherTimer ogolnyTimer = new System.Windows.Threading.DispatcherTimer();
 
         public byte[] token;
         public Int64 id;
@@ -30,6 +32,8 @@ namespace klient_wpf
         Rozgrywki.RozgrywkiSoapClient SerwerRozgrywki = new Rozgrywki.RozgrywkiSoapClient();
         Glowny.Komunikat komunikat = new Glowny.Komunikat();
         Rozgrywki.Komunikat komunikatR = new Rozgrywki.Komunikat();
+        Rozgrywki.Gra gra = new Rozgrywki.Gra();
+
 
         Rozgrywki.Uzytkownik ObecnyUzytkownik;
         Rozgrywki.Uzytkownik[] Uzytkownicy;
@@ -58,25 +62,25 @@ namespace klient_wpf
             ZaladujKarty();
             
             UsunWszystkieKarty();
-            ZmienKarte(ref Stol, 0, ref kier[11]);
-            ZmienKarte(ref Stol, 1, ref trefl[11]);
-            ZmienKarte(ref Stol, 2, ref pik[11]);
-            UstawGracza(1, "primu", 150000,12,true,true,false,true);
-            ZmienKarte(ref G1, 0, ref pik[12]);
-            ZmienKarte(ref G1, 1, ref kier[12]);
-            UstawGracza(6, "Paweł", 1500,0, true, false, false, false, true);
-            ZmienKarte(ref G6, 0, ref pik[2]);
-            ZmienKarte(ref G6, 1, ref karo[3]);
-            UstawGracza(2, "Marcin", 0, 100, true);
-            ZmienKarte(ref G2, 0, ref kier[2]);
-            ZmienKarte(ref G2, 1, ref trefl[3]);
-            UstawGracza(8, "Komputer", 10, 199, true, true, true);
-            ZmienKarte(ref G8, 0, ref pik[4]);
-            ZmienKarte(ref G8, 1, ref trefl[4]);
-            UstawGracza(3);
-            UstawGracza(4);
-            UstawGracza(5);
-            UstawGracza(7);
+            //ZmienKarte(ref Stol, 0, ref kier[11]);
+            //ZmienKarte(ref Stol, 1, ref trefl[11]);
+            //ZmienKarte(ref Stol, 2, ref pik[11]);
+            //UstawGracza(1, "primu", 150000,12,true,true,false,true);
+            //ZmienKarte(ref G1, 0, ref pik[12]);
+            //ZmienKarte(ref G1, 1, ref kier[12]);
+            //UstawGracza(6, "Paweł", 1500,0, true, false, false, false, true);
+            //ZmienKarte(ref G6, 0, ref pik[2]);
+            //ZmienKarte(ref G6, 1, ref karo[3]);
+            //UstawGracza(2, "Marcin", 0, 100, true);
+            //ZmienKarte(ref G2, 0, ref kier[2]);
+            //ZmienKarte(ref G2, 1, ref trefl[3]);
+            //UstawGracza(8, "Komputer", 10, 199, true, true, true);
+            //ZmienKarte(ref G8, 0, ref pik[4]);
+            //ZmienKarte(ref G8, 1, ref trefl[4]);
+            //UstawGracza(3);
+            //UstawGracza(4);
+            //UstawGracza(5);
+            //UstawGracza(7);
 
         }
         private void Nakladka(bool widoczna = false)
@@ -182,16 +186,62 @@ namespace klient_wpf
             chatTimer.Interval = new TimeSpan(0, 0, 3);
             chatTimer.Start();
         }
+        private void WystartujZegar2()
+        {
+            ogolnyTimer.Tick += new EventHandler(ogolnyTimer_Tick);
+            ogolnyTimer.Interval = new TimeSpan(0, 0, 1);
+            ogolnyTimer.Start();
+        }
 
         private void chatTimer_Tick(object sender, EventArgs e)
         {
             if (!ObecnyStol.graRozpoczeta)
             {
                 PobierzUzytkownikow();
-                Nakladka(true);
+                if(gra==null)
+                    Nakladka(true);
             }
             
             PobierzWiadomosci();
+        }
+
+        private void ogolnyTimer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                gra = SerwerRozgrywki.ZwrocGre(token);
+                if (gra != null)
+                {
+                    Nakladka(false);
+                    Gracze=SerwerRozgrywki.ZwrocGraczy(token);
+                    for(int i=0;i<Gracze.Length;i++)     
+                    {
+                        bool tempBB=false;
+                        bool tempSB=false;
+                        bool ruch=false;
+                        bool fold=false;
+                        if(Gracze[i].stan==StanGracza.BigBlind)
+                            tempBB=true;
+                        else if (Gracze[i].stan == StanGracza.SmallBlind)
+                        {
+                            tempBB = true;
+                            tempSB = true;
+                        }
+                        if(Gracze[i].identyfikatorUzytkownika==gra.czyjRuch)
+                            ruch=true;
+                        if (Gracze[i].stan == StanGracza.Fold)
+                            fold = true;
+
+                        UstawGracza(i+1,Gracze[i].nazwaUzytkownika,(int)Gracze[i].kasa,(int)Gracze[i].stawia,true,tempBB,tempSB,ruch,fold);
+                    }
+                    LKasaStol.Content = gra.pula;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Nieoczekiwany wyjątek!", "Fatal Error");
+            }
+
         }
 
         private void PobierzWiadomosci()
@@ -363,7 +413,8 @@ namespace klient_wpf
                 case 1:
                     if (widoczny)
                     {
-                        LG1.Content = nazwa;
+                        LG1.Visibility = Visibility.Visible;
+                        LG1.Content = nazwa;                      
                         LKasaG1.Content = kasa;
                         if (ruch)
                             LG1.Foreground = Brushes.Red;
@@ -388,6 +439,7 @@ namespace klient_wpf
                 case 2:
                     if (widoczny)
                     {
+                        LG2.Visibility = Visibility.Visible;
                         LG2.Content = nazwa;
                         LKasaG2.Content = kasa;
                         if (ruch)
@@ -412,6 +464,7 @@ namespace klient_wpf
                 case 3:
                     if (widoczny)
                     {
+                        LG3.Visibility = Visibility.Visible;
                         LG3.Content = nazwa;
                         LKasaG3.Content = kasa;
                         if (ruch)
@@ -436,6 +489,7 @@ namespace klient_wpf
                 case 4:
                     if (widoczny)
                     {
+                        LG4.Visibility = Visibility.Visible;
                         LG4.Content = nazwa;
                         LKasaG4.Content = kasa;
                         if (ruch)
@@ -460,6 +514,7 @@ namespace klient_wpf
                 case 5:
                     if (widoczny)
                     {
+                        LG5.Visibility = Visibility.Visible;
                         LG5.Content = nazwa;
                         LKasaG5.Content = kasa;
                         if (ruch)
@@ -484,6 +539,7 @@ namespace klient_wpf
                 case 6:
                     if (widoczny)
                     {
+                        LG6.Visibility = Visibility.Visible;
                         LG6.Content = nazwa;
                         LKasaG6.Content = kasa;
                         if (ruch)
@@ -508,6 +564,7 @@ namespace klient_wpf
                 case 7:
                     if (widoczny)
                     {
+                        LG7.Visibility = Visibility.Visible;
                         LG7.Content = nazwa;
                         LKasaG7.Content = kasa;
                         if (ruch)
@@ -532,6 +589,7 @@ namespace klient_wpf
                 case 8:
                     if (widoczny)
                     {
+                        LG8.Visibility = Visibility.Visible;
                         LG8.Content = nazwa;
                         LKasaG8.Content = kasa;
                         if (ruch)
@@ -701,6 +759,7 @@ namespace klient_wpf
             TBLStart.Visibility = Visibility.Hidden;
             PobierzUzytkownikow();
             UzytkownicyNaStart();
+            WystartujZegar2();
         }
 
     }

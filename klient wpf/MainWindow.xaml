@@ -36,7 +36,7 @@
         <Label Content="Zaloguj się do gry Poker" Margin="0,217,0,367" VerticalAlignment="Center" FontSize="20" Background="{x:Null}" Foreground="#FF5F5F5F" HorizontalAlignment="Center"/>
         <Image HorizontalAlignment="Center" Margin="198,-26,197,534" VerticalAlignment="Center" Source="resources/logo2.png" Height="134" Width="310"/>
         <TextBlock x:Name="ZamknijTBL" HorizontalAlignment="Center" Margin="332,548,331,78" TextWrapping="Wrap" Foreground="#FF487BD4" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown" VerticalAlignment="Center" Style="{StaticResource HoverUnderlineStyle}"><Run Language="pl-pl" Text="Zamknij" /></TextBlock>
-        <TextBlock HorizontalAlignment="Center" Margin="0,486,0,140" TextWrapping="Wrap" Foreground="#FF487BD4" Text="Utwórz konto" VerticalAlignment="Center" Style="{StaticResource HoverUnderlineStyle}"/>
+        <TextBlock HorizontalAlignment="Center" Margin="0,486,0,140" TextWrapping="Wrap" Foreground="#FF487BD4" Text="Utwórz konto" VerticalAlignment="Center" Style="{StaticResource HoverUnderlineStyle}" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_1"/>
         <Label Name="LBlad" Content="" HorizontalAlignment="Center" Margin="227,286,228,330" VerticalAlignment="Center" Width="250" Foreground="Red" Visibility="Hidden"/>
     </Grid>
 </Window>

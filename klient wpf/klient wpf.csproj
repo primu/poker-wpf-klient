@@ -73,6 +73,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Rejestracja.xaml.cs">
+      <DependentUpon>Rejestracja.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Service References\Glowny\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -107,6 +110,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="PokojGry.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Rejestracja.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -188,6 +195,12 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.czyWynikiResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.DajGreResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.DajPokojResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.DolaczDoStoluResponse.datasource">

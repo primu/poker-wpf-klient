@@ -140,7 +140,6 @@
           <s:element minOccurs="0" maxOccurs="1" name="nazwaUzytkownika" type="s:string" />
           <s:element minOccurs="1" maxOccurs="1" name="numerPokoju" type="s:long" />
           <s:element minOccurs="1" maxOccurs="1" name="kasiora" type="s:long" />
-          <s:element minOccurs="1" maxOccurs="1" name="fold" type="s:boolean" />
           <s:element minOccurs="1" maxOccurs="1" name="start" type="s:boolean" />
         </s:sequence>
       </s:complexType>
@@ -409,6 +408,7 @@
           <s:element minOccurs="1" maxOccurs="1" name="duzyBlind" type="s:long" />
           <s:element minOccurs="0" maxOccurs="1" name="stol" type="tns:ArrayOfKarta" />
           <s:element minOccurs="0" maxOccurs="1" name="listaWin" type="tns:ArrayOfGracz" />
+          <s:element minOccurs="1" maxOccurs="1" name="ktoDealer" type="s:long" />
           <s:element minOccurs="1" maxOccurs="1" name="wyniki" type="s:boolean" />
         </s:sequence>
       </s:complexType>
@@ -427,6 +427,34 @@
       </s:element>
       <s:element name="CzyscStolyResponse">
         <s:complexType />
+      </s:element>
+      <s:element name="DajPokoj">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nazwa" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DajPokojResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DajPokojResult" type="tns:Pokoj" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DajGre">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="nazwa" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DajGreResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DajGreResult" type="tns:Gra" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
     </s:schema>
   </wsdl:types>
@@ -556,6 +584,18 @@
   <wsdl:message name="CzyscStolySoapOut">
     <wsdl:part name="parameters" element="tns:CzyscStolyResponse" />
   </wsdl:message>
+  <wsdl:message name="DajPokojSoapIn">
+    <wsdl:part name="parameters" element="tns:DajPokoj" />
+  </wsdl:message>
+  <wsdl:message name="DajPokojSoapOut">
+    <wsdl:part name="parameters" element="tns:DajPokojResponse" />
+  </wsdl:message>
+  <wsdl:message name="DajGreSoapIn">
+    <wsdl:part name="parameters" element="tns:DajGre" />
+  </wsdl:message>
+  <wsdl:message name="DajGreSoapOut">
+    <wsdl:part name="parameters" element="tns:DajGreResponse" />
+  </wsdl:message>
   <wsdl:portType name="RozgrywkiSoap">
     <wsdl:operation name="ustawNoweRoz">
       <wsdl:input message="tns:ustawNoweRozSoapIn" />
@@ -640,6 +680,14 @@
     <wsdl:operation name="CzyscStoly">
       <wsdl:input message="tns:CzyscStolySoapIn" />
       <wsdl:output message="tns:CzyscStolySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DajPokoj">
+      <wsdl:input message="tns:DajPokojSoapIn" />
+      <wsdl:output message="tns:DajPokojSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DajGre">
+      <wsdl:input message="tns:DajGreSoapIn" />
+      <wsdl:output message="tns:DajGreSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="RozgrywkiSoap" type="tns:RozgrywkiSoap">
@@ -833,6 +881,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="DajPokoj">
+      <soap:operation soapAction="http://tempuri.org/DajPokoj" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DajGre">
+      <soap:operation soapAction="http://tempuri.org/DajGre" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="RozgrywkiSoap12" type="tns:RozgrywkiSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -1018,6 +1084,24 @@
     </wsdl:operation>
     <wsdl:operation name="CzyscStoly">
       <soap12:operation soapAction="http://tempuri.org/CzyscStoly" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DajPokoj">
+      <soap12:operation soapAction="http://tempuri.org/DajPokoj" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DajGre">
+      <soap12:operation soapAction="http://tempuri.org/DajGre" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
