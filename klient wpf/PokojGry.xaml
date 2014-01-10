@@ -17,7 +17,7 @@
         </Style>
     </Window.Resources>
     <Grid Width="1366" Height="786">
-        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Hidden" Height="{Binding ElementName=RootGrid,Path=ActualHeight}" Margin="260,0">
+        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Visible" Height="{Binding ElementName=RootGrid,Path=ActualHeight}" Margin="260,0">
             <!-- Width="{Binding ElementName=RootGrid,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}"-->
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity=".5"/>
