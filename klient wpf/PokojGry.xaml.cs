@@ -294,14 +294,16 @@ namespace klient_wpf
                         temp = j + 1;
                     }
                 }
+                int k = 1;
                 for (int i = 0; i < Gracze.Length; i++)
                 {
                     if (Gracze[i].identyfikatorUzytkownika != ja.identyfikatorUzytkownika)
                     {
-                        miejscePrzyStole[i] = temp;
+                        miejscePrzyStole[k] = temp;
                         temp++;
-                        if (temp > 8)
+                        if (temp > 7)
                             temp = 0;
+                        k++;
                     }
                 }
             }
