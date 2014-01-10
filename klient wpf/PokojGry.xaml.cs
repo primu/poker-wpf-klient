@@ -53,6 +53,10 @@ namespace klient_wpf
         Glowny.Wiadomosc[] Wiadomosci;
         int OstatnieOdswiezenie = (Int32)(DateTime.Now.Subtract(new TimeSpan(0, 1, 0)).Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 
+        int[] miejscePrzyStole = new int[8];
+
+        bool s = false;
+
         public PokojGry()
         {
             InitializeComponent();
@@ -211,11 +215,22 @@ namespace klient_wpf
             {
                 gra = SerwerRozgrywki.ZwrocGre(token);               
                 if (gra != null)
-                {                
+                {
+                    if (!s) // Wykonuje się raz, jedynie przy starcie gry
+                    {
+                        s = true;
+                        UstawMiejscePrzyStole();
+                    }
+
                     Nakladka(false);
                     Gracze=SerwerRozgrywki.ZwrocGraczy(token);
                     for(int i=0;i<Gracze.Length;i++)     
                     {
+                        if (Gracze[i].identyfikatorUzytkownika == id)
+                        {
+                            ja = Gracze[i];
+                            SIleStawia.Maximum = ja.kasa;
+                        }
                         bool tempBB=false;
                         bool tempSB=false;
                         bool ruch=false;
@@ -264,6 +279,35 @@ namespace klient_wpf
                 MessageBox.Show("Nieoczekiwany wyjątek!", "Fatal Error");
             }
 
+        }
+
+        private void UstawMiejscePrzyStole()
+        {
+            if (ObecnyStol.graRozpoczeta)
+            {
+                int temp = -1;
+                for (int j = 0; j < Gracze.Length; j++)
+                {
+                    if (Gracze[j].identyfikatorUzytkownika == ja.identyfikatorUzytkownika)
+                    {
+                        miejscePrzyStole[0] = j;
+                        temp = j + 1;
+                    }
+                }
+                for (int i = 0; i < Gracze.Length; i++)
+                {
+                    if (Gracze[i].identyfikatorUzytkownika != ja.identyfikatorUzytkownika)
+                    {
+                        miejscePrzyStole[i] = temp;
+                        temp++;
+                        if (temp > 8)
+                            temp = 0;
+                    }
+                }
+            }
+            //else
+            //{
+            //}
         }
 
         private void displayCards()

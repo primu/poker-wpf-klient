@@ -190,7 +190,7 @@
             </Rectangle.Fill>
         </Rectangle>
         <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="20" Margin="376,674,756,92" VerticalAlignment="Center" Width="234" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True"/>
-        <Label Name="LIleStawia" Content="0" HorizontalAlignment="Center" Height="30" Margin="645,670,687,77" VerticalAlignment="Center" Width="95" FontWeight="Bold"/>
+        <Label Name="LIleStawia" Content="0" HorizontalAlignment="Center" Height="30" Margin="618,672,653,84" VerticalAlignment="Center" Width="95" FontWeight="Bold"/>
         <Button Content="Postaw" HorizontalAlignment="Center" Margin="810,666,462,78" VerticalAlignment="Center" Width="95" Height="42"/>
         <Button Content="Spasuj" HorizontalAlignment="Center" Margin="909,666,362,78" VerticalAlignment="Center" Width="95" Height="42"/>
         <Label HorizontalContentAlignment="Center" Name="LKasaG1" Content="0" HorizontalAlignment="Center" Margin="634,531,626,229" VerticalAlignment="Center" Foreground="Yellow" Width="106">
