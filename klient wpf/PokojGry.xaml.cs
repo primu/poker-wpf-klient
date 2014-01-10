@@ -265,7 +265,7 @@ namespace klient_wpf
                         if (Gracze[i].stan == StanGracza.Fold)
                             fold = true;
 
-                        UstawGracza(i + 1, Gracze[miejscePrzyStole[i, 0]].nazwaUzytkownika, (int)Gracze[miejscePrzyStole[i, 0]].kasa, (int)Gracze[miejscePrzyStole[i, 0]].stawia, true, tempBB, tempSB, ruch, fold, (int)Gracze[miejscePrzyStole[i, 0]].identyfikatorUzytkownika);
+                        UstawGracza(miejscePrzyStole[i,0], Gracze[i].nazwaUzytkownika, (int)Gracze[i].kasa, (int)Gracze[i].stawia, true, tempBB, tempSB, ruch, fold, (int)Gracze[i].identyfikatorUzytkownika);
                     }
                     LKasaStol.Content = gra.pula;
                     //wszystko co związane z naszym graczem
@@ -299,9 +299,42 @@ namespace klient_wpf
 
         }
 
+        //private void UstawMiejscePrzyStole()
+        //{
+        //    if (gra != null) 
+        //    {
+        //        miejscePrzyStole = new int[Gracze.Length, 2];
+        //        int temp = -1;
+        //        for (int j = 0; j < Gracze.Length; j++)
+        //        {
+        //            if (Gracze[j].identyfikatorUzytkownika == ObecnyUzytkownik.identyfikatorUzytkownika)
+        //            {
+        //                miejscePrzyStole[0, 0] = j;
+        //                miejscePrzyStole[0, 1] = (int)ObecnyUzytkownik.identyfikatorUzytkownika;
+        //                temp = j + 1;
+        //            }
+        //        }
+        //        int k = 1;
+        //        for (int i = 0; i < Gracze.Length; i++)
+        //        {
+        //            if (Gracze[i].identyfikatorUzytkownika != ObecnyUzytkownik.identyfikatorUzytkownika)
+        //            {
+        //                if (temp >= Gracze.Length)
+        //                    temp = 0;
+        //                miejscePrzyStole[k, 0] = temp;
+        //                miejscePrzyStole[k, 1] = (int)Gracze[i].identyfikatorUzytkownika;
+        //                temp++;
+        //                k++;
+        //            }
+        //        }
+        //    }
+        //    //else
+        //    //{
+        //    //}
+        //}
         private void UstawMiejscePrzyStole()
         {
-            if (gra != null) 
+            if (gra != null)
             {
                 miejscePrzyStole = new int[Gracze.Length, 2];
                 int temp = -1;
@@ -309,20 +342,22 @@ namespace klient_wpf
                 {
                     if (Gracze[j].identyfikatorUzytkownika == ObecnyUzytkownik.identyfikatorUzytkownika)
                     {
-                        miejscePrzyStole[0, 0] = j;
-                        miejscePrzyStole[0, 1] = (int)ObecnyUzytkownik.identyfikatorUzytkownika;
+                        miejscePrzyStole[j, 0] = 1;
+                        miejscePrzyStole[j, 1] = (int)ObecnyUzytkownik.identyfikatorUzytkownika;
                         temp = j + 1;
                     }
                 }
-                int k = 1;
+
+                int k = 2;
                 for (int i = 0; i < Gracze.Length; i++)
                 {
-                    if (Gracze[i].identyfikatorUzytkownika != ObecnyUzytkownik.identyfikatorUzytkownika)
+                    if (temp >= Gracze.Length)
+                        temp = 0;
+                    if (Gracze[temp].identyfikatorUzytkownika != ObecnyUzytkownik.identyfikatorUzytkownika)
                     {
-                        if (temp >= Gracze.Length)
-                            temp = 0;
-                        miejscePrzyStole[k, 0] = temp;
-                        miejscePrzyStole[k, 1] = (int)Gracze[i].identyfikatorUzytkownika;
+                        
+                        miejscePrzyStole[temp, 0] = k;
+                        miejscePrzyStole[temp, 1] = (int)Gracze[temp].identyfikatorUzytkownika;
                         temp++;
                         k++;
                     }
@@ -336,11 +371,16 @@ namespace klient_wpf
         {
             for (int i = 0; i < Gracze.Length; i++)
             {
-                for (int j = 0; j < miejscePrzyStole.GetLength(0); j++)
+                if (miejscePrzyStole[i, 1] != Gracze[i].identyfikatorUzytkownika)
                 {
-                    if (miejscePrzyStole[j, 1] == Gracze[i].identyfikatorUzytkownika)
+                    for (int j = 0; j < miejscePrzyStole.GetLength(0); j++)
                     {
-                        miejscePrzyStole[j, 0] = i;
+                        if(miejscePrzyStole[j,1]==Gracze[i].identyfikatorUzytkownika)
+                        {
+                            miejscePrzyStole[j, 1] = -1;
+                            miejscePrzyStole[i, 0] = miejscePrzyStole[j, 0];
+                            miejscePrzyStole[i, 1] = (int)Gracze[i].identyfikatorUzytkownika;
+                        }
                     }
                 }
             }
