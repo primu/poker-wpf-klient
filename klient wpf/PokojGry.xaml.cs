@@ -32,7 +32,7 @@ namespace klient_wpf
         Rozgrywki.RozgrywkiSoapClient SerwerRozgrywki = new Rozgrywki.RozgrywkiSoapClient();
         Glowny.Komunikat komunikat = new Glowny.Komunikat();
         Rozgrywki.Komunikat komunikatR = new Rozgrywki.Komunikat();
-        Rozgrywki.Gra gra = new Rozgrywki.Gra();
+        Rozgrywki.Gra gra = null;
 
 
         Rozgrywki.Uzytkownik ObecnyUzytkownik;
@@ -114,6 +114,16 @@ namespace klient_wpf
                 TBLUzytkownicyStart.Inlines.Add(new LineBreak());
             }
         }
+        private void PobierzObecnyStol()
+        {
+            Rozgrywki.Pokoj[] temp = SerwerRozgrywki.PobierzPokoje(token);
+            foreach (Rozgrywki.Pokoj p in temp)
+            {
+                //if (ObecnyUzytkownik.numerPokoju == p.numerPokoju)
+                if (idPokoju == p.numerPokoju)
+                    ObecnyStol = p;
+            }
+        }
         public PokojGry(byte[] token, Int64 id, Int64 nrPokoju)
         {
             InitializeComponent();
@@ -129,13 +139,7 @@ namespace klient_wpf
 
             PobierzUzytkownikow();
 
-            Rozgrywki.Pokoj[] temp = SerwerRozgrywki.PobierzPokoje(token);
-            foreach (Rozgrywki.Pokoj p in temp)
-            {
-                //if (ObecnyUzytkownik.numerPokoju == p.numerPokoju)
-                if (idPokoju == p.numerPokoju)
-                    ObecnyStol = p;
-            }
+            PobierzObecnyStol();
             LStol.Content = ObecnyStol.nazwaPokoju;
 
             ZaladujKarty();
@@ -199,14 +203,19 @@ namespace klient_wpf
 
         private void chatTimer_Tick(object sender, EventArgs e)
         {
-            if (!ObecnyStol.graRozpoczeta)
+            if (ObecnyStol.graRozpoczeta==false)
             {
                 PobierzUzytkownikow();
-                if(gra==null)
+                if (gra == null)
                     Nakladka(true);
+            }
+            else
+            {
+                Nakladka(false);
             }
             
             PobierzWiadomosci();
+            PobierzObecnyStol();
         }
 
         private void ogolnyTimer_Tick(object sender, EventArgs e)
@@ -216,13 +225,17 @@ namespace klient_wpf
                 gra = SerwerRozgrywki.ZwrocGre(token);               
                 if (gra != null)
                 {
+                    Gracze = SerwerRozgrywki.ZwrocGraczy(token);
                     if (!s) // Wykonuje się raz, jedynie przy starcie gry
                     {
                         s = true;
+                        PobierzObecnyStol();
                         UstawMiejscePrzyStole();
+                        
+                        Nakladka(false);
                     }
 
-                    Nakladka(false);
+                    
                     Gracze=SerwerRozgrywki.ZwrocGraczy(token);
                     for(int i=0;i<Gracze.Length;i++)     
                     {
@@ -247,7 +260,7 @@ namespace klient_wpf
                         if (Gracze[i].stan == StanGracza.Fold)
                             fold = true;
 
-                        UstawGracza(i+1,Gracze[i].nazwaUzytkownika,(int)Gracze[i].kasa,(int)Gracze[i].stawia,true,tempBB,tempSB,ruch,fold,(int)Gracze[i].identyfikatorUzytkownika);
+                        UstawGracza(i + 1, Gracze[miejscePrzyStole[i]].nazwaUzytkownika, (int)Gracze[miejscePrzyStole[i]].kasa, (int)Gracze[miejscePrzyStole[i]].stawia, true, tempBB, tempSB, ruch, fold, (int)Gracze[miejscePrzyStole[i]].identyfikatorUzytkownika);
                     }
                     LKasaStol.Content = gra.pula;
                     //wszystko co związane z naszym graczem
@@ -283,7 +296,7 @@ namespace klient_wpf
 
         private void UstawMiejscePrzyStole()
         {
-            if (ObecnyStol.graRozpoczeta)
+            if (gra != null) 
             {
                 int temp = -1;
                 for (int j = 0; j < Gracze.Length; j++)
@@ -301,7 +314,7 @@ namespace klient_wpf
                     {
                         miejscePrzyStole[k] = temp;
                         temp++;
-                        if (temp > 7)
+                        if (temp >= Gracze.Length)
                             temp = 0;
                         k++;
                     }
@@ -843,6 +856,7 @@ namespace klient_wpf
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             chatTimer.Stop();
+            ogolnyTimer.Stop();
             if (MessageBox.Show("Czy na pewno chcesz opuścić pokój?", "Opuść pokój", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
             {
                 komunikatR = SerwerRozgrywki.OpuscStol(token);
@@ -852,6 +866,7 @@ namespace klient_wpf
             else
             {
                 chatTimer.Start();
+                ogolnyTimer.Start();
             }
         }
 
