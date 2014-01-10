@@ -53,7 +53,8 @@ namespace klient_wpf
         Glowny.Wiadomosc[] Wiadomosci;
         int OstatnieOdswiezenie = (Int32)(DateTime.Now.Subtract(new TimeSpan(0, 1, 0)).Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
 
-        int[] miejscePrzyStole = new int[8];
+        //int[,] miejscePrzyStole = new int[8,2];
+        int[,] miejscePrzyStole;
 
         bool s = false;
 
@@ -244,6 +245,10 @@ namespace klient_wpf
                             ja = Gracze[i];
                             SIleStawia.Maximum = ja.kasa;
                         }
+                        else
+                        {
+                            UaktualnijMiejscePrzystole();
+                        }
                         bool tempBB=false;
                         bool tempSB=false;
                         bool ruch=false;
@@ -260,7 +265,7 @@ namespace klient_wpf
                         if (Gracze[i].stan == StanGracza.Fold)
                             fold = true;
 
-                        UstawGracza(i + 1, Gracze[miejscePrzyStole[i]].nazwaUzytkownika, (int)Gracze[miejscePrzyStole[i]].kasa, (int)Gracze[miejscePrzyStole[i]].stawia, true, tempBB, tempSB, ruch, fold, (int)Gracze[miejscePrzyStole[i]].identyfikatorUzytkownika);
+                        UstawGracza(i + 1, Gracze[miejscePrzyStole[i, 0]].nazwaUzytkownika, (int)Gracze[miejscePrzyStole[i, 0]].kasa, (int)Gracze[miejscePrzyStole[i, 0]].stawia, true, tempBB, tempSB, ruch, fold, (int)Gracze[miejscePrzyStole[i, 0]].identyfikatorUzytkownika);
                     }
                     LKasaStol.Content = gra.pula;
                     //wszystko co związane z naszym graczem
@@ -269,8 +274,8 @@ namespace klient_wpf
                         Rozgrywki.Gracz t = gra.aktywni.Single<Gracz>(delegate(Gracz c) { return c.identyfikatorUzytkownika == id; });
                         if (t != null)
                         {
-                            if (ja != t)
-                            {
+                            //if (ja != t)
+                            //{
                                 //ja = t;
                                 if (gra.stan == Stan.PREFLOP)
                                 {//pobranie kart i wyświetlenie ich
@@ -281,7 +286,7 @@ namespace klient_wpf
                                     ZmienKarte(ref G1, 1, ref y);
                                   
                                 }
-                            }
+                            //}
                         }
                     }
 
@@ -289,7 +294,7 @@ namespace klient_wpf
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Nieoczekiwany wyjątek!", "Fatal Error");
+                MessageBox.Show("Nieoczekiwany wyjątek! " + ex.Message +" "+ex.StackTrace, "Fatal Error");
             }
 
         }
@@ -298,24 +303,27 @@ namespace klient_wpf
         {
             if (gra != null) 
             {
+                miejscePrzyStole = new int[Gracze.Length, 2];
                 int temp = -1;
                 for (int j = 0; j < Gracze.Length; j++)
                 {
-                    if (Gracze[j].identyfikatorUzytkownika == ja.identyfikatorUzytkownika)
+                    if (Gracze[j].identyfikatorUzytkownika == ObecnyUzytkownik.identyfikatorUzytkownika)
                     {
-                        miejscePrzyStole[0] = j;
+                        miejscePrzyStole[0, 0] = j;
+                        miejscePrzyStole[0, 1] = (int)ObecnyUzytkownik.identyfikatorUzytkownika;
                         temp = j + 1;
                     }
                 }
                 int k = 1;
                 for (int i = 0; i < Gracze.Length; i++)
                 {
-                    if (Gracze[i].identyfikatorUzytkownika != ja.identyfikatorUzytkownika)
+                    if (Gracze[i].identyfikatorUzytkownika != ObecnyUzytkownik.identyfikatorUzytkownika)
                     {
-                        miejscePrzyStole[k] = temp;
-                        temp++;
                         if (temp >= Gracze.Length)
                             temp = 0;
+                        miejscePrzyStole[k, 0] = temp;
+                        miejscePrzyStole[k, 1] = (int)Gracze[i].identyfikatorUzytkownika;
+                        temp++;
                         k++;
                     }
                 }
@@ -323,6 +331,19 @@ namespace klient_wpf
             //else
             //{
             //}
+        }
+        private void UaktualnijMiejscePrzystole()
+        {
+            for (int i = 0; i < Gracze.Length; i++)
+            {
+                for (int j = 0; j < miejscePrzyStole.GetLength(0); j++)
+                {
+                    if (miejscePrzyStole[j, 1] == Gracze[i].identyfikatorUzytkownika)
+                    {
+                        miejscePrzyStole[j, 0] = i;
+                    }
+                }
+            }
         }
 
         private void displayCards()
