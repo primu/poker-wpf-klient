@@ -1012,6 +1012,13 @@ namespace klient_wpf.Rozgrywki {
         System.Threading.Tasks.Task<klient_wpf.Rozgrywki.ZwrocNajUklGraczyResponse> ZwrocNajUklGraczyAsync(klient_wpf.Rozgrywki.ZwrocNajUklGraczyRequest request);
         
         // CODEGEN: Generating message contract since element name token from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ZwrocHandGraczy", ReplyAction="*")]
+        klient_wpf.Rozgrywki.ZwrocHandGraczyResponse ZwrocHandGraczy(klient_wpf.Rozgrywki.ZwrocHandGraczyRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ZwrocHandGraczy", ReplyAction="*")]
+        System.Threading.Tasks.Task<klient_wpf.Rozgrywki.ZwrocHandGraczyResponse> ZwrocHandGraczyAsync(klient_wpf.Rozgrywki.ZwrocHandGraczyRequest request);
+        
+        // CODEGEN: Generating message contract since element name token from namespace http://tempuri.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PobierzGracza", ReplyAction="*")]
         klient_wpf.Rozgrywki.PobierzGraczaResponse PobierzGracza(klient_wpf.Rozgrywki.PobierzGraczaRequest request);
         
@@ -1719,6 +1726,78 @@ namespace klient_wpf.Rozgrywki {
         
         public ZwrocNajUklGraczyResponseBody(klient_wpf.Rozgrywki.Karta[] ZwrocNajUklGraczyResult) {
             this.ZwrocNajUklGraczyResult = ZwrocNajUklGraczyResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ZwrocHandGraczyRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ZwrocHandGraczy", Namespace="http://tempuri.org/", Order=0)]
+        public klient_wpf.Rozgrywki.ZwrocHandGraczyRequestBody Body;
+        
+        public ZwrocHandGraczyRequest() {
+        }
+        
+        public ZwrocHandGraczyRequest(klient_wpf.Rozgrywki.ZwrocHandGraczyRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class ZwrocHandGraczyRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public byte[] token;
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public long idGracza;
+        
+        public ZwrocHandGraczyRequestBody() {
+        }
+        
+        public ZwrocHandGraczyRequestBody(byte[] token, long idGracza) {
+            this.token = token;
+            this.idGracza = idGracza;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class ZwrocHandGraczyResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="ZwrocHandGraczyResponse", Namespace="http://tempuri.org/", Order=0)]
+        public klient_wpf.Rozgrywki.ZwrocHandGraczyResponseBody Body;
+        
+        public ZwrocHandGraczyResponse() {
+        }
+        
+        public ZwrocHandGraczyResponse(klient_wpf.Rozgrywki.ZwrocHandGraczyResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class ZwrocHandGraczyResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public klient_wpf.Rozgrywki.Karta[] ZwrocHandGraczyResult;
+        
+        public ZwrocHandGraczyResponseBody() {
+        }
+        
+        public ZwrocHandGraczyResponseBody(klient_wpf.Rozgrywki.Karta[] ZwrocHandGraczyResult) {
+            this.ZwrocHandGraczyResult = ZwrocHandGraczyResult;
         }
     }
     
@@ -2887,6 +2966,33 @@ namespace klient_wpf.Rozgrywki {
             inValue.Body.token = token;
             inValue.Body.idGracza = idGracza;
             return ((klient_wpf.Rozgrywki.RozgrywkiSoap)(this)).ZwrocNajUklGraczyAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        klient_wpf.Rozgrywki.ZwrocHandGraczyResponse klient_wpf.Rozgrywki.RozgrywkiSoap.ZwrocHandGraczy(klient_wpf.Rozgrywki.ZwrocHandGraczyRequest request) {
+            return base.Channel.ZwrocHandGraczy(request);
+        }
+        
+        public klient_wpf.Rozgrywki.Karta[] ZwrocHandGraczy(byte[] token, long idGracza) {
+            klient_wpf.Rozgrywki.ZwrocHandGraczyRequest inValue = new klient_wpf.Rozgrywki.ZwrocHandGraczyRequest();
+            inValue.Body = new klient_wpf.Rozgrywki.ZwrocHandGraczyRequestBody();
+            inValue.Body.token = token;
+            inValue.Body.idGracza = idGracza;
+            klient_wpf.Rozgrywki.ZwrocHandGraczyResponse retVal = ((klient_wpf.Rozgrywki.RozgrywkiSoap)(this)).ZwrocHandGraczy(inValue);
+            return retVal.Body.ZwrocHandGraczyResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<klient_wpf.Rozgrywki.ZwrocHandGraczyResponse> klient_wpf.Rozgrywki.RozgrywkiSoap.ZwrocHandGraczyAsync(klient_wpf.Rozgrywki.ZwrocHandGraczyRequest request) {
+            return base.Channel.ZwrocHandGraczyAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<klient_wpf.Rozgrywki.ZwrocHandGraczyResponse> ZwrocHandGraczyAsync(byte[] token, long idGracza) {
+            klient_wpf.Rozgrywki.ZwrocHandGraczyRequest inValue = new klient_wpf.Rozgrywki.ZwrocHandGraczyRequest();
+            inValue.Body = new klient_wpf.Rozgrywki.ZwrocHandGraczyRequestBody();
+            inValue.Body.token = token;
+            inValue.Body.idGracza = idGracza;
+            return ((klient_wpf.Rozgrywki.RozgrywkiSoap)(this)).ZwrocHandGraczyAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
