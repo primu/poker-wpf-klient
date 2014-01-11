@@ -146,14 +146,7 @@ namespace klient_wpf
             ZaladujKarty();
 
             //UsunWszystkieKarty();
-            for (int i = 0; i < Uzytkownicy.Length; i++)
-            {
-                UstawGracza(i + 1, Uzytkownicy[i].nazwaUzytkownika,0,0,true);
-            }
-            for (int i = Uzytkownicy.Length; i < 8; i++)
-            {
-                UstawGracza(i + 1);
-            }
+            ZerujUzytkownikow(true);
             //ZmienKarte(ref Stol, 0, ref kier[11]);
             //ZmienKarte(ref Stol, 1, ref trefl[11]);
             //ZmienKarte(ref Stol, 2, ref pik[11]);
@@ -179,9 +172,31 @@ namespace klient_wpf
             WystartujZegar();
         }
 
+        private void ZerujUzytkownikow(bool start = false)
+        {
+            if (start)
+            {
+                for (int i = 0; i < Uzytkownicy.Length; i++)
+                {
+                    UstawGracza(i + 1, Uzytkownicy[i].nazwaUzytkownika, 0, 0, true);
+                }
+                for (int i = Uzytkownicy.Length; i < 8; i++)
+                {
+                    UstawGracza(i + 1);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 8; i++)
+                {
+                    UstawGracza(i + 1);
+                }
+            }
+        }
+
         private void PobierzUzytkownikow()
         {
-            Uzytkownicy = SerwerRozgrywki.ZwrocUserowStart(token); // Tu jest czasem coś nie tak ;p
+            Uzytkownicy = SerwerRozgrywki.ZwrocUserowStart(token); 
             foreach (Rozgrywki.Uzytkownik u in Uzytkownicy)
             {
                 if (id == u.identyfikatorUzytkownika)
@@ -207,6 +222,7 @@ namespace klient_wpf
             if (ObecnyStol.graRozpoczeta==false)
             {
                 PobierzUzytkownikow();
+                ZerujUzytkownikow(true);
                 if (gra == null)
                     Nakladka(true);
             }
@@ -238,6 +254,7 @@ namespace klient_wpf
 
                     
                     Gracze=SerwerRozgrywki.ZwrocGraczy(token);
+                    ZerujUzytkownikow();
                     for(int i=0;i<Gracze.Length;i++)     
                     {
                         if (Gracze[i].identyfikatorUzytkownika == id)
@@ -265,8 +282,10 @@ namespace klient_wpf
                         if (Gracze[i].stan == StanGracza.Fold)
                             fold = true;
 
+                        
                         UstawGracza(miejscePrzyStole[i,0], Gracze[i].nazwaUzytkownika, (int)Gracze[i].kasa, (int)Gracze[i].stawia, true, tempBB, tempSB, ruch, fold, (int)Gracze[i].identyfikatorUzytkownika);
                     }
+                    
                     LKasaStol.Content = gra.pula;
                     //wszystko co związane z naszym graczem
                     if (SerwerRozgrywki.PobierzGracza(token, id) != null)
@@ -280,8 +299,8 @@ namespace klient_wpf
                                 if (gra.stan == Stan.PREFLOP)
                                 {//pobranie kart i wyświetlenie ich
                                     List<Karta> k = new List<Karta>(SerwerRozgrywki.PobierzKarty(token));
-                                    Image x=PowiazanieKart(k.ElementAt(0));
-                                    Image y=PowiazanieKart(k.ElementAt(1));
+                                    Image x=PowiazanieKart(k[0]);
+                                    Image y=PowiazanieKart(k[1]);
                                     ZmienKarte(ref G1, 0, ref x);
                                     ZmienKarte(ref G1, 1, ref y);
                                   
@@ -299,39 +318,6 @@ namespace klient_wpf
 
         }
 
-        //private void UstawMiejscePrzyStole()
-        //{
-        //    if (gra != null) 
-        //    {
-        //        miejscePrzyStole = new int[Gracze.Length, 2];
-        //        int temp = -1;
-        //        for (int j = 0; j < Gracze.Length; j++)
-        //        {
-        //            if (Gracze[j].identyfikatorUzytkownika == ObecnyUzytkownik.identyfikatorUzytkownika)
-        //            {
-        //                miejscePrzyStole[0, 0] = j;
-        //                miejscePrzyStole[0, 1] = (int)ObecnyUzytkownik.identyfikatorUzytkownika;
-        //                temp = j + 1;
-        //            }
-        //        }
-        //        int k = 1;
-        //        for (int i = 0; i < Gracze.Length; i++)
-        //        {
-        //            if (Gracze[i].identyfikatorUzytkownika != ObecnyUzytkownik.identyfikatorUzytkownika)
-        //            {
-        //                if (temp >= Gracze.Length)
-        //                    temp = 0;
-        //                miejscePrzyStole[k, 0] = temp;
-        //                miejscePrzyStole[k, 1] = (int)Gracze[i].identyfikatorUzytkownika;
-        //                temp++;
-        //                k++;
-        //            }
-        //        }
-        //    }
-        //    //else
-        //    //{
-        //    //}
-        //}
         private void UstawMiejscePrzyStole()
         {
             if (gra != null)
