@@ -227,9 +227,6 @@
     <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.NazwaMojegoUkladuResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
-    <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.NoweRozResponse.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
     <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.OpuscStolResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -243,6 +240,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.Pokoj.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.PotwierdzZakonczenieResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.StartResponse.datasource">

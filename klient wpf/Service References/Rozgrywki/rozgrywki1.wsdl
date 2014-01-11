@@ -2,6 +2,26 @@
 <wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="PotwierdzZakonczenie">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PotwierdzZakonczenieResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PotwierdzZakonczenieResult" type="tns:Komunikat" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="Komunikat">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="trescKomunikatu" type="s:string" />
+          <s:element minOccurs="1" maxOccurs="1" name="kodKomunikatu" type="s:long" />
+        </s:sequence>
+      </s:complexType>
       <s:element name="ustawNoweRoz">
         <s:complexType>
           <s:sequence>
@@ -25,16 +45,6 @@
             <s:element minOccurs="1" maxOccurs="1" name="czyWynikiResult" type="s:boolean" />
           </s:sequence>
         </s:complexType>
-      </s:element>
-      <s:element name="NoweRoz">
-        <s:complexType>
-          <s:sequence>
-            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:base64Binary" />
-          </s:sequence>
-        </s:complexType>
-      </s:element>
-      <s:element name="NoweRozResponse">
-        <s:complexType />
       </s:element>
       <s:element name="NazwaMojegoUkladu">
         <s:complexType>
@@ -286,12 +296,6 @@
           </s:sequence>
         </s:complexType>
       </s:element>
-      <s:complexType name="Komunikat">
-        <s:sequence>
-          <s:element minOccurs="0" maxOccurs="1" name="trescKomunikatu" type="s:string" />
-          <s:element minOccurs="1" maxOccurs="1" name="kodKomunikatu" type="s:long" />
-        </s:sequence>
-      </s:complexType>
       <s:element name="UtworzStol">
         <s:complexType>
           <s:sequence>
@@ -370,7 +374,7 @@
         <s:complexType>
           <s:sequence>
             <s:element minOccurs="0" maxOccurs="1" name="token" type="s:base64Binary" />
-            <s:element minOccurs="1" maxOccurs="1" name="ile" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="ile" type="s:int" />
           </s:sequence>
         </s:complexType>
       </s:element>
@@ -420,6 +424,7 @@
           <s:enumeration value="RIVER" />
           <s:enumeration value="SHOWDOWN" />
           <s:enumeration value="STARTING" />
+          <s:enumeration value="END" />
         </s:restriction>
       </s:simpleType>
       <s:element name="CzyscStoly">
@@ -458,6 +463,12 @@
       </s:element>
     </s:schema>
   </wsdl:types>
+  <wsdl:message name="PotwierdzZakonczenieSoapIn">
+    <wsdl:part name="parameters" element="tns:PotwierdzZakonczenie" />
+  </wsdl:message>
+  <wsdl:message name="PotwierdzZakonczenieSoapOut">
+    <wsdl:part name="parameters" element="tns:PotwierdzZakonczenieResponse" />
+  </wsdl:message>
   <wsdl:message name="ustawNoweRozSoapIn">
     <wsdl:part name="parameters" element="tns:ustawNoweRoz" />
   </wsdl:message>
@@ -469,12 +480,6 @@
   </wsdl:message>
   <wsdl:message name="czyWynikiSoapOut">
     <wsdl:part name="parameters" element="tns:czyWynikiResponse" />
-  </wsdl:message>
-  <wsdl:message name="NoweRozSoapIn">
-    <wsdl:part name="parameters" element="tns:NoweRoz" />
-  </wsdl:message>
-  <wsdl:message name="NoweRozSoapOut">
-    <wsdl:part name="parameters" element="tns:NoweRozResponse" />
   </wsdl:message>
   <wsdl:message name="NazwaMojegoUkladuSoapIn">
     <wsdl:part name="parameters" element="tns:NazwaMojegoUkladu" />
@@ -597,6 +602,10 @@
     <wsdl:part name="parameters" element="tns:DajGreResponse" />
   </wsdl:message>
   <wsdl:portType name="RozgrywkiSoap">
+    <wsdl:operation name="PotwierdzZakonczenie">
+      <wsdl:input message="tns:PotwierdzZakonczenieSoapIn" />
+      <wsdl:output message="tns:PotwierdzZakonczenieSoapOut" />
+    </wsdl:operation>
     <wsdl:operation name="ustawNoweRoz">
       <wsdl:input message="tns:ustawNoweRozSoapIn" />
       <wsdl:output message="tns:ustawNoweRozSoapOut" />
@@ -604,10 +613,6 @@
     <wsdl:operation name="czyWyniki">
       <wsdl:input message="tns:czyWynikiSoapIn" />
       <wsdl:output message="tns:czyWynikiSoapOut" />
-    </wsdl:operation>
-    <wsdl:operation name="NoweRoz">
-      <wsdl:input message="tns:NoweRozSoapIn" />
-      <wsdl:output message="tns:NoweRozSoapOut" />
     </wsdl:operation>
     <wsdl:operation name="NazwaMojegoUkladu">
       <wsdl:input message="tns:NazwaMojegoUkladuSoapIn" />
@@ -692,6 +697,15 @@
   </wsdl:portType>
   <wsdl:binding name="RozgrywkiSoap" type="tns:RozgrywkiSoap">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PotwierdzZakonczenie">
+      <soap:operation soapAction="http://tempuri.org/PotwierdzZakonczenie" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ustawNoweRoz">
       <soap:operation soapAction="http://tempuri.org/ustawNoweRoz" style="document" />
       <wsdl:input>
@@ -703,15 +717,6 @@
     </wsdl:operation>
     <wsdl:operation name="czyWyniki">
       <soap:operation soapAction="http://tempuri.org/czyWyniki" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="NoweRoz">
-      <soap:operation soapAction="http://tempuri.org/NoweRoz" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -902,6 +907,15 @@
   </wsdl:binding>
   <wsdl:binding name="RozgrywkiSoap12" type="tns:RozgrywkiSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="PotwierdzZakonczenie">
+      <soap12:operation soapAction="http://tempuri.org/PotwierdzZakonczenie" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="ustawNoweRoz">
       <soap12:operation soapAction="http://tempuri.org/ustawNoweRoz" style="document" />
       <wsdl:input>
@@ -913,15 +927,6 @@
     </wsdl:operation>
     <wsdl:operation name="czyWyniki">
       <soap12:operation soapAction="http://tempuri.org/czyWyniki" style="document" />
-      <wsdl:input>
-        <soap12:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap12:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="NoweRoz">
-      <soap12:operation soapAction="http://tempuri.org/NoweRoz" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>
