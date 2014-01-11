@@ -15,6 +15,66 @@ namespace klient_wpf.Rozgrywki {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Komunikat", Namespace="http://tempuri.org/")]
+    [System.SerializableAttribute()]
+    public partial class Komunikat : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string trescKomunikatuField;
+        
+        private long kodKomunikatuField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
+        public string trescKomunikatu {
+            get {
+                return this.trescKomunikatuField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.trescKomunikatuField, value) != true)) {
+                    this.trescKomunikatuField = value;
+                    this.RaisePropertyChanged("trescKomunikatu");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
+        public long kodKomunikatu {
+            get {
+                return this.kodKomunikatuField;
+            }
+            set {
+                if ((this.kodKomunikatuField.Equals(value) != true)) {
+                    this.kodKomunikatuField = value;
+                    this.RaisePropertyChanged("kodKomunikatu");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Karta", Namespace="http://tempuri.org/")]
     [System.SerializableAttribute()]
     public partial class Karta : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -632,66 +692,6 @@ namespace klient_wpf.Rozgrywki {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Komunikat", Namespace="http://tempuri.org/")]
-    [System.SerializableAttribute()]
-    public partial class Komunikat : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string trescKomunikatuField;
-        
-        private long kodKomunikatuField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false)]
-        public string trescKomunikatu {
-            get {
-                return this.trescKomunikatuField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.trescKomunikatuField, value) != true)) {
-                    this.trescKomunikatuField = value;
-                    this.RaisePropertyChanged("trescKomunikatu");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=1)]
-        public long kodKomunikatu {
-            get {
-                return this.kodKomunikatuField;
-            }
-            set {
-                if ((this.kodKomunikatuField.Equals(value) != true)) {
-                    this.kodKomunikatuField = value;
-                    this.RaisePropertyChanged("kodKomunikatu");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Gra", Namespace="http://tempuri.org/")]
     [System.SerializableAttribute()]
     public partial class Gra : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -939,11 +939,21 @@ namespace klient_wpf.Rozgrywki {
         
         [System.Runtime.Serialization.EnumMemberAttribute()]
         STARTING = 5,
+        
+        [System.Runtime.Serialization.EnumMemberAttribute()]
+        END = 6,
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="Rozgrywki.RozgrywkiSoap")]
     public interface RozgrywkiSoap {
+        
+        // CODEGEN: Generating message contract since element name token from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PotwierdzZakonczenie", ReplyAction="*")]
+        klient_wpf.Rozgrywki.PotwierdzZakonczenieResponse PotwierdzZakonczenie(klient_wpf.Rozgrywki.PotwierdzZakonczenieRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PotwierdzZakonczenie", ReplyAction="*")]
+        System.Threading.Tasks.Task<klient_wpf.Rozgrywki.PotwierdzZakonczenieResponse> PotwierdzZakonczenieAsync(klient_wpf.Rozgrywki.PotwierdzZakonczenieRequest request);
         
         // CODEGEN: Generating message contract since element name token from namespace http://tempuri.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ustawNoweRoz", ReplyAction="*")]
@@ -958,13 +968,6 @@ namespace klient_wpf.Rozgrywki {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/czyWyniki", ReplyAction="*")]
         System.Threading.Tasks.Task<klient_wpf.Rozgrywki.czyWynikiResponse> czyWynikiAsync(klient_wpf.Rozgrywki.czyWynikiRequest request);
-        
-        // CODEGEN: Generating message contract since element name token from namespace http://tempuri.org/ is not marked nillable
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/NoweRoz", ReplyAction="*")]
-        klient_wpf.Rozgrywki.NoweRozResponse NoweRoz(klient_wpf.Rozgrywki.NoweRozRequest request);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/NoweRoz", ReplyAction="*")]
-        System.Threading.Tasks.Task<klient_wpf.Rozgrywki.NoweRozResponse> NoweRozAsync(klient_wpf.Rozgrywki.NoweRozRequest request);
         
         // CODEGEN: Generating message contract since element name token from namespace http://tempuri.org/ is not marked nillable
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/NazwaMojegoUkladu", ReplyAction="*")]
@@ -1110,6 +1113,74 @@ namespace klient_wpf.Rozgrywki {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
     [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class PotwierdzZakonczenieRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PotwierdzZakonczenie", Namespace="http://tempuri.org/", Order=0)]
+        public klient_wpf.Rozgrywki.PotwierdzZakonczenieRequestBody Body;
+        
+        public PotwierdzZakonczenieRequest() {
+        }
+        
+        public PotwierdzZakonczenieRequest(klient_wpf.Rozgrywki.PotwierdzZakonczenieRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class PotwierdzZakonczenieRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public byte[] token;
+        
+        public PotwierdzZakonczenieRequestBody() {
+        }
+        
+        public PotwierdzZakonczenieRequestBody(byte[] token) {
+            this.token = token;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class PotwierdzZakonczenieResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PotwierdzZakonczenieResponse", Namespace="http://tempuri.org/", Order=0)]
+        public klient_wpf.Rozgrywki.PotwierdzZakonczenieResponseBody Body;
+        
+        public PotwierdzZakonczenieResponse() {
+        }
+        
+        public PotwierdzZakonczenieResponse(klient_wpf.Rozgrywki.PotwierdzZakonczenieResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class PotwierdzZakonczenieResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public klient_wpf.Rozgrywki.Komunikat PotwierdzZakonczenieResult;
+        
+        public PotwierdzZakonczenieResponseBody() {
+        }
+        
+        public PotwierdzZakonczenieResponseBody(klient_wpf.Rozgrywki.Komunikat PotwierdzZakonczenieResult) {
+            this.PotwierdzZakonczenieResult = PotwierdzZakonczenieResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
     public partial class ustawNoweRozRequest {
         
         [System.ServiceModel.MessageBodyMemberAttribute(Name="ustawNoweRoz", Namespace="http://tempuri.org/", Order=0)]
@@ -1232,67 +1303,6 @@ namespace klient_wpf.Rozgrywki {
         
         public czyWynikiResponseBody(bool czyWynikiResult) {
             this.czyWynikiResult = czyWynikiResult;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class NoweRozRequest {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="NoweRoz", Namespace="http://tempuri.org/", Order=0)]
-        public klient_wpf.Rozgrywki.NoweRozRequestBody Body;
-        
-        public NoweRozRequest() {
-        }
-        
-        public NoweRozRequest(klient_wpf.Rozgrywki.NoweRozRequestBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
-    public partial class NoweRozRequestBody {
-        
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
-        public byte[] token;
-        
-        public NoweRozRequestBody() {
-        }
-        
-        public NoweRozRequestBody(byte[] token) {
-            this.token = token;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
-    public partial class NoweRozResponse {
-        
-        [System.ServiceModel.MessageBodyMemberAttribute(Name="NoweRozResponse", Namespace="http://tempuri.org/", Order=0)]
-        public klient_wpf.Rozgrywki.NoweRozResponseBody Body;
-        
-        public NoweRozResponse() {
-        }
-        
-        public NoweRozResponse(klient_wpf.Rozgrywki.NoweRozResponseBody Body) {
-            this.Body = Body;
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute()]
-    public partial class NoweRozResponseBody {
-        
-        public NoweRozResponseBody() {
         }
     }
     
@@ -2375,12 +2385,12 @@ namespace klient_wpf.Rozgrywki {
         public byte[] token;
         
         [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
-        public long ile;
+        public int ile;
         
         public CallRiseAllInRequestBody() {
         }
         
-        public CallRiseAllInRequestBody(byte[] token, long ile) {
+        public CallRiseAllInRequestBody(byte[] token, int ile) {
             this.token = token;
             this.ile = ile;
         }
@@ -2652,6 +2662,31 @@ namespace klient_wpf.Rozgrywki {
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        klient_wpf.Rozgrywki.PotwierdzZakonczenieResponse klient_wpf.Rozgrywki.RozgrywkiSoap.PotwierdzZakonczenie(klient_wpf.Rozgrywki.PotwierdzZakonczenieRequest request) {
+            return base.Channel.PotwierdzZakonczenie(request);
+        }
+        
+        public klient_wpf.Rozgrywki.Komunikat PotwierdzZakonczenie(byte[] token) {
+            klient_wpf.Rozgrywki.PotwierdzZakonczenieRequest inValue = new klient_wpf.Rozgrywki.PotwierdzZakonczenieRequest();
+            inValue.Body = new klient_wpf.Rozgrywki.PotwierdzZakonczenieRequestBody();
+            inValue.Body.token = token;
+            klient_wpf.Rozgrywki.PotwierdzZakonczenieResponse retVal = ((klient_wpf.Rozgrywki.RozgrywkiSoap)(this)).PotwierdzZakonczenie(inValue);
+            return retVal.Body.PotwierdzZakonczenieResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<klient_wpf.Rozgrywki.PotwierdzZakonczenieResponse> klient_wpf.Rozgrywki.RozgrywkiSoap.PotwierdzZakonczenieAsync(klient_wpf.Rozgrywki.PotwierdzZakonczenieRequest request) {
+            return base.Channel.PotwierdzZakonczenieAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<klient_wpf.Rozgrywki.PotwierdzZakonczenieResponse> PotwierdzZakonczenieAsync(byte[] token) {
+            klient_wpf.Rozgrywki.PotwierdzZakonczenieRequest inValue = new klient_wpf.Rozgrywki.PotwierdzZakonczenieRequest();
+            inValue.Body = new klient_wpf.Rozgrywki.PotwierdzZakonczenieRequestBody();
+            inValue.Body.token = token;
+            return ((klient_wpf.Rozgrywki.RozgrywkiSoap)(this)).PotwierdzZakonczenieAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
         klient_wpf.Rozgrywki.ustawNoweRozResponse klient_wpf.Rozgrywki.RozgrywkiSoap.ustawNoweRoz(klient_wpf.Rozgrywki.ustawNoweRozRequest request) {
             return base.Channel.ustawNoweRoz(request);
         }
@@ -2698,30 +2733,6 @@ namespace klient_wpf.Rozgrywki {
             inValue.Body = new klient_wpf.Rozgrywki.czyWynikiRequestBody();
             inValue.Body.token = token;
             return ((klient_wpf.Rozgrywki.RozgrywkiSoap)(this)).czyWynikiAsync(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        klient_wpf.Rozgrywki.NoweRozResponse klient_wpf.Rozgrywki.RozgrywkiSoap.NoweRoz(klient_wpf.Rozgrywki.NoweRozRequest request) {
-            return base.Channel.NoweRoz(request);
-        }
-        
-        public void NoweRoz(byte[] token) {
-            klient_wpf.Rozgrywki.NoweRozRequest inValue = new klient_wpf.Rozgrywki.NoweRozRequest();
-            inValue.Body = new klient_wpf.Rozgrywki.NoweRozRequestBody();
-            inValue.Body.token = token;
-            klient_wpf.Rozgrywki.NoweRozResponse retVal = ((klient_wpf.Rozgrywki.RozgrywkiSoap)(this)).NoweRoz(inValue);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        System.Threading.Tasks.Task<klient_wpf.Rozgrywki.NoweRozResponse> klient_wpf.Rozgrywki.RozgrywkiSoap.NoweRozAsync(klient_wpf.Rozgrywki.NoweRozRequest request) {
-            return base.Channel.NoweRozAsync(request);
-        }
-        
-        public System.Threading.Tasks.Task<klient_wpf.Rozgrywki.NoweRozResponse> NoweRozAsync(byte[] token) {
-            klient_wpf.Rozgrywki.NoweRozRequest inValue = new klient_wpf.Rozgrywki.NoweRozRequest();
-            inValue.Body = new klient_wpf.Rozgrywki.NoweRozRequestBody();
-            inValue.Body.token = token;
-            return ((klient_wpf.Rozgrywki.RozgrywkiSoap)(this)).NoweRozAsync(inValue);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
@@ -3120,7 +3131,7 @@ namespace klient_wpf.Rozgrywki {
             return base.Channel.CallRiseAllIn(request);
         }
         
-        public klient_wpf.Rozgrywki.Komunikat CallRiseAllIn(byte[] token, long ile) {
+        public klient_wpf.Rozgrywki.Komunikat CallRiseAllIn(byte[] token, int ile) {
             klient_wpf.Rozgrywki.CallRiseAllInRequest inValue = new klient_wpf.Rozgrywki.CallRiseAllInRequest();
             inValue.Body = new klient_wpf.Rozgrywki.CallRiseAllInRequestBody();
             inValue.Body.token = token;
@@ -3134,7 +3145,7 @@ namespace klient_wpf.Rozgrywki {
             return base.Channel.CallRiseAllInAsync(request);
         }
         
-        public System.Threading.Tasks.Task<klient_wpf.Rozgrywki.CallRiseAllInResponse> CallRiseAllInAsync(byte[] token, long ile) {
+        public System.Threading.Tasks.Task<klient_wpf.Rozgrywki.CallRiseAllInResponse> CallRiseAllInAsync(byte[] token, int ile) {
             klient_wpf.Rozgrywki.CallRiseAllInRequest inValue = new klient_wpf.Rozgrywki.CallRiseAllInRequest();
             inValue.Body = new klient_wpf.Rozgrywki.CallRiseAllInRequestBody();
             inValue.Body.token = token;

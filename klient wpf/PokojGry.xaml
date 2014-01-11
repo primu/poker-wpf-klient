@@ -181,7 +181,7 @@
             <Image Grid.Column="3" Source="/resources/rect12346.png"></Image>
             <Image Grid.Column="4" Source="/resources/rect12346.png"></Image>
         </Grid>
-        <Rectangle HorizontalAlignment="Center" Height="58" Margin="354,656,346,72" Stroke="#FF572801" VerticalAlignment="Center" Width="666" StrokeThickness="3">
+        <Rectangle x:Name="panelSterowania" HorizontalAlignment="Center" Height="58" Margin="354,656,346,72" Stroke="#FF572801" VerticalAlignment="Center" Width="666" StrokeThickness="3">
             <Rectangle.Fill>
                 <RadialGradientBrush>
                     <GradientStop Color="#FFE6960B" Offset="0"/>
@@ -189,46 +189,46 @@
                 </RadialGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="20" Margin="376,674,756,92" VerticalAlignment="Center" Width="234" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True"/>
-        <Label Name="LIleStawia" Content="0" HorizontalAlignment="Center" Height="30" Margin="645,670,687,77" VerticalAlignment="Center" Width="95" FontWeight="Bold"/>
-        <Button Content="Postaw" HorizontalAlignment="Center" Margin="810,666,462,78" VerticalAlignment="Center" Width="95" Height="42"/>
-        <Button Content="Spasuj" HorizontalAlignment="Center" Margin="909,666,362,78" VerticalAlignment="Center" Width="95" Height="42"/>
-        <Label Name="LKasaG1" Content="0" HorizontalAlignment="Center" Margin="710,534,701,217" VerticalAlignment="Center" Foreground="Yellow">
+        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="28" Margin="376,674,756,84" VerticalAlignment="Center" Width="234" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True"/>
+        <Label Name="LIleStawia" Content="0" HorizontalAlignment="Center" Height="30" Margin="618,672,653,84" VerticalAlignment="Center" Width="95" FontWeight="Bold"/>
+        <Button x:Name="PostawBTN" Content="Postaw" HorizontalAlignment="Center" Margin="809,666,462,78" VerticalAlignment="Center" Width="95" Height="42" Click="PostawBTN_Click"/>
+        <Button x:Name="SpasujBTN" Content="Spasuj" HorizontalAlignment="Center" Margin="909,666,362,78" VerticalAlignment="Center" Width="95" Height="42" Click="SpasujBTN_Click"/>
+        <Label HorizontalContentAlignment="Center" Name="LKasaG1" Content="0" HorizontalAlignment="Center" Margin="634,531,626,229" VerticalAlignment="Center" Foreground="Yellow" Width="106">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
         </Label>
-        <Label Name="LKasaG2" Content="0" HorizontalAlignment="Center" Margin="514,499,897,252" VerticalAlignment="Center" Foreground="Yellow">
+        <Label HorizontalContentAlignment="Center" Name="LKasaG2" Content="0" HorizontalAlignment="Center" Margin="450,497,810,263" VerticalAlignment="Center" Foreground="Yellow" Width="106">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
         </Label>
-        <Label Name="LKasaG3" Content="0" HorizontalAlignment="Center" Margin="450,384,961,367" VerticalAlignment="Center" Foreground="Yellow">
+        <Label Name="LKasaG3" HorizontalContentAlignment="Center" Content="0" HorizontalAlignment="Center" Margin="376,390,884,370" VerticalAlignment="Center" Foreground="Yellow" Width="106">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
         </Label>
-        <Label Name="LKasaG4" Content="0" HorizontalAlignment="Center" Margin="534,295,877,456" VerticalAlignment="Center" Foreground="Yellow">
+        <Label Name="LKasaG4" Content="0" HorizontalAlignment="Center" Margin="462,294,798,466" VerticalAlignment="Center" Foreground="Yellow" HorizontalContentAlignment="Center" Width="106">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
         </Label>
-        <Label Name="LKasaG5" Content="0" HorizontalAlignment="Center" Margin="710,244,701,507" VerticalAlignment="Center" Foreground="Yellow">
+        <Label Name="LKasaG5" Content="0" HorizontalAlignment="Center" Margin="634,241,626,519" VerticalAlignment="Center" Foreground="Yellow" HorizontalContentAlignment="Center" Width="106">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
         </Label>
-        <Label Name="LKasaG6" Content="0" HorizontalAlignment="Center" Margin="895,295,516,456" VerticalAlignment="Center" Foreground="Yellow">
+        <Label Name="LKasaG6" Content="0" HorizontalAlignment="Center" Margin="822,293,438,467" VerticalAlignment="Center" Foreground="Yellow" HorizontalContentAlignment="Center" Width="106">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
         </Label>
-        <Label Name="LKasaG7" Content="0" HorizontalAlignment="Center" Margin="964,384,447,367" VerticalAlignment="Center" Foreground="Yellow">
+        <Label Name="LKasaG7" Content="0" HorizontalAlignment="Center" Margin="886,381,374,379" VerticalAlignment="Center" Foreground="Yellow" HorizontalContentAlignment="Center" Width="106">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
         </Label>
-        <Label Name="LKasaG8" Content="0" HorizontalAlignment="Center" Margin="905,499,506,252" VerticalAlignment="Center" Foreground="Yellow">
+        <Label Name="LKasaG8" Content="0" HorizontalAlignment="Center" Margin="822,501,438,259" VerticalAlignment="Center" Foreground="Yellow" HorizontalContentAlignment="Center" Width="106">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
@@ -254,7 +254,7 @@
                 </LinearGradientBrush>
             </Label.Foreground>
         </Label>
-        <Label HorizontalContentAlignment="Center" x:Name="LG2" Content="Gracz 2" HorizontalAlignment="Center" Margin="450,486,810,274" VerticalAlignment="Center" Foreground="#FFFF9700" Width="106" FontWeight="Bold">
+        <Label HorizontalContentAlignment="Center" x:Name="LG2" Content="Gracz 2" HorizontalAlignment="Center" Margin="450,478,810,282" VerticalAlignment="Center" Foreground="#FFFF9700" Width="106" FontWeight="Bold">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
@@ -264,7 +264,7 @@
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
         </Label>
-        <Label HorizontalContentAlignment="Center" x:Name="LG4" Content="Gracz 4" HorizontalAlignment="Center" Margin="480,269,820,482" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
+        <Label HorizontalContentAlignment="Center" x:Name="LG4" Content="Gracz 4" HorizontalAlignment="Center" Margin="450,274,789,486" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
@@ -284,7 +284,7 @@
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>
         </Label>
-        <Label HorizontalContentAlignment="Center" x:Name="LG8" Content="Gracz 8" HorizontalAlignment="Center" Margin="853,480,447,271" VerticalAlignment="Center" Foreground="#FFFF9700" Width="127" FontWeight="Bold">
+        <Label HorizontalContentAlignment="Center" x:Name="LG8" Content="Gracz 8" HorizontalAlignment="Center" Margin="810,482,430,278" VerticalAlignment="Center" Foreground="#FFFF9700" Width="126" FontWeight="Bold">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
             </Label.Effect>

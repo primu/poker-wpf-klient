@@ -65,17 +65,21 @@ namespace klient_wpf
             //    if (id == a.identyfikatorUzytkownika)
             //        ObecnyUzytkownik = a;
             //}
-            PobierzUzytkownikow();
-            PobierzWiadomosci();
+            
+            
             //ObecnyUzytkownik 
             //this.Resources.Add("KeyNazwaUzytkownika", ObecnyUzytkownik.nazwaUzytkownika);
+
+           
+            
+            PobierzPokoje();
+            PobierzWiadomosci();
+            PobierzUzytkownikow();
 
             if (ObecnyUzytkownik.kasiora < 500)
             {
                 IUPStawka.Maximum = (int)ObecnyUzytkownik.kasiora;
             }
-            
-            PobierzPokoje();
             //LUzytkownik.Content = "<span>Witaj <Bold>" + ObecnyUzytkownik.nazwaUzytkownika + "</Bold><LineBreak/><Bold>Twoje środki: </Bold>"+ObecnyUzytkownik.kasiora.ToString()+"</span>";
             TBLUzytkownik.Inlines.Add(new Run("Witaj "));
             TBLUzytkownik.Inlines.Add(new Run() { Text = ObecnyUzytkownik.nazwaUzytkownika, FontWeight = FontWeights.Bold, Foreground=Brushes.Red });
