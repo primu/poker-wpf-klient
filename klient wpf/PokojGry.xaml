@@ -408,6 +408,46 @@
         <TextBox Name="TBPoleCzatu" Grid.Column="0" Margin="66,684,1118,62" HorizontalAlignment="Center" VerticalAlignment="Center" Width="182" KeyDown="TBPoleCzatu_KeyDown" Height="22" />
         <Label Content="Chat:" HorizontalAlignment="Center" Margin="96,429,1293,322" VerticalAlignment="Center" FontWeight="Bold"/>
         <Button Content="Opuść pokój" HorizontalAlignment="Center" Margin="66,360,1118,358" VerticalAlignment="Center" Width="182" Height="50" Click="Button_Click"/>
+        <Grid x:Name="PanelBoczny" HorizontalAlignment="Right" Height="776" VerticalAlignment="Top" Width="35" MouseLeftButtonDown="uklad_MouseLeftButtonDown" Visibility="Hidden">
+            <Grid.Background>
+                <SolidColorBrush Color="Black" Opacity="0.5"/>
+            </Grid.Background>
+        </Grid>
+        <Expander x:Name="expand" Header="" HorizontalAlignment="Left" Margin="1333,358,-46,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5" ExpandDirection="Up" Foreground="#FFEE0E0E" IsEnabled="False" Visibility="Hidden">
+            <Expander.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90.325"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Expander.RenderTransform>
+            <Grid Background="#FFE5E5E5" RenderTransformOrigin="0.5,0.5" Width="77">
+                <Grid.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="88.936"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Grid.RenderTransform>
+            </Grid>
+        </Expander>
+        <Grid x:Name="NajlepszyUklad" HorizontalAlignment="Center" Height="104" Margin="1122,92,10,590" VerticalAlignment="Center" Width="234" Visibility="Hidden">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0" Source="resources/rect12346.png"/>
+            <Image Grid.Column="1" Source="resources/rect12346.png"/>
+            <Image Grid.Column="2" Source="resources/rect12346.png"/>
+            <Image Grid.Column="3" Source="resources/rect12346.png"/>
+            <Image Grid.Column="4" Source="resources/rect12346.png"/>
+        </Grid>
+        <Label x:Name="LNajUklad" Content="Nasz układ:" HorizontalAlignment="Center" Margin="1161,59,49,683" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18" Height="44"/>
 
     </Grid>
 </Window>

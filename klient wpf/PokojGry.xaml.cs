@@ -29,8 +29,9 @@ namespace klient_wpf
         public byte[] token;
         public Int64 id;
         public Int64 idPokoju;
-        private Thread _xThread;
+        private Thread _xThread;     
         private int wartosc;
+        bool klik = false;       
 
         Glowny.GlownySoapClient SerwerGlowny = new Glowny.GlownySoapClient();
         Rozgrywki.RozgrywkiSoapClient SerwerRozgrywki = new Rozgrywki.RozgrywkiSoapClient();
@@ -43,7 +44,8 @@ namespace klient_wpf
         Rozgrywki.Uzytkownik[] Uzytkownicy;
 
         Rozgrywki.Gracz[] Gracze;
-        Rozgrywki.Gracz ja;        
+        Rozgrywki.Gracz ja;
+        Rozgrywki.Karta[] najUkl;
 
         Rozgrywki.Pokoj ObecnyStol;
 
@@ -238,6 +240,8 @@ namespace klient_wpf
                         UstawMiejscePrzyStole();
                         
                         Nakladka(false);
+                        PanelBoczny.Visibility = Visibility.Visible;
+                        expand.Visibility = Visibility.Visible;
                     }
 
                     
@@ -294,6 +298,14 @@ namespace klient_wpf
                                     Image x = PowiazanieKart(stol.ElementAt(i));
                                     ZmienKarte(ref Stol, i, ref x);
                                 }
+                                najUkl = SerwerRozgrywki.MojNajUkl(token);
+                                //List<Karta> najUkl = new List<Karta>(SerwerRozgrywki.MojNajUkl(token));
+
+                                for (int i = 0; i < najUkl.Length; i++)
+                                {
+                                    Image y = PowiazanieKart(najUkl.ElementAt(i));
+                                    ZmienKarte(ref NajlepszyUklad, i, ref y);
+                                }
                             }
                         }
                     }
@@ -321,7 +333,7 @@ namespace klient_wpf
                 MessageBox.Show("Nieoczekiwany wyjątek! " + ex.Message +" "+ex.StackTrace, "Fatal Error");
             }
 
-        }
+        }      
 
         //private void UstawMiejscePrzyStole()
         //{
@@ -408,12 +420,7 @@ namespace klient_wpf
                     }
                 }
             }
-        }
-
-        private void displayCards()
-        {
-
-        }
+        }    
 
         private Image PowiazanieKart(Karta card)
         {
@@ -1004,6 +1011,24 @@ namespace klient_wpf
         private void SpasujBTN_Click(object sender, RoutedEventArgs e)
         {
             SerwerRozgrywki.Fold(token);
+        }
+
+        private void uklad_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (klik == false)
+            {
+                PanelBoczny.Width = 260;
+                klik = true;
+                expand.ExpandDirection = ExpandDirection.Down;
+                NajlepszyUklad.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                PanelBoczny.Width = 35;
+                klik = false;
+                expand.ExpandDirection = ExpandDirection.Up;
+                NajlepszyUklad.Visibility = Visibility.Hidden;
+            }
         }
 
     }
