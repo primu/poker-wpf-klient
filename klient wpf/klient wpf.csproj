@@ -263,6 +263,9 @@
     <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.ZwrocGreResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.ZwrocHandGraczyResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Rozgrywki\klient_wpf.Rozgrywki.ZwrocNajUklGraczyResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

@@ -38,14 +38,14 @@ namespace klient_wpf
         Glowny.Komunikat komunikat = new Glowny.Komunikat();
         Rozgrywki.Komunikat komunikatR = new Rozgrywki.Komunikat();
         Rozgrywki.Gra gra = null;
+        List<Grid> m=new List<Grid>();                       
 
 
         Rozgrywki.Uzytkownik ObecnyUzytkownik;
         Rozgrywki.Uzytkownik[] Uzytkownicy;
 
         Rozgrywki.Gracz[] Gracze;
-        Rozgrywki.Gracz ja;        
-        Rozgrywki.Karta[] najUkl;
+        Rozgrywki.Gracz ja;
 
         Rozgrywki.Pokoj ObecnyStol;
 
@@ -172,6 +172,14 @@ namespace klient_wpf
             //UstawGracza(4);
             //UstawGracza(5);
             //UstawGracza(7);
+            m.Add(G1);
+            m.Add(G2);
+            m.Add(G3);
+            m.Add(G4);
+            m.Add(G5);
+            m.Add(G6);
+            m.Add(G7);
+            m.Add(G8);
             
             PobierzWiadomosci();
             Nakladka(true);
@@ -247,7 +255,7 @@ namespace klient_wpf
             {
                 gra = SerwerRozgrywki.ZwrocGre(token);               
                 if (gra != null)
-                {                
+                {
                     Gracze = SerwerRozgrywki.ZwrocGraczy(token);
                     if (!s) // Wykonuje się raz, jedynie przy starcie gry
                     {
@@ -255,13 +263,12 @@ namespace klient_wpf
                         PobierzObecnyStol();
                         UstawMiejscePrzyStole();
                         
-                    Nakladka(false);
+                        Nakladka(false);
                         PanelBoczny.Visibility = Visibility.Visible;
                         expand.Visibility = Visibility.Visible;
                     }
 
-                    
-                    Gracze=SerwerRozgrywki.ZwrocGraczy(token);
+
                     ZerujUzytkownikow();
                     for(int i=0;i<Gracze.Length;i++)     
                     {
@@ -290,27 +297,22 @@ namespace klient_wpf
                         if (Gracze[i].stan == StanGracza.Fold)
                             fold = true;
 
-                        
                         UstawGracza(miejscePrzyStole[i,0], Gracze[i].nazwaUzytkownika, (int)Gracze[i].kasa, (int)Gracze[i].stawia, true, tempBB, tempSB, ruch, fold, (int)Gracze[i].identyfikatorUzytkownika);
                     }
-                    
                     LKasaStol.Content = gra.pula;
                     //wszystko co związane z naszym graczem
                     if (SerwerRozgrywki.PobierzGracza(token, id) != null)
                     {
                         Rozgrywki.Gracz t = gra.aktywni.Single<Gracz>(delegate(Gracz c) { return c.identyfikatorUzytkownika == id; });
                         if (t != null)
-                        {
-                            //if (ja != t)
-                            //{
-                                //ja = t;
-                                if (gra.stan == Stan.PREFLOP)
-                                {//pobranie kart i wyświetlenie ich
-                                    List<Karta> k = new List<Karta>(SerwerRozgrywki.PobierzKarty(token));
+                        {                        
+                            if (gra.stan == Stan.PREFLOP)
+                            {//pobranie kart i wyświetlenie ich
+                               List<Karta> k = new List<Karta>(SerwerRozgrywki.PobierzKarty(token));
                                     Image x=PowiazanieKart(k[0]);
                                     Image y=PowiazanieKart(k[1]);
-                                    ZmienKarte(ref G1, 0, ref x);
-                                    ZmienKarte(ref G1, 1, ref y);
+                               ZmienKarte(ref G1, 0, ref x);
+                               ZmienKarte(ref G1, 1, ref y);                         
                             }
                             if (gra.stan == Stan.FLOP || gra.stan == Stan.TURN || gra.stan == Stan.RIVER)
                             {
@@ -320,18 +322,41 @@ namespace klient_wpf
                                     Image x = PowiazanieKart(stol.ElementAt(i));
                                     ZmienKarte(ref Stol, i, ref x);
                                 }
-                                najUkl = SerwerRozgrywki.MojNajUkl(token);
-                                //List<Karta> najUkl = new List<Karta>(SerwerRozgrywki.MojNajUkl(token));
-                                  
-                                for (int i = 0; i < najUkl.Length; i++)
+                                LNajUkladNazwa.Content=SerwerRozgrywki.NazwaMojegoUkladu(token);                           
+                                List<Karta> najUkl = new List<Karta>(SerwerRozgrywki.MojNajUkl(token));
+                                for (int i = 0; i < najUkl.Count; i++)
                                 {
-                                    Image y = PowiazanieKart(najUkl.ElementAt(i));
+                                    Image y=new Image();//PowiazanieKart(najUkl.ElementAt(i));                                 
+                                    y.Source = PowiazanieKart(najUkl.ElementAt(i)).Source;
                                     ZmienKarte(ref NajlepszyUklad, i, ref y);
                                 }
                             }
+                        }
+                    }
+                    //SHOWDOWN
+                    if (gra.stan == Stan.SHOWDOWN)
+                    {                      
+                        List<Karta> cards = null;                     
+                        for (int i = 0; i < Gracze.Length; i++)
+                        {
+                            cards=new List<Karta>(SerwerRozgrywki.ZwrocHandGraczy(token, Gracze[i].identyfikatorUzytkownika));                          
+                            for (int j = 0; j < Gracze.Length; j++)
+                            {
+                                if (miejscePrzyStole[j, 1] == Gracze[i].identyfikatorUzytkownika)
+                                {
+                                    Image x = new Image(); x.Source=PowiazanieKart(cards.ElementAt(0)).Source;
+                                    Image y = new Image(); y.Source= PowiazanieKart(cards.ElementAt(1)).Source;
+                                    Grid grid = m.ElementAt(miejscePrzyStole[j,0]-1);
+                                    ZmienKarte(ref grid, 0, ref x);
+                                    ZmienKarte(ref grid, 1, ref y);                                   
                                 }
-                            //}
                             }
+                        }
+                        ogolnyTimer.Stop();
+                        KoniecRozdania.Visibility = Visibility.Visible;
+
+                    }
+
                     if (gra.czyjRuch == id)
                     {
                         panelSterowania.Visibility = Visibility.Visible;
@@ -339,7 +364,9 @@ namespace klient_wpf
                         LIleStawia.Visibility = Visibility.Visible;
                         PostawBTN.Visibility = Visibility.Visible;
                         SpasujBTN.Visibility = Visibility.Visible;
-                        }
+                        zmniejsz.Visibility = Visibility.Visible;
+                        powieksz.Visibility = Visibility.Visible;
+                    }
                     else
                     {
                         panelSterowania.Visibility = Visibility.Hidden;
@@ -347,6 +374,8 @@ namespace klient_wpf
                         LIleStawia.Visibility = Visibility.Hidden;
                         PostawBTN.Visibility = Visibility.Hidden;
                         SpasujBTN.Visibility = Visibility.Hidden;
+                        zmniejsz.Visibility = Visibility.Hidden;
+                        powieksz.Visibility = Visibility.Hidden;
                     }
 
                 }
@@ -356,7 +385,7 @@ namespace klient_wpf
                 MessageBox.Show("Nieoczekiwany wyjątek! " + ex.Message +" "+ex.StackTrace, "Fatal Error");
             }
 
-        }
+        }      
 
         private void UstawMiejscePrzyStole()
         {
@@ -372,7 +401,7 @@ namespace klient_wpf
                         miejscePrzyStole[j, 1] = (int)ObecnyUzytkownik.identyfikatorUzytkownika;
                         temp = j + 1;
                     }
-            }
+                }
 
                 int k = 2;
                 for (int i = 0; i < Gracze.Length; i++)
@@ -410,12 +439,7 @@ namespace klient_wpf
                     }
                 }
             }
-        }
-
-        private void displayCards()
-        {
-
-        }
+        }    
 
         private Image PowiazanieKart(Karta card)
         {
@@ -652,7 +676,7 @@ namespace klient_wpf
                     {
                         LG1.Visibility = Visibility.Hidden;
                         LKasaG1.Visibility = Visibility.Hidden;
-                        EG1.Visibility = Visibility.Hidden;
+                        EG1.Visibility = Visibility.Hidden;                       
                     }
                     break;
                 case 2:
@@ -675,7 +699,7 @@ namespace klient_wpf
                             EG2.Visibility = Visibility.Hidden;
                     }
                     else
-                    {
+                    {                      
                         LG2.Visibility = Visibility.Hidden;
                         LKasaG2.Visibility = Visibility.Hidden;
                         EG2.Visibility = Visibility.Hidden;
@@ -701,7 +725,7 @@ namespace klient_wpf
                             EG3.Visibility = Visibility.Hidden;
                     }
                     else
-                    {
+                    {                      
                         LG3.Visibility = Visibility.Hidden;
                         LKasaG3.Visibility = Visibility.Hidden;
                         EG3.Visibility = Visibility.Hidden;
@@ -1024,6 +1048,24 @@ namespace klient_wpf
                 expand.ExpandDirection = ExpandDirection.Up;
                 NajlepszyUklad.Visibility = Visibility.Hidden;
             }
+        }
+
+        private void zmniejsz_Click(object sender, RoutedEventArgs e)
+        {
+            SIleStawia.Value -= 1;
+        }
+
+        private void powieksz_Click(object sender, RoutedEventArgs e)
+        {
+            SIleStawia.Value += 1;
+        }
+
+        private void TBLNoweRoz_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SerwerRozgrywki.ustawNoweRoz(token);
+            KoniecRozdania.Visibility = Visibility.Hidden;
+            TBLNoweRoz.Visibility = Visibility.Hidden;
+            ogolnyTimer.Start();
         }
 
     }

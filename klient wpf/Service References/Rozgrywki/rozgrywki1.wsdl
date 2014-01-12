@@ -221,6 +221,21 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="ZwrocHandGraczy">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:base64Binary" />
+            <s:element minOccurs="1" maxOccurs="1" name="idGracza" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ZwrocHandGraczyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ZwrocHandGraczyResult" type="tns:ArrayOfKarta" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
       <s:element name="PobierzGracza">
         <s:complexType>
           <s:sequence>
@@ -517,6 +532,12 @@
   <wsdl:message name="ZwrocNajUklGraczySoapOut">
     <wsdl:part name="parameters" element="tns:ZwrocNajUklGraczyResponse" />
   </wsdl:message>
+  <wsdl:message name="ZwrocHandGraczySoapIn">
+    <wsdl:part name="parameters" element="tns:ZwrocHandGraczy" />
+  </wsdl:message>
+  <wsdl:message name="ZwrocHandGraczySoapOut">
+    <wsdl:part name="parameters" element="tns:ZwrocHandGraczyResponse" />
+  </wsdl:message>
   <wsdl:message name="PobierzGraczaSoapIn">
     <wsdl:part name="parameters" element="tns:PobierzGracza" />
   </wsdl:message>
@@ -637,6 +658,10 @@
     <wsdl:operation name="ZwrocNajUklGraczy">
       <wsdl:input message="tns:ZwrocNajUklGraczySoapIn" />
       <wsdl:output message="tns:ZwrocNajUklGraczySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ZwrocHandGraczy">
+      <wsdl:input message="tns:ZwrocHandGraczySoapIn" />
+      <wsdl:output message="tns:ZwrocHandGraczySoapOut" />
     </wsdl:operation>
     <wsdl:operation name="PobierzGracza">
       <wsdl:input message="tns:PobierzGraczaSoapIn" />
@@ -771,6 +796,15 @@
     </wsdl:operation>
     <wsdl:operation name="ZwrocNajUklGraczy">
       <soap:operation soapAction="http://tempuri.org/ZwrocNajUklGraczy" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZwrocHandGraczy">
+      <soap:operation soapAction="http://tempuri.org/ZwrocHandGraczy" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -981,6 +1015,15 @@
     </wsdl:operation>
     <wsdl:operation name="ZwrocNajUklGraczy">
       <soap12:operation soapAction="http://tempuri.org/ZwrocNajUklGraczy" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ZwrocHandGraczy">
+      <soap12:operation soapAction="http://tempuri.org/ZwrocHandGraczy" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

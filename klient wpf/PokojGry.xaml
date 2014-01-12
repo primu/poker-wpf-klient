@@ -45,7 +45,6 @@
 
             <!-- Add controls as needed -->
         </Grid>
-
         <Image x:Name="IObrazStolu" Height="528" Margin="0" Width="847" Source="resources/stol.png" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Grid Name="G1" HorizontalAlignment="Center" Height="60" Margin="614,564,614,164" VerticalAlignment="Center" Width="130">
             <Grid.ColumnDefinitions>
@@ -189,10 +188,10 @@
                 </RadialGradientBrush>
             </Rectangle.Fill>
         </Rectangle>
-        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="28" Margin="376,674,756,84" VerticalAlignment="Center" Width="234" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True"/>
-        <Label Name="LIleStawia" Content="0" HorizontalAlignment="Center" Height="30" Margin="618,672,653,84" VerticalAlignment="Center" Width="95" FontWeight="Bold"/>
-        <Button x:Name="PostawBTN" Content="Postaw" HorizontalAlignment="Center" Margin="809,666,462,78" VerticalAlignment="Center" Width="95" Height="42" Click="PostawBTN_Click"/>
-        <Button x:Name="SpasujBTN" Content="Spasuj" HorizontalAlignment="Center" Margin="909,666,362,78" VerticalAlignment="Center" Width="95" Height="42" Click="SpasujBTN_Click"/>
+        <Slider Name="SIleStawia" HorizontalAlignment="Center" Height="28" Margin="401,674,731,84" VerticalAlignment="Center" Width="234" ValueChanged="SIleStawia_ValueChanged" LargeChange="20" SmallChange="10" IsSnapToTickEnabled="True" Opacity="0.7"/>
+        <Label Name="LIleStawia" Content="0" HorizontalAlignment="Center" Height="30" Margin="690,672,580,84" VerticalAlignment="Center" Width="96" FontWeight="Bold"/>
+        <Button x:Name="PostawBTN" Content="Postaw" HorizontalAlignment="Center" Margin="809,666,462,78" VerticalAlignment="Center" Width="95" Height="42" Click="PostawBTN_Click" Opacity="0.7"/>
+        <Button x:Name="SpasujBTN" Content="Spasuj" HorizontalAlignment="Center" Margin="909,666,362,78" VerticalAlignment="Center" Width="95" Height="42" Click="SpasujBTN_Click" Opacity="0.7"/>
         <Label HorizontalContentAlignment="Center" Name="LKasaG1" Content="0" HorizontalAlignment="Center" Margin="634,531,626,229" VerticalAlignment="Center" Foreground="Yellow" Width="106">
             <Label.Effect>
                 <DropShadowEffect ShadowDepth="1" BlurRadius="2"/>
@@ -447,7 +446,27 @@
             <Image Grid.Column="3" Source="resources/rect12346.png"/>
             <Image Grid.Column="4" Source="resources/rect12346.png"/>
         </Grid>
-        <Label x:Name="LNajUklad" Content="Nasz układ:" HorizontalAlignment="Center" Margin="1161,59,49,683" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18" Height="44"/>
-
+        <Label x:Name="LNajUklad" Content="Najlepszy układ:" HorizontalAlignment="Center" Margin="1161,59,49,683" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18" Height="44"/>
+        <Label x:Name="LNajUkladNazwa" Content="" HorizontalAlignment="Center" Margin="1122,196,10,546" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="18" Height="44" Width="234"/>
+        <Button x:Name="zmniejsz" Content="-" HorizontalAlignment="Left" Margin="368,674,0,0" VerticalAlignment="Top" Width="28" Height="28" Opacity="0.7" Click="zmniejsz_Click"/>
+        <Button x:Name="powieksz" Content="+" HorizontalAlignment="Left" Margin="635,674,0,0" VerticalAlignment="Top" Width="28" Height="28" Opacity="0.7" Click="powieksz_Click"/>
+        <Grid x:Name="KoniecRozdania" HorizontalAlignment="Left" Height="776" Margin="260,0,0,0" VerticalAlignment="Top" Width="846" Background="Black" Opacity="0.5" Visibility="Hidden">
+            <TextBlock x:Name="TBLNoweRoz" TextAlignment="Center" HorizontalAlignment="Center"  Margin="288,437,290,252" TextWrapping="Wrap" Text="Nowe Rozdanie" VerticalAlignment="Center" Height="87" Width="268" FontSize="36" FontWeight="Bold" MouseLeftButtonDown="TBLNoweRoz_MouseLeftButtonDown">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="2"/>
+                </TextBlock.Effect>
+                <TextBlock.Style>
+                    <Style TargetType="{x:Type TextBlock}">
+                        <Setter Property= "Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <Trigger Property ="IsMouseOver" Value="True">
+                                <Setter Property= "Foreground" Value="Red"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </Grid>
     </Grid>
+
 </Window>
