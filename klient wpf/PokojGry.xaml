@@ -451,7 +451,10 @@
         <Button x:Name="zmniejsz" Content="-" HorizontalAlignment="Left" Margin="368,674,0,0" VerticalAlignment="Top" Width="28" Height="28" Opacity="0.7" Click="zmniejsz_Click"/>
         <Button x:Name="powieksz" Content="+" HorizontalAlignment="Left" Margin="635,674,0,0" VerticalAlignment="Top" Width="28" Height="28" Opacity="0.7" Click="powieksz_Click"/>
         <Grid x:Name="KoniecRozdania" HorizontalAlignment="Left" Height="776" Margin="260,0,0,0" VerticalAlignment="Top" Width="846" Background="Black" Opacity="0.5" Visibility="Hidden">
-            <TextBlock x:Name="TBLNoweRoz" TextAlignment="Center" HorizontalAlignment="Center"  Margin="288,437,290,252" TextWrapping="Wrap" Text="Nowe Rozdanie" VerticalAlignment="Center" Height="87" Width="268" FontSize="36" FontWeight="Bold" MouseLeftButtonDown="TBLNoweRoz_MouseLeftButtonDown">
+            <TextBlock x:Name="TBLNoweRoz" TextAlignment="Center" HorizontalAlignment="Center"  Margin="294,436,284,254" TextWrapping="Wrap" Text="Nowe Rozdanie" VerticalAlignment="Center" Height="86" Width="268" FontSize="36" FontWeight="Bold" MouseLeftButtonDown="TBLNoweRoz_MouseLeftButtonDown" IsHitTestVisible="True">
+                <TextBlock.Foreground>
+                    <SolidColorBrush Color="White"/>
+                </TextBlock.Foreground>
                 <TextBlock.Effect>
                     <DropShadowEffect ShadowDepth="2"/>
                 </TextBlock.Effect>
@@ -466,7 +469,16 @@
                     </Style>
                 </TextBlock.Style>
             </TextBlock>
+            <Label Content="Label" HorizontalAlignment="Left" Margin="348,522,0,0" VerticalAlignment="Top"/>
         </Grid>
+        <Label x:Name="Lwin1" Content="Wygrał!" HorizontalAlignment="Left" Margin="586,534,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
+        <Label x:Name="Lwin2" Content="Wygrał!" HorizontalAlignment="Left" Margin="408,470,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
+        <Label x:Name="Lwin3" Content="Wygrał!" HorizontalAlignment="Left" Margin="376,344,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
+        <Label x:Name="Lwin4" Content="Wygrał!" HorizontalAlignment="Left" Margin="523,251,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
+        <Label x:Name="Lwin5" Content="Wygrał!" HorizontalAlignment="Left" Margin="717,231,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
+        <Label x:Name="Lwin6" Content="Wygrał!" HorizontalAlignment="Left" Margin="904,300,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
+        <Label x:Name="Lwin7" Content="Wygrał!" HorizontalAlignment="Left" Margin="888,407,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
+        <Label x:Name="Lwin8" Content="Wygrał!" HorizontalAlignment="Left" Margin="784,498,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
     </Grid>
 
 </Window>

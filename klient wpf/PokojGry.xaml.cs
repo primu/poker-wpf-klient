@@ -31,7 +31,11 @@ namespace klient_wpf
         public Int64 idPokoju;
         private Thread _xThread;     
         private int wartosc;
-        bool klik = false;       
+        bool klik = false;
+        bool btnNowe = false;
+        bool czyLiczycCzas = false;//do wyswietlania po zakonczeniu rozdania,  po upływie x czasu
+        Int64 czas = 0;
+        //List<List<Karta>> cards = null;
 
         Glowny.GlownySoapClient SerwerGlowny = new Glowny.GlownySoapClient();
         Rozgrywki.RozgrywkiSoapClient SerwerRozgrywki = new Rozgrywki.RozgrywkiSoapClient();
@@ -39,13 +43,13 @@ namespace klient_wpf
         Rozgrywki.Komunikat komunikatR = new Rozgrywki.Komunikat();
         Rozgrywki.Gra gra = null;
         List<Grid> m=new List<Grid>();                       
-
+        List<Label> LabWin = new List<Label>();           
 
         Rozgrywki.Uzytkownik ObecnyUzytkownik;
         Rozgrywki.Uzytkownik[] Uzytkownicy;
 
         Rozgrywki.Gracz[] Gracze;
-        Rozgrywki.Gracz ja;
+        Rozgrywki.Gracz ja;       
 
         Rozgrywki.Pokoj ObecnyStol;
 
@@ -181,7 +185,19 @@ namespace klient_wpf
             m.Add(G6);
             m.Add(G7);
             m.Add(G8);
+
+            LabWin.Add(Lwin1);
+            LabWin.Add(Lwin2);
+            LabWin.Add(Lwin3);
+            LabWin.Add(Lwin4);
+            LabWin.Add(Lwin5);
+            LabWin.Add(Lwin6);
+            LabWin.Add(Lwin7);
+            LabWin.Add(Lwin8);
+            for (int i = 0; i < LabWin.Count; i++)           
+                LabWin.ElementAt(i).Visibility = Visibility.Hidden;
             
+
             PobierzWiadomosci();
             Nakladka(true);
             WystartujZegar();
@@ -234,6 +250,10 @@ namespace klient_wpf
 
         private void chatTimer_Tick(object sender, EventArgs e)
         {
+            if (czyLiczycCzas == true)
+                czas++;
+            else
+                czas = 0;
             if (ObecnyStol.graRozpoczeta==false)
             {
                 PobierzUzytkownikow();
@@ -250,6 +270,32 @@ namespace klient_wpf
             PobierzObecnyStol();
         }
 
+        private void ustawEtykietyPoRozdaniu()
+        {
+            UsunWszystkieKarty();
+            for (int i = 0; i < Gracze.Length; i++)
+            {               
+                for (int j = 0; j < Gracze.Length; j++)
+                {
+                    if (miejscePrzyStole[j, 1] == Gracze[i].identyfikatorUzytkownika)
+                    {
+                        Image x = new Image(); x.Source = tlo[2].Source;
+                        Image y = new Image(); y.Source = tlo[2].Source;
+                        Grid grid = m.ElementAt(miejscePrzyStole[j, 0] - 1);
+                        ZmienKarte(ref grid, 0, ref x);
+                        ZmienKarte(ref grid, 1, ref y);
+                    }
+                }
+            }
+            for (int i = 0; i < 5; i++)
+            {
+                Image img = new Image(); img.Source = tlo[2].Source;
+                Image img2 = new Image(); img2.Source = tlo[0].Source;             
+                ZmienKarte(ref Stol, i, ref img);
+                ZmienKarte(ref NajlepszyUklad, i, ref img2);
+            }
+        }
+
         private void ogolnyTimer_Tick(object sender, EventArgs e)
         {
             try
@@ -264,12 +310,13 @@ namespace klient_wpf
                         PobierzObecnyStol();
                         UstawMiejscePrzyStole();
                         
+                        ustawEtykietyPoRozdaniu();
                         Nakladka(false);
                         PanelBoczny.Visibility = Visibility.Visible;
                         expand.Visibility = Visibility.Visible;
                     }
 
-
+                    
                     ZerujUzytkownikow();
                     for(int i=0;i<Gracze.Length;i++)     
                     {
@@ -335,9 +382,11 @@ namespace klient_wpf
                         }
                     }
                     //SHOWDOWN
-                    if (gra.stan == Stan.SHOWDOWN)
+                    if (gra.stan == Stan.SHOWDOWN && btnNowe==false)
                     {                      
+                        czyLiczycCzas = true;
                         List<Karta> cards = null;                     
+                        List<Gracz> winner = new List<Gracz>(gra.listaWin);
                         for (int i = 0; i < Gracze.Length; i++)
                         {
                             cards=new List<Karta>(SerwerRozgrywki.ZwrocHandGraczy(token, Gracze[i].identyfikatorUzytkownika));                          
@@ -352,10 +401,33 @@ namespace klient_wpf
                                     ZmienKarte(ref grid, 1, ref y);                                   
                                 }
                             }
-                        }
-                        ogolnyTimer.Stop();
-                        KoniecRozdania.Visibility = Visibility.Visible;
+                            for (int k = 0; k < winner.Count; k++)
+                            {
+                                if (miejscePrzyStole[i, 1] == winner.ElementAt(k).identyfikatorUzytkownika)
+                                {
+                                    LabWin.ElementAt(miejscePrzyStole[i, 0]-1).Visibility = Visibility.Visible;
+                                }
+                            }
 
+                            }
+                        }
+
+                    //panel po zakonczeniu rozdania
+                    if (SerwerRozgrywki.czyWyniki(token) == true)
+                    {
+                        if (czas > 1)
+                        {
+                        KoniecRozdania.Visibility = Visibility.Visible;
+                            czyLiczycCzas = false;
+                            czas = 0;
+                        }
+                    }
+                    else
+                    {
+                        KoniecRozdania.Visibility = Visibility.Hidden;
+                        btnNowe = false;
+                        TBLNoweRoz.IsEnabled = true;
+                        TBLNoweRoz.Text = "Nowe Rozdanie";
                     }
 
                     if (gra.czyjRuch == id)
@@ -894,6 +966,7 @@ namespace klient_wpf
                 G7.Children.RemoveRange(0, G7.Children.Count);
                 G8.Children.RemoveRange(0, G8.Children.Count);
                 Stol.Children.RemoveRange(0, Stol.Children.Count);
+                NajlepszyUklad.Children.RemoveRange(0, NajlepszyUklad.Children.Count);
             }
             catch (Exception ex)
             {
@@ -1063,10 +1136,22 @@ namespace klient_wpf
 
         private void TBLNoweRoz_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            btnNowe = true;
+            UsunWszystkieKarty();
+            LNajUkladNazwa.Content = "";
             SerwerRozgrywki.ustawNoweRoz(token);
-            KoniecRozdania.Visibility = Visibility.Hidden;
-            TBLNoweRoz.Visibility = Visibility.Hidden;
-            ogolnyTimer.Start();
+            TBLNoweRoz.IsEnabled = false;
+            TBLNoweRoz.Text = "Oczekiwanie...";
+            ustawEtykietyPoRozdaniu();
+            for (int i = 0; i < 5; i++)
+            {
+                Image img = new Image();
+                img.Source = tlo[0].Source;
+                ZmienKarte(ref NajlepszyUklad,i,ref img);                
+            }
+            for (int i = 0; i < LabWin.Count; i++)
+                LabWin.ElementAt(i).Visibility = Visibility.Hidden;
+            
         }
 
     }
