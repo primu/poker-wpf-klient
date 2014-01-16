@@ -26,6 +26,7 @@ namespace klient_wpf
         public Rejestracja()
         {
             InitializeComponent();
+            SSLValidator.OverrideValidation();
         }      
 
         private void TextBlock_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

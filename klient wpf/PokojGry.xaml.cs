@@ -134,6 +134,7 @@ namespace klient_wpf
         public PokojGry(byte[] token, Int64 id, Int64 nrPokoju)
         {
             InitializeComponent();
+            SSLValidator.OverrideValidation();
             idPokoju = nrPokoju;
             this.token = token;
             this.id = id;

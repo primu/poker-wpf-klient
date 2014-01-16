@@ -56,6 +56,7 @@ namespace klient_wpf
         public PokojGlowny(byte[] token, Int64 id)
         {
             InitializeComponent();
+            SSLValidator.OverrideValidation();
             this.token = token;
             this.id = id;
 

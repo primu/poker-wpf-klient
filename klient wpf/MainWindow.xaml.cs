@@ -29,10 +29,10 @@ namespace klient_wpf
         Glowny.GlownySoapClient SerwerGlowny = new Glowny.GlownySoapClient();
         Glowny.Komunikat komunikat = new Glowny.Komunikat();
 
-
         public MainWindow()
         {
             InitializeComponent();
+            SSLValidator.OverrideValidation();
         }
 
         private void ZalogujBTN_Click(object sender, RoutedEventArgs e)
