@@ -153,6 +153,12 @@
     <None Include="Service References\Glowny\klient_wpf.Glowny.Komunikat.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\Glowny\klient_wpf.Glowny.PobierzListeNajbogatszychResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Glowny\klient_wpf.Glowny.PobierzListeNajlepszychResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\Glowny\klient_wpf.Glowny.PobierzSwojeIDResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

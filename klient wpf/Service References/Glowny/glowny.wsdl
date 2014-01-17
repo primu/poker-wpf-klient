@@ -187,6 +187,34 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="PobierzListeNajlepszych">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PobierzListeNajlepszychResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PobierzListeNajlepszychResult" type="tns:ArrayOfUzytkownik" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PobierzListeNajbogatszych">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="token" type="s:base64Binary" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PobierzListeNajbogatszychResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PobierzListeNajbogatszychResult" type="tns:ArrayOfUzytkownik" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="ZwrocZalogowanychSoapIn">
@@ -255,6 +283,18 @@
   <wsdl:message name="WyslijWiadomoscSoapOut">
     <wsdl:part name="parameters" element="tns:WyslijWiadomoscResponse" />
   </wsdl:message>
+  <wsdl:message name="PobierzListeNajlepszychSoapIn">
+    <wsdl:part name="parameters" element="tns:PobierzListeNajlepszych" />
+  </wsdl:message>
+  <wsdl:message name="PobierzListeNajlepszychSoapOut">
+    <wsdl:part name="parameters" element="tns:PobierzListeNajlepszychResponse" />
+  </wsdl:message>
+  <wsdl:message name="PobierzListeNajbogatszychSoapIn">
+    <wsdl:part name="parameters" element="tns:PobierzListeNajbogatszych" />
+  </wsdl:message>
+  <wsdl:message name="PobierzListeNajbogatszychSoapOut">
+    <wsdl:part name="parameters" element="tns:PobierzListeNajbogatszychResponse" />
+  </wsdl:message>
   <wsdl:portType name="GlownySoap">
     <wsdl:operation name="ZwrocZalogowanych">
       <wsdl:input message="tns:ZwrocZalogowanychSoapIn" />
@@ -299,6 +339,14 @@
     <wsdl:operation name="WyslijWiadomosc">
       <wsdl:input message="tns:WyslijWiadomoscSoapIn" />
       <wsdl:output message="tns:WyslijWiadomoscSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PobierzListeNajlepszych">
+      <wsdl:input message="tns:PobierzListeNajlepszychSoapIn" />
+      <wsdl:output message="tns:PobierzListeNajlepszychSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="PobierzListeNajbogatszych">
+      <wsdl:input message="tns:PobierzListeNajbogatszychSoapIn" />
+      <wsdl:output message="tns:PobierzListeNajbogatszychSoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="GlownySoap" type="tns:GlownySoap">
@@ -402,6 +450,24 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="PobierzListeNajlepszych">
+      <soap:operation soapAction="http://tempuri.org/PobierzListeNajlepszych" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PobierzListeNajbogatszych">
+      <soap:operation soapAction="http://tempuri.org/PobierzListeNajbogatszych" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="GlownySoap12" type="tns:GlownySoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -497,6 +563,24 @@
     </wsdl:operation>
     <wsdl:operation name="WyslijWiadomosc">
       <soap12:operation soapAction="http://tempuri.org/WyslijWiadomosc" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PobierzListeNajlepszych">
+      <soap12:operation soapAction="http://tempuri.org/PobierzListeNajlepszych" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="PobierzListeNajbogatszych">
+      <soap12:operation soapAction="http://tempuri.org/PobierzListeNajbogatszych" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

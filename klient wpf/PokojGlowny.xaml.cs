@@ -160,14 +160,7 @@ namespace klient_wpf
 
         private void TextBlock_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
-            (sender as TextBlock).ContextMenu.IsEnabled = true;
-            (sender as TextBlock).ContextMenu.PlacementTarget = (sender as TextBlock);
-            (sender as TextBlock).ContextMenu.Placement = System.Windows.Controls.Primitives.PlacementMode.Bottom;
-            (sender as TextBlock).ContextMenu.IsOpen = true;
-        }
-
-        private void Top10_MenuItem_Click(object sender, RoutedEventArgs e)
-        {
+            UstawRanking();
             Overlay.Visibility = Visibility.Visible;
         }
 
@@ -403,6 +396,117 @@ namespace klient_wpf
         {
             chatTimer.Stop();
             ogolnyTimer.Stop();
+        }
+
+        private void TBLStart_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Overlay.Visibility = Visibility.Hidden;
+        }
+
+        private void UstawRanking()
+        {
+            //TBLUzytkownik.Inlines.Add(new Run("Witaj "));
+            //TBLUzytkownik.Inlines.Add(new Run() { Text = ObecnyUzytkownik.nazwaUzytkownika, FontWeight = FontWeights.Bold, Foreground = Brushes.Red });
+            //TBLUzytkownik.Inlines.Add(new Run("!"));
+            //TBLUzytkownik.Inlines.Add(new LineBreak());
+            //TBLUzytkownik.Inlines.Add(new Run() { Text = "Twoje środki: ", FontWeight = FontWeights.Bold });
+            //TBLUzytkownik.Inlines.Add(new Run(ObecnyUzytkownik.kasiora.ToString()));
+            try
+            {
+                Glowny.Uzytkownik[] najL = SerwerGlowny.PobierzListeNajlepszych(token);
+                Glowny.Uzytkownik[] najB = SerwerGlowny.PobierzListeNajbogatszych(token);
+                if (najL != null)
+                {
+                    TBLZwyciezcy.Inlines.Add(new Run() { Text = "Lp.\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
+                    TBLZwyciezcy.Inlines.Add(new Run() { Text = "Nazwa\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
+                    TBLZwyciezcy.Inlines.Add(new Run() { Text = "Kasa\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
+                    TBLZwyciezcy.Inlines.Add(new Run() { Text = "Zwycięstwa\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
+                    TBLZwyciezcy.Inlines.Add(new LineBreak());
+                    for (int i = 0; i < najL.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            TBLZwyciezcy.Inlines.Add(new Run() { Text = i.ToString() + ".\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Red, FontSize = 18 });
+                            TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].nazwaUzytkownika + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Red, FontSize = 18 });
+                            TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].kasiora + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Red, FontSize = 18 });
+                            TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].identyfikatorUzytkownika.ToString(), FontWeight = FontWeights.Bold, Foreground = Brushes.Red, FontSize = 18 });
+                            
+                        }else
+                        if (i == 1)
+                        {
+                            TBLZwyciezcy.Inlines.Add(new Run() { Text = i.ToString() + ".\t", FontWeight = FontWeights.Bold, Foreground = Brushes.OrangeRed, FontSize = 16 });
+                            TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].nazwaUzytkownika + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.OrangeRed, FontSize = 16 });
+                            TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].kasiora + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.OrangeRed, FontSize = 16 });
+                            TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].identyfikatorUzytkownika.ToString(), FontWeight = FontWeights.Bold, Foreground = Brushes.OrangeRed, FontSize = 16 });
+                            
+                        }else
+                            if (i == 2)
+                            {
+                                TBLZwyciezcy.Inlines.Add(new Run() { Text = i.ToString() + ".\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Tomato, FontSize = 14 });
+                                TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].nazwaUzytkownika + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Tomato, FontSize = 14 });
+                                TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].kasiora + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Tomato, FontSize = 18 });
+                                TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].identyfikatorUzytkownika.ToString(), FontWeight = FontWeights.Bold, Foreground = Brushes.Tomato, FontSize = 14 });
+                            }
+                            else
+                            {
+                                TBLZwyciezcy.Inlines.Add(new Run() { Text = i.ToString() + ".\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 12 });
+                                TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].nazwaUzytkownika + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 12 });
+                                TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].kasiora + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 12 });
+                                TBLZwyciezcy.Inlines.Add(new Run() { Text = najL[i].identyfikatorUzytkownika.ToString(), FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 12 });
+                            }
+                        TBLZwyciezcy.Inlines.Add(new LineBreak());
+                    }
+                }
+                if (najB != null)
+                {
+                    TBLBogacze.Inlines.Add(new Run() { Text = "Lp.\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
+                    TBLBogacze.Inlines.Add(new Run() { Text = "Nazwa\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
+                    TBLBogacze.Inlines.Add(new Run() { Text = "Kasa\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
+                    TBLBogacze.Inlines.Add(new Run() { Text = "Zwycięstwa\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
+                    TBLBogacze.Inlines.Add(new LineBreak());
+                    for (int i = 0; i < najL.Length; i++)
+                    {
+                        if (i == 0)
+                        {
+                            TBLBogacze.Inlines.Add(new Run() { Text = i.ToString() + ".\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Red, FontSize = 18 });
+                            TBLBogacze.Inlines.Add(new Run() { Text = najB[i].nazwaUzytkownika + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Red, FontSize = 18 });
+                            TBLBogacze.Inlines.Add(new Run() { Text = najB[i].kasiora + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Red, FontSize = 18 });
+                            TBLBogacze.Inlines.Add(new Run() { Text = najB[i].identyfikatorUzytkownika.ToString(), FontWeight = FontWeights.Bold, Foreground = Brushes.Red, FontSize = 18 });
+
+                        }
+                        else
+                            if (i == 1)
+                            {
+                                TBLBogacze.Inlines.Add(new Run() { Text = i.ToString() + ".\t", FontWeight = FontWeights.Bold, Foreground = Brushes.OrangeRed, FontSize = 16 });
+                                TBLBogacze.Inlines.Add(new Run() { Text = najB[i].nazwaUzytkownika + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.OrangeRed, FontSize = 16 });
+                                TBLBogacze.Inlines.Add(new Run() { Text = najB[i].kasiora + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.OrangeRed, FontSize = 16 });
+                                TBLBogacze.Inlines.Add(new Run() { Text = najB[i].identyfikatorUzytkownika.ToString(), FontWeight = FontWeights.Bold, Foreground = Brushes.OrangeRed, FontSize = 16 });
+
+                            }
+                            else
+                                if (i == 2)
+                                {
+                                    TBLBogacze.Inlines.Add(new Run() { Text = i.ToString() + ".\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Tomato, FontSize = 14 });
+                                    TBLBogacze.Inlines.Add(new Run() { Text = najB[i].nazwaUzytkownika + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Tomato, FontSize = 14 });
+                                    TBLBogacze.Inlines.Add(new Run() { Text = najB[i].kasiora + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.Tomato, FontSize = 18 });
+                                    TBLBogacze.Inlines.Add(new Run() { Text = najB[i].identyfikatorUzytkownika.ToString(), FontWeight = FontWeights.Bold, Foreground = Brushes.Tomato, FontSize = 14 });
+                                }
+                                else
+                                {
+                                    TBLBogacze.Inlines.Add(new Run() { Text = i.ToString() + ".\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 12 });
+                                    TBLBogacze.Inlines.Add(new Run() { Text = najB[i].nazwaUzytkownika + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 12 });
+                                    TBLBogacze.Inlines.Add(new Run() { Text = najB[i].kasiora + "\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 12 });
+                                    TBLBogacze.Inlines.Add(new Run() { Text = najB[i].identyfikatorUzytkownika.ToString(), FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 12 });
+                                }
+                        TBLBogacze.Inlines.Add(new LineBreak());
+                    }
+                }
+            }
+            catch (Exception ee)
+            {
+                MessageBox.Show(ee.Message);
+            }
+
         }
     }
 }

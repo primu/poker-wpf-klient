@@ -348,6 +348,20 @@ namespace klient_wpf.Glowny {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/WyslijWiadomosc", ReplyAction="*")]
         System.Threading.Tasks.Task<klient_wpf.Glowny.WyslijWiadomoscResponse> WyslijWiadomoscAsync(klient_wpf.Glowny.WyslijWiadomoscRequest request);
+        
+        // CODEGEN: Generating message contract since element name token from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PobierzListeNajlepszych", ReplyAction="*")]
+        klient_wpf.Glowny.PobierzListeNajlepszychResponse PobierzListeNajlepszych(klient_wpf.Glowny.PobierzListeNajlepszychRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PobierzListeNajlepszych", ReplyAction="*")]
+        System.Threading.Tasks.Task<klient_wpf.Glowny.PobierzListeNajlepszychResponse> PobierzListeNajlepszychAsync(klient_wpf.Glowny.PobierzListeNajlepszychRequest request);
+        
+        // CODEGEN: Generating message contract since element name token from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PobierzListeNajbogatszych", ReplyAction="*")]
+        klient_wpf.Glowny.PobierzListeNajbogatszychResponse PobierzListeNajbogatszych(klient_wpf.Glowny.PobierzListeNajbogatszychRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/PobierzListeNajbogatszych", ReplyAction="*")]
+        System.Threading.Tasks.Task<klient_wpf.Glowny.PobierzListeNajbogatszychResponse> PobierzListeNajbogatszychAsync(klient_wpf.Glowny.PobierzListeNajbogatszychRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -1047,6 +1061,142 @@ namespace klient_wpf.Glowny {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class PobierzListeNajlepszychRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzListeNajlepszych", Namespace="http://tempuri.org/", Order=0)]
+        public klient_wpf.Glowny.PobierzListeNajlepszychRequestBody Body;
+        
+        public PobierzListeNajlepszychRequest() {
+        }
+        
+        public PobierzListeNajlepszychRequest(klient_wpf.Glowny.PobierzListeNajlepszychRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class PobierzListeNajlepszychRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public byte[] token;
+        
+        public PobierzListeNajlepszychRequestBody() {
+        }
+        
+        public PobierzListeNajlepszychRequestBody(byte[] token) {
+            this.token = token;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class PobierzListeNajlepszychResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzListeNajlepszychResponse", Namespace="http://tempuri.org/", Order=0)]
+        public klient_wpf.Glowny.PobierzListeNajlepszychResponseBody Body;
+        
+        public PobierzListeNajlepszychResponse() {
+        }
+        
+        public PobierzListeNajlepszychResponse(klient_wpf.Glowny.PobierzListeNajlepszychResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class PobierzListeNajlepszychResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public klient_wpf.Glowny.Uzytkownik[] PobierzListeNajlepszychResult;
+        
+        public PobierzListeNajlepszychResponseBody() {
+        }
+        
+        public PobierzListeNajlepszychResponseBody(klient_wpf.Glowny.Uzytkownik[] PobierzListeNajlepszychResult) {
+            this.PobierzListeNajlepszychResult = PobierzListeNajlepszychResult;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class PobierzListeNajbogatszychRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzListeNajbogatszych", Namespace="http://tempuri.org/", Order=0)]
+        public klient_wpf.Glowny.PobierzListeNajbogatszychRequestBody Body;
+        
+        public PobierzListeNajbogatszychRequest() {
+        }
+        
+        public PobierzListeNajbogatszychRequest(klient_wpf.Glowny.PobierzListeNajbogatszychRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class PobierzListeNajbogatszychRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public byte[] token;
+        
+        public PobierzListeNajbogatszychRequestBody() {
+        }
+        
+        public PobierzListeNajbogatszychRequestBody(byte[] token) {
+            this.token = token;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class PobierzListeNajbogatszychResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="PobierzListeNajbogatszychResponse", Namespace="http://tempuri.org/", Order=0)]
+        public klient_wpf.Glowny.PobierzListeNajbogatszychResponseBody Body;
+        
+        public PobierzListeNajbogatszychResponse() {
+        }
+        
+        public PobierzListeNajbogatszychResponse(klient_wpf.Glowny.PobierzListeNajbogatszychResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class PobierzListeNajbogatszychResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public klient_wpf.Glowny.Uzytkownik[] PobierzListeNajbogatszychResult;
+        
+        public PobierzListeNajbogatszychResponseBody() {
+        }
+        
+        public PobierzListeNajbogatszychResponseBody(klient_wpf.Glowny.Uzytkownik[] PobierzListeNajbogatszychResult) {
+            this.PobierzListeNajbogatszychResult = PobierzListeNajbogatszychResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface GlownySoapChannel : klient_wpf.Glowny.GlownySoap, System.ServiceModel.IClientChannel {
     }
@@ -1340,6 +1490,56 @@ namespace klient_wpf.Glowny {
             inValue.Body.token = token;
             inValue.Body.wiadomosc = wiadomosc;
             return ((klient_wpf.Glowny.GlownySoap)(this)).WyslijWiadomoscAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        klient_wpf.Glowny.PobierzListeNajlepszychResponse klient_wpf.Glowny.GlownySoap.PobierzListeNajlepszych(klient_wpf.Glowny.PobierzListeNajlepszychRequest request) {
+            return base.Channel.PobierzListeNajlepszych(request);
+        }
+        
+        public klient_wpf.Glowny.Uzytkownik[] PobierzListeNajlepszych(byte[] token) {
+            klient_wpf.Glowny.PobierzListeNajlepszychRequest inValue = new klient_wpf.Glowny.PobierzListeNajlepszychRequest();
+            inValue.Body = new klient_wpf.Glowny.PobierzListeNajlepszychRequestBody();
+            inValue.Body.token = token;
+            klient_wpf.Glowny.PobierzListeNajlepszychResponse retVal = ((klient_wpf.Glowny.GlownySoap)(this)).PobierzListeNajlepszych(inValue);
+            return retVal.Body.PobierzListeNajlepszychResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<klient_wpf.Glowny.PobierzListeNajlepszychResponse> klient_wpf.Glowny.GlownySoap.PobierzListeNajlepszychAsync(klient_wpf.Glowny.PobierzListeNajlepszychRequest request) {
+            return base.Channel.PobierzListeNajlepszychAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<klient_wpf.Glowny.PobierzListeNajlepszychResponse> PobierzListeNajlepszychAsync(byte[] token) {
+            klient_wpf.Glowny.PobierzListeNajlepszychRequest inValue = new klient_wpf.Glowny.PobierzListeNajlepszychRequest();
+            inValue.Body = new klient_wpf.Glowny.PobierzListeNajlepszychRequestBody();
+            inValue.Body.token = token;
+            return ((klient_wpf.Glowny.GlownySoap)(this)).PobierzListeNajlepszychAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        klient_wpf.Glowny.PobierzListeNajbogatszychResponse klient_wpf.Glowny.GlownySoap.PobierzListeNajbogatszych(klient_wpf.Glowny.PobierzListeNajbogatszychRequest request) {
+            return base.Channel.PobierzListeNajbogatszych(request);
+        }
+        
+        public klient_wpf.Glowny.Uzytkownik[] PobierzListeNajbogatszych(byte[] token) {
+            klient_wpf.Glowny.PobierzListeNajbogatszychRequest inValue = new klient_wpf.Glowny.PobierzListeNajbogatszychRequest();
+            inValue.Body = new klient_wpf.Glowny.PobierzListeNajbogatszychRequestBody();
+            inValue.Body.token = token;
+            klient_wpf.Glowny.PobierzListeNajbogatszychResponse retVal = ((klient_wpf.Glowny.GlownySoap)(this)).PobierzListeNajbogatszych(inValue);
+            return retVal.Body.PobierzListeNajbogatszychResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<klient_wpf.Glowny.PobierzListeNajbogatszychResponse> klient_wpf.Glowny.GlownySoap.PobierzListeNajbogatszychAsync(klient_wpf.Glowny.PobierzListeNajbogatszychRequest request) {
+            return base.Channel.PobierzListeNajbogatszychAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<klient_wpf.Glowny.PobierzListeNajbogatszychResponse> PobierzListeNajbogatszychAsync(byte[] token) {
+            klient_wpf.Glowny.PobierzListeNajbogatszychRequest inValue = new klient_wpf.Glowny.PobierzListeNajbogatszychRequest();
+            inValue.Body = new klient_wpf.Glowny.PobierzListeNajbogatszychRequestBody();
+            inValue.Body.token = token;
+            return ((klient_wpf.Glowny.GlownySoap)(this)).PobierzListeNajbogatszychAsync(inValue);
         }
     }
 }

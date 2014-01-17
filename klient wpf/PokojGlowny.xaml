@@ -47,19 +47,14 @@
             <Image Grid.ColumnSpan="7" Grid.Row="1" Source="resources/logo2.png" Margin="5"></Image>
             <TextBlock Grid.Row="0" Grid.Column="6" Text="Wyloguj" TextAlignment="Center" Foreground="#FF487BD4" Style="{StaticResource HoverUnderlineStyle}" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown"><Run Language="pl-pl"/></TextBlock>
             <TextBlock ContextMenuService.IsEnabled="False" Grid.Row="0" Grid.Column="1" Text="Ranking ▼" TextAlignment="Center" Foreground="#FF487BD4" Style="{StaticResource HoverUnderlineStyle}" MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_1"><Run Language="pl-pl"/>
-                <TextBlock.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Top 10" Click="Top10_MenuItem_Click"></MenuItem>
-                        <MenuItem Header="Najwięcej zwycięstw"></MenuItem>
-                    </ContextMenu>
-                </TextBlock.ContextMenu>
             </TextBlock>
             <TextBlock Name="TBLUzytkownik" Grid.Column="6" Grid.Row="1">
 
             </TextBlock>
         </Grid>
         <RichTextBox Name="RTBa" VerticalScrollBarVisibility="Auto" Grid.Column="0" Grid.Row="2" Margin="3" AllowDrop="False" IsReadOnly="True" IsUndoEnabled="False" AcceptsReturn="False" AutoWordSelection="False">
-            <FlowDocument Name="TBOknoCzatu"><!--Przedtem był sam TextBox zamiast RichTextBoxa (stąd nazwa)-->
+            <FlowDocument Name="TBOknoCzatu">
+                <!--Przedtem był sam TextBox zamiast RichTextBoxa (stąd nazwa)-->
                 <Paragraph>
                     <Bold>
                         <Run>Witaj w grze internetowej Poker!</Run>
@@ -90,7 +85,7 @@
             </Border>
             <Button Grid.Row="1" Margin="3" Content="Dołącz" Click="Button_Click"></Button>
         </Grid>
-        
+
         <ListView x:Name="LVListaPokoi" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Margin="3" SelectionChanged="LVListaPokoi_SelectionChanged">
             <ListView.View>
                 <GridView>
@@ -115,10 +110,10 @@
                 <RowDefinition Height="2*" />
             </Grid.RowDefinitions>
             <Label HorizontalContentAlignment="Center" Grid.Row="0" Content="Nowy pokój" FontWeight="Bold"/>
-            
+
             <Label Content="Nazwa stołu" Grid.Row="1"/>
             <TextBox Margin="3,3,3,3" Name="TBNazwaStolu" Grid.Row="2" MaxLength="50"></TextBox>
-            
+
             <Label Content="Liczba graczy" Grid.Row="3"/>
             <Grid Grid.Row="4">
                 <Grid.ColumnDefinitions>
@@ -134,14 +129,34 @@
             <Label Content="Duży blind" Grid.Row="7"/>
             <xctk:IntegerUpDown Name="IUPBlind" Value="2" Margin="3,3,3,3" Grid.Row="8" Increment="2" Minimum="2" Maximum="100"></xctk:IntegerUpDown>
         </Grid>
-        
+
         <Button Content="Utwórz pokój" Grid.Column="2" Grid.Row="3" Margin="3" Click="Button_Click_1"/>
         <!--wyskakujące okienko-->
 
-        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Collapsed" Grid.ColumnSpan="3" Grid.RowSpan="4" ><!-- Width="{Binding ElementName=RootGrid,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}"-->
+        <Grid x:Name="Overlay" Panel.ZIndex="1000" Visibility="Hidden" Grid.ColumnSpan="3" Grid.RowSpan="4" >
+            <!-- Width="{Binding ElementName=RootGrid,Path=ActualWidth}" Height="{Binding ElementName=RootGrid,Path=ActualHeight}"-->
             <Grid.Background>
                 <SolidColorBrush Color="Black" Opacity=".5"/>
             </Grid.Background>
+            <TextBlock x:Name="TBLStart" TextAlignment="Center" HorizontalAlignment="Center"  Margin="220,448,253,-6" TextWrapping="Wrap" Text="Zamknij" VerticalAlignment="Center" Height="100" Width="302" FontSize="72" FontWeight="Bold" MouseLeftButtonDown="TBLStart_MouseLeftButtonDown">
+                <TextBlock.Effect>
+                    <DropShadowEffect ShadowDepth="2"/>
+                </TextBlock.Effect>
+                <TextBlock.Style>
+                    <Style TargetType="TextBlock">
+                        <Setter Property= "Foreground" Value="White"/>
+                        <Style.Triggers>
+                            <Trigger Property ="IsMouseOver" Value="True">
+                                <Setter Property= "Foreground" Value="Red"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+            <Label Content="Najbogatsi gracze" HorizontalAlignment="Center" Margin="10,0,392,498" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="24" Height="44" Width="373"/>
+            <Label Content="Najlepsi gracze" HorizontalAlignment="Center" Margin="388,0,14,498" VerticalAlignment="Center" Foreground="White" FontWeight="Bold" FontSize="24" Height="44" Width="373"/>
+            <TextBlock Name="TBLZwyciezcy" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="388,44,10,112" Width="377" Height="386"/>
+            <TextBlock Name="TBLBogacze" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="6,44,392,112" Width="377" Height="386"/>
 
             <!-- Add controls as needed -->
         </Grid>
