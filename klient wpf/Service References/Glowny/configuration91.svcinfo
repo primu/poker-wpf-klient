@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="arMXcCA4l71o4Vrmmo7a+5+jLvo=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="+dLbsxOF/9TDD9h+GDEcQXq3Dyg=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="GlownySoap">
       <properties>
@@ -221,10 +221,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="GlownySoap" contract="Glowny.GlownySoap" bindingType="basicHttpBinding" address="https://localhost:44300/glowny.asmx" bindingConfiguration="GlownySoap">
+    <endpoint name="GlownySoap" contract="Glowny.GlownySoap" bindingType="basicHttpBinding" address="https://x230-think:44301/Glowny.asmx" bindingConfiguration="GlownySoap">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://localhost:44300/glowny.asmx</serializedValue>
+          <serializedValue>https://x230-think:44301/Glowny.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />

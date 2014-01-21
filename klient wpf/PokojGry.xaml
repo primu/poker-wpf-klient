@@ -479,6 +479,7 @@
         <Label x:Name="Lwin6" Content="Wygrał!" HorizontalAlignment="Left" Margin="904,300,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
         <Label x:Name="Lwin7" Content="Wygrał!" HorizontalAlignment="Left" Margin="888,407,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
         <Label x:Name="Lwin8" Content="Wygrał!" HorizontalAlignment="Left" Margin="784,498,0,0" VerticalAlignment="Top" Foreground="#FFD6E005" FontWeight="Bold" FontSize="14" TextOptions.TextHintingMode="Animated"/>
+        <Image x:Name="pomocK" HorizontalAlignment="Left" Height="451" Margin="1181,300,0,0" VerticalAlignment="Top" Width="151" Source="resources/ukl.png" Visibility="Hidden"/>
     </Grid>
 
 </Window>

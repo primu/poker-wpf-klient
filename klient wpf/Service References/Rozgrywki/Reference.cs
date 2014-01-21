@@ -324,6 +324,8 @@ namespace klient_wpf.Rozgrywki {
         
         private bool czyNoweRozdanieField;
         
+        private bool czyGraField;
+        
         private long kasaField;
         
         private long stawiaField;
@@ -436,6 +438,19 @@ namespace klient_wpf.Rozgrywki {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=8)]
+        public bool czyGra {
+            get {
+                return this.czyGraField;
+            }
+            set {
+                if ((this.czyGraField.Equals(value) != true)) {
+                    this.czyGraField = value;
+                    this.RaisePropertyChanged("czyGra");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=9)]
         public long kasa {
             get {
                 return this.kasaField;
@@ -448,7 +463,7 @@ namespace klient_wpf.Rozgrywki {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=9)]
+        [System.Runtime.Serialization.DataMemberAttribute(IsRequired=true, Order=10)]
         public long stawia {
             get {
                 return this.stawiaField;
@@ -461,7 +476,7 @@ namespace klient_wpf.Rozgrywki {
             }
         }
         
-        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=10)]
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=11)]
         public klient_wpf.Rozgrywki.UkladyKart ukl {
             get {
                 return this.uklField;
@@ -1238,10 +1253,17 @@ namespace klient_wpf.Rozgrywki {
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-    [System.Runtime.Serialization.DataContractAttribute()]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
     public partial class ustawNoweRozResponseBody {
         
+        [System.Runtime.Serialization.DataMemberAttribute(Order=0)]
+        public bool ustawNoweRozResult;
+        
         public ustawNoweRozResponseBody() {
+        }
+        
+        public ustawNoweRozResponseBody(bool ustawNoweRozResult) {
+            this.ustawNoweRozResult = ustawNoweRozResult;
         }
     }
     
@@ -2770,11 +2792,12 @@ namespace klient_wpf.Rozgrywki {
             return base.Channel.ustawNoweRoz(request);
         }
         
-        public void ustawNoweRoz(byte[] token) {
+        public bool ustawNoweRoz(byte[] token) {
             klient_wpf.Rozgrywki.ustawNoweRozRequest inValue = new klient_wpf.Rozgrywki.ustawNoweRozRequest();
             inValue.Body = new klient_wpf.Rozgrywki.ustawNoweRozRequestBody();
             inValue.Body.token = token;
             klient_wpf.Rozgrywki.ustawNoweRozResponse retVal = ((klient_wpf.Rozgrywki.RozgrywkiSoap)(this)).ustawNoweRoz(inValue);
+            return retVal.Body.ustawNoweRozResult;
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]

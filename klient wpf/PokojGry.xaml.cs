@@ -196,9 +196,14 @@ namespace klient_wpf
             LabWin.Add(Lwin8);
             for (int i = 0; i < LabWin.Count; i++)           
                 LabWin.ElementAt(i).Visibility = Visibility.Hidden;
-            
 
-            PobierzWiadomosci();
+            try
+            {
+                PobierzWiadomosci();
+            }
+            catch (Exception ee)
+            {
+            }
             Nakladka(true);
             WystartujZegar();
         }
@@ -265,8 +270,14 @@ namespace klient_wpf
             {
                 Nakladka(false);
             }
-            
-            PobierzWiadomosci();
+
+            try
+            {
+                PobierzWiadomosci();
+            }
+            catch (Exception ee)
+            {
+            }
             PobierzObecnyStol();
         }
 
@@ -333,13 +344,30 @@ namespace klient_wpf
                         bool tempSB=false;
                         bool ruch=false;
                         bool fold=false;
-                        if(Gracze[i].stan==StanGracza.BigBlind)
+                        if(Gracze[i].identyfikatorUzytkownika==gra.ktoBigBlind)
                             tempBB=true;
-                        else if (Gracze[i].stan == StanGracza.SmallBlind)
+                        if (i + 1 != Gracze.Length)
                         {
-                            tempBB = true;
-                            tempSB = true;
+                            if (Gracze[i + 1].identyfikatorUzytkownika == gra.ktoBigBlind)
+                            {
+                                tempBB = true;
+                                tempSB = true;
+                            }
                         }
+                        else
+                        {
+                            if (Gracze[0].identyfikatorUzytkownika == gra.ktoBigBlind)
+                            {
+                                tempBB = true;
+                                tempSB = true;
+                            }
+                        }
+                        //else if (Gracze[i].identyfikatorUzytkownika==gra.)
+                        //{
+                        //    tempBB = true;
+                        //   tempSB = true;
+                        //}
+                        
                         if(Gracze[i].identyfikatorUzytkownika==gra.czyjRuch)
                             ruch=true;
                         if (Gracze[i].stan == StanGracza.Fold)
@@ -382,35 +410,41 @@ namespace klient_wpf
                         }
                     }
                     //SHOWDOWN
-                    if (gra.stan == Stan.SHOWDOWN && btnNowe==false)
-                    {                      
+                    if (gra.stan == Stan.SHOWDOWN && btnNowe == false)
+                    {
                         czyLiczycCzas = true;
-                        List<Karta> cards = null;                     
+                        List<Karta> cards = null;
                         List<Gracz> winner = new List<Gracz>(gra.listaWin);
                         for (int i = 0; i < Gracze.Length; i++)
                         {
-                            cards=new List<Karta>(SerwerRozgrywki.ZwrocHandGraczy(token, Gracze[i].identyfikatorUzytkownika));                          
+                            cards = new List<Karta>(SerwerRozgrywki.ZwrocHandGraczy(token, Gracze[i].identyfikatorUzytkownika));
                             for (int j = 0; j < Gracze.Length; j++)
                             {
-                                if (miejscePrzyStole[j, 1] == Gracze[i].identyfikatorUzytkownika)
+                                if (miejscePrzyStole[j, 1] == Gracze[i].identyfikatorUzytkownika && cards.Count != 0)
                                 {
-                                    Image x = new Image(); x.Source=PowiazanieKart(cards.ElementAt(0)).Source;
-                                    Image y = new Image(); y.Source= PowiazanieKart(cards.ElementAt(1)).Source;
-                                    Grid grid = m.ElementAt(miejscePrzyStole[j,0]-1);
+                                    Image x = new Image(); x.Source = PowiazanieKart(cards.ElementAt(0)).Source;
+                                    Image y = new Image(); y.Source = PowiazanieKart(cards.ElementAt(1)).Source;
+                                    Grid grid = m.ElementAt(miejscePrzyStole[j, 0] - 1);
                                     ZmienKarte(ref grid, 0, ref x);
-                                    ZmienKarte(ref grid, 1, ref y);                                   
+                                    ZmienKarte(ref grid, 1, ref y);
                                 }
                             }
                             for (int k = 0; k < winner.Count; k++)
                             {
                                 if (miejscePrzyStole[i, 1] == winner.ElementAt(k).identyfikatorUzytkownika)
                                 {
-                                    LabWin.ElementAt(miejscePrzyStole[i, 0]-1).Visibility = Visibility.Visible;
+                                    LabWin.ElementAt(miejscePrzyStole[i, 0] - 1).Visibility = Visibility.Visible;
                                 }
                             }
 
-                            }
                         }
+                        List<Karta> stol = new List<Karta>(SerwerRozgrywki.zwrocStol(token));
+                        for (int i = 0; i < stol.Count; i++)
+                        {
+                            Image x = PowiazanieKart(stol.ElementAt(i));
+                            ZmienKarte(ref Stol, i, ref x);
+                        }
+                    }
 
                     //panel po zakonczeniu rozdania
                     if (SerwerRozgrywki.czyWyniki(token) == true)
@@ -449,6 +483,16 @@ namespace klient_wpf
                         SpasujBTN.Visibility = Visibility.Hidden;
                         zmniejsz.Visibility = Visibility.Hidden;
                         powieksz.Visibility = Visibility.Hidden;
+                    }
+
+                    if (gra.stan == Stan.END)
+                    {
+                        ogolnyTimer.Stop();
+                        chatTimer.Stop();
+                        MessageBox.Show("Wygrałeś!", "GRA", System.Windows.MessageBoxButton.OK);
+                        SerwerRozgrywki.PotwierdzZakonczenie(token);
+                        MessageBox.Show("Pokój został wyczyszczony", "GRA", System.Windows.MessageBoxButton.OK);
+                        PrzejdzDoPokojuGlownego();
                     }
 
                 }
@@ -1114,6 +1158,7 @@ namespace klient_wpf
                 klik = true;
                 expand.ExpandDirection = ExpandDirection.Down;
                 NajlepszyUklad.Visibility = Visibility.Visible;
+                pomocK.Visibility = System.Windows.Visibility.Visible;
             }
             else
             {
@@ -1121,6 +1166,7 @@ namespace klient_wpf
                 klik = false;
                 expand.ExpandDirection = ExpandDirection.Up;
                 NajlepszyUklad.Visibility = Visibility.Hidden;
+                pomocK.Visibility = System.Windows.Visibility.Hidden;
             }
         }
 
@@ -1136,21 +1182,32 @@ namespace klient_wpf
 
         private void TBLNoweRoz_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            btnNowe = true;
-            UsunWszystkieKarty();
-            LNajUkladNazwa.Content = "";
-            SerwerRozgrywki.ustawNoweRoz(token);
-            TBLNoweRoz.IsEnabled = false;
-            TBLNoweRoz.Text = "Oczekiwanie...";
-            ustawEtykietyPoRozdaniu();
-            for (int i = 0; i < 5; i++)
+            bool czyGra = SerwerRozgrywki.ustawNoweRoz(token);
+
+            if (czyGra == true)
             {
-                Image img = new Image();
-                img.Source = tlo[0].Source;
-                ZmienKarte(ref NajlepszyUklad,i,ref img);                
+                btnNowe = true;
+                UsunWszystkieKarty();
+                LNajUkladNazwa.Content = "";
+                TBLNoweRoz.IsEnabled = false;
+                TBLNoweRoz.Text = "Oczekiwanie...";
+                ustawEtykietyPoRozdaniu();
+                for (int i = 0; i < 5; i++)
+                {
+                    Image img = new Image();
+                    img.Source = tlo[0].Source;
+                    ZmienKarte(ref NajlepszyUklad, i, ref img);
+                }
+                for (int i = 0; i < LabWin.Count; i++)
+                    LabWin.ElementAt(i).Visibility = Visibility.Hidden;
             }
-            for (int i = 0; i < LabWin.Count; i++)
-                LabWin.ElementAt(i).Visibility = Visibility.Hidden;
+            else
+            {//nie gra już
+                ogolnyTimer.Stop();
+                chatTimer.Stop();
+                MessageBox.Show("Niestety, ale przegrałeś!", "GRA", System.Windows.MessageBoxButton.OK);
+                PrzejdzDoPokojuGlownego();
+            }
             
         }
 

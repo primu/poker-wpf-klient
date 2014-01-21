@@ -591,10 +591,10 @@
   </wsdl:binding>
   <wsdl:service name="Glowny">
     <wsdl:port name="GlownySoap" binding="tns:GlownySoap">
-      <soap:address location="https://localhost:44300/glowny.asmx" />
+      <soap:address location="https://x230-think:44301/Glowny.asmx" />
     </wsdl:port>
     <wsdl:port name="GlownySoap12" binding="tns:GlownySoap12">
-      <soap12:address location="https://localhost:44300/glowny.asmx" />
+      <soap12:address location="https://x230-think:44301/Glowny.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

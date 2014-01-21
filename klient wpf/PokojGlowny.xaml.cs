@@ -417,6 +417,7 @@ namespace klient_wpf
                 Glowny.Uzytkownik[] najB = SerwerGlowny.PobierzListeNajbogatszych(token);
                 if (najL != null)
                 {
+                    TBLZwyciezcy.Inlines.Clear();
                     TBLZwyciezcy.Inlines.Add(new Run() { Text = "Lp.\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
                     TBLZwyciezcy.Inlines.Add(new Run() { Text = "Nazwa\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
                     TBLZwyciezcy.Inlines.Add(new Run() { Text = "Kasa\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
@@ -459,6 +460,7 @@ namespace klient_wpf
                 }
                 if (najB != null)
                 {
+                    TBLBogacze.Inlines.Clear();
                     TBLBogacze.Inlines.Add(new Run() { Text = "Lp.\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
                     TBLBogacze.Inlines.Add(new Run() { Text = "Nazwa\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });
                     TBLBogacze.Inlines.Add(new Run() { Text = "Kasa\t", FontWeight = FontWeights.Bold, Foreground = Brushes.White, FontSize = 18 });

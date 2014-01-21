@@ -30,7 +30,11 @@
         </s:complexType>
       </s:element>
       <s:element name="ustawNoweRozResponse">
-        <s:complexType />
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ustawNoweRozResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
       </s:element>
       <s:element name="czyWyniki">
         <s:complexType>
@@ -184,6 +188,7 @@
               <s:element minOccurs="0" maxOccurs="1" name="nazwaUkladu" type="s:string" />
               <s:element minOccurs="1" maxOccurs="1" name="czyPobralKarty" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="czyNoweRozdanie" type="s:boolean" />
+              <s:element minOccurs="1" maxOccurs="1" name="czyGra" type="s:boolean" />
               <s:element minOccurs="1" maxOccurs="1" name="kasa" type="s:long" />
               <s:element minOccurs="1" maxOccurs="1" name="stawia" type="s:long" />
               <s:element minOccurs="0" maxOccurs="1" name="ukl" type="tns:UkladyKart" />
@@ -1160,10 +1165,10 @@
   </wsdl:binding>
   <wsdl:service name="Rozgrywki">
     <wsdl:port name="RozgrywkiSoap" binding="tns:RozgrywkiSoap">
-      <soap:address location="https://localhost:44300/rozgrywki.asmx" />
+      <soap:address location="https://x230-think:44301/Rozgrywki.asmx" />
     </wsdl:port>
     <wsdl:port name="RozgrywkiSoap12" binding="tns:RozgrywkiSoap12">
-      <soap12:address location="https://localhost:44300/rozgrywki.asmx" />
+      <soap12:address location="https://x230-think:44301/Rozgrywki.asmx" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

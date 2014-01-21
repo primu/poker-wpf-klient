@@ -79,9 +79,7 @@
                 <RowDefinition Height="1*"/>
             </Grid.RowDefinitions>
             <Border BorderThickness="1" BorderBrush="Black" Grid.Column="0" Grid.Row="0" Margin="3" >
-                <TextBlock Margin="3" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fermentum lorem sit amet quam feugiat venenatis sit amet at dui. Vivamus iaculis lectus at leo gravida, nec tempor odio fringilla. Quisque cursus, libero ut sodales auctor, massa sem fermentum lectus, non molestie sem leo non mi. Duis pretium ac magna quis egestas. Quisque tellus ante, viverra ut dolor vel, eleifend semper elit. Nunc porttitor erat at mi varius, nec posuere nibh eleifend. Vestibulum pharetra pulvinar mauris, ac venenatis augue mollis blandit. Vivamus a massa pretium, ornare neque sed, malesuada nisl. Fusce dictum justo nisi, id vulputate velit egestas eu. Mauris et elit nunc. Etiam lacinia turpis vitae erat feugiat mattis. 
-
- Phasellus at iaculis neque. Cras et enim sed est consequat venenatis non non lectus. Cras congue turpis eros, vel tempor ligula blandit vitae. Duis sed quam porttitor, fringilla enim a, dapibus felis. Mauris euismod ornare pellentesque. Nulla euismod dignissim accumsan. Vestibulum lobortis enim urna, pharetra malesuada est interdum semper. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Pellentesque quis sem ullamcorper, eleifend arcu vel, ornare odio."></TextBlock>
+                <TextBlock Margin="3" TextWrapping="Wrap" Text="Poker – gra karciana, rozgrywana talią składającą się z 52 kart, której celem jest wygranie pieniędzy (lub żetonów w wersji sportowej) od pozostałych uczestników dzięki skompletowaniu najlepszego układu lub za pomocą tzw. blefu. Liczba graczy przy jednym stole nie jest ograniczona, ale ze względów praktycznych nie gra się więcej niż w dziesięć osób."></TextBlock>
             </Border>
             <Button Grid.Row="1" Margin="3" Content="Dołącz" Click="Button_Click"></Button>
         </Grid>

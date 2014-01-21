@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="kaPDnngyQnB2XZ043eZCJgMSLsg=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="12dsAwUEbQtMYIC6+3vGLwKAf5Q=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="RozgrywkiSoap">
       <properties>
@@ -221,10 +221,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="RozgrywkiSoap" contract="Rozgrywki.RozgrywkiSoap" bindingType="basicHttpBinding" address="https://localhost:44300/rozgrywki.asmx" bindingConfiguration="RozgrywkiSoap">
+    <endpoint name="RozgrywkiSoap" contract="Rozgrywki.RozgrywkiSoap" bindingType="basicHttpBinding" address="https://x230-think:44301/Rozgrywki.asmx" bindingConfiguration="RozgrywkiSoap">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://localhost:44300/rozgrywki.asmx</serializedValue>
+          <serializedValue>https://x230-think:44301/Rozgrywki.asmx</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
